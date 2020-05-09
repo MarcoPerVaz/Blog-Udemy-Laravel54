@@ -12,7 +12,7 @@
       </span>
     </a>
     <ul class="treeview-menu">
-      <li><a href="#">Ver todos los posts</a></li>
+      <li><a href="{{ route('admin.posts.index') }}">Ver todos los posts</a></li>
       <li><a href="#">Crear un post</a></li>
     </ul>
   </li>

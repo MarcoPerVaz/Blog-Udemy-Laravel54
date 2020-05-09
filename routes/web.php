@@ -33,11 +33,12 @@ Route::group(
     ],
     function () {
         /* 
-            |-------------------------------------------------------------------------------------------------------------------------------------
-            | *Ruta que apunta a 'admin/posts' y está asociada a la función index() del controlador app\Http\Controllers\Admin\PostsController.php
-            |-------------------------------------------------------------------------------------------------------------------------------------
+            |-------------------------------------------------------------------------------------------------
+            | *Ruta con nombre que apunta a 'admin/posts' y está asociada a la función index() del controlador 
+            |  app\Http\Controllers\Admin\PostsController.php
+            |-------------------------------------------------------------------------------------------------
         */
-        Route::get('posts', 'PostsController@index');
+        Route::get('posts', 'PostsController@index')->name('admin.posts.index');
         // Otras rutas de administración
     }
 );
