@@ -4,7 +4,7 @@
 <!-- end title -->
 
 <!-- commit name -->
-### Commit | __Implementando Seeders__
+### Commit | __Creando las etiquetas__
 <!-- end commit name -->
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -17,35 +17,37 @@
 
 <!-- commit instructions -->
 #### Instrucciones Commit
-1. Creación y edición del seeder `database\seeds\PostsTableSeeder.php`
-   > php artisan make:seeder PostsTableSeeder
+1. Creación del modelo `app\Tag.php` junto a su migración `ddatabase\migrations\2020_05_09_174944_create_tags_table.php`
+   > php artisan make:model Tag -m
+   - Edición de la migración `ddatabase\migrations\2020_05_09_174944_create_tags_table.php`
+2. Creación y edición de la migración `database\migrations\2020_05_09_175109_create_post_tag_table.php`
+   > php artisan make:migration create_post_tag_table --create=post_tag
 
-   **No olvidar importar use `App\Post;`*
-
-   **No olvidar importar use `App\Category;`*
-
-   ***Si se usa Carbon no olvidar importar la librería Carbon `use Carbon\Carbon;`*
-2. Edición del archivo `database\seeds\DatabaseSeeder.php`
-3. Ejecutar los seeds
-   > php artisan db:seed
-4. De querer ejecutar las migraciones junto con los seeds
-   > php artisan migrate --seed
-5. De querer rehacer las migraciones junto con los seeds
-   > php artisan migrate:refresh --seed
+   **Esta migración es para guardar los id de los posts y los id de los tags (relación belongToMany)*
+3. Ejecutar las migraciones
+   > php artisan migrate
+4. Se crean 2 etiquetas de forma manual en la tabla `tags`
+5. Edición del modelo `app\Post.php`
+   - Creación y edición de la función `tags()` relación belongsToMany
+6. Se crearon 4 registros de forma manual de `post_id` y `tag_id` en la tabla `post_tag` para asignarle etiquetas a los 3 posts existentes
+7. Edición de la vista `resources\views\welcome.blade.php`
 <!-- end commit instructions -->
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 <!-- notes -->
 #### Notas:
-- [Librería Carbon](https://carbon.nesbot.com/docs/)
 <!-- end notes -->
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 <!-- information -->
 #### Información:
-- Más información en `database\seeds\PostsTableSeeder.php`
+- Más información en `ddatabase\migrations\2020_05_09_174944_create_tags_table.php`
 
-- Más información en `database\seeds\DatabaseSeeder.php`
+- Más información en `database\migrations\2020_05_09_175109_create_post_tag_table.php`
+
+- Más información en `app\Post.php`
+
+- Más información en `resources\views\welcome.blade.php`
 <!-- end information -->

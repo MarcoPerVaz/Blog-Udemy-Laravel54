@@ -35,9 +35,11 @@
 								<a href="#" class="text-uppercase c-green">read more</a>
 							</div>
 							<div class="tags container-flex">
-								<span class="tag c-gray-1 text-capitalize">#yosemite</span>
-								<span class="tag c-gray-1 text-capitalize">#peak</span>
-								<span class="tag c-gray-1 text-capitalize">#explorer</span>
+
+								@foreach ($post->tags as $tag)
+									<span class="tag c-gray-1 text-capitalize">#{{ $tag->name }}</span>	
+								@endforeach
+								
 							</div>
 						</footer>
 					{{-- end footer --}}
@@ -258,9 +260,10 @@
 
 
 {{-- Notas:
-        | ---------------------------------------------------------------------------------------
-				| *{{ $post->category->name }} Se accede a la relación category() del modelo app\Post.php
-        | ---------------------------------------------------------------------------------------
+				| -------------------------------------------------------------------------------------------------------
+				| *Para poder acceder a la relación belongsToMany (Pertenece a muchos) incluida en el modelo app\Post.php
+				| 	*@foreach ($post->tags as $tag)
+				|			<span class="tag c-gray-1 text-capitalize">#{{ $tag->name }}</span>	
+				|	 	 @endforeach
+        | -------------------------------------------------------------------------------------------------------    
 --}}
-
-	
