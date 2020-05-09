@@ -3,33 +3,50 @@
 
 @section('content')
 	<section class="posts container">
-		<article class="post no-image">
-			<div class="content-post">
-				<header class="container-flex space-between">
-					<div class="date">
-						<span class="c-gray-1">sep 20</span>
-					</div>
-					<div class="post-category">
-						<span class="category text-capitalize">i do travel</span>
-					</div>
-				</header>
-				<h1>No difference how many peaks you reach if there was no pleasure in the climb.</h1>
-				<div class="divider"></div>
-				<p>Quisque congue lacus mattis massa luctus, nec hendrerit purus aliquet. Ut ac elementum urna. Pellentesque suscipit metus et egestas congue. Duis eu pellentesque turpis, ut maximus metus. Sed ultrices tellus vitae rutrum congue. Fusce luctus augue id nisl suscipit, vel sollicitudin orci egestas. Morbi posuere venenatis ipsum, ac vestibulum quam dignissim efficitur. Ut vitae rutrum augue, in volutpat quam. Cras a viverra ipsum. Aenean ut consequat ex, vitae vulputate nunc. Vestibulum metus nisi, aliquam sed tincidunt sit amet, pretium et augue.</p>
-				<footer class="container-flex space-between">
-					<div class="read-more">
-						<a href="#" class="text-uppercase c-green">read more</a>
-					</div>
-					<div class="tags container-flex">
-						<span class="tag c-gray-1 text-capitalize">#yosemite</span>
-						<span class="tag c-gray-1 text-capitalize">#peak</span>
-						<span class="tag c-gray-1 text-capitalize">#explorer</span>
-					</div>
-				</footer>
-			</div>
-		</article>
 
-		<article class="post w-image">
+		@foreach ($posts as $post)
+
+			<article class="post no-image">
+				<div class="content-post">
+					{{-- header --}}
+						<header class="container-flex space-between">
+							<div class="date">
+								<span class="c-gray-1">{{ $post->published_at }}</span>
+							</div>
+							<div class="post-category">
+								<span class="category text-capitalize">i do travel</span>
+							</div>
+						</header>
+					{{-- end header --}}
+
+					{{-- title --}}
+						<h1>{{ $post->title }}</h1>
+					{{-- end title --}}
+					
+					<div class="divider"></div>
+
+					{{-- excerpt --}}
+						<p>{{ $post->excerpt }}</p>
+					{{-- end excerpt --}}
+
+					{{-- footer --}}
+						<footer class="container-flex space-between">
+							<div class="read-more">
+								<a href="#" class="text-uppercase c-green">read more</a>
+							</div>
+							<div class="tags container-flex">
+								<span class="tag c-gray-1 text-capitalize">#yosemite</span>
+								<span class="tag c-gray-1 text-capitalize">#peak</span>
+								<span class="tag c-gray-1 text-capitalize">#explorer</span>
+							</div>
+						</footer>
+					{{-- end footer --}}
+				</div>
+			</article>
+
+		@endforeach
+
+		{{-- <article class="post w-image">
 			<figure><img src="img/img-post-1.png" alt="" class="img-responsive"></figure>
 			<div class="content-post">
 				<header class="container-flex space-between">
@@ -56,9 +73,9 @@
 					</div>
 				</footer>
 			</div>
-		</article>
+		</article> --}}
 
-		<article class="post w-gallery">
+		{{-- <article class="post w-gallery">
 			<div class="gallery-photos masonry">
 				<figure class="gallery-image"><img src="img/img-post-gallery-1.png" alt=""></figure>
 
@@ -91,9 +108,9 @@
 					</div>
 				</footer>
 			</div>
-		</article>
+		</article> --}}
 
-		<article class="post w-video">
+		{{-- <article class="post w-video">
 			<div class="video">
 				<iframe width="100%" height="480" src="https://www.youtube.com/embed/Zsqep7_9_mw?rel=0&amp;controls=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
 			</div>
@@ -116,9 +133,9 @@
 					</div>
 				</footer>
 			</div>
-		</article>
+		</article> --}}
 
-		<article class="post cite">
+		{{-- <article class="post cite">
 			<div class="content-post">
 				<header class="container-flex space-between">
 					<div class="date">
@@ -136,9 +153,9 @@
 					</div>
 				</footer>
 			</div>
-		</article>
+		</article> --}}
 
-		<article class="post audio">
+		{{-- <article class="post audio">
 			<div class="c-audio">
 				<iframe width="100%" height="150" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/315307209&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe>
 			</div>
@@ -165,9 +182,9 @@
 					</div>
 				</footer>
 			</div>
-		</article>
+		</article> --}}
 
-		<article class="post w-slider">
+		{{-- <article class="post w-slider">
 			<figure><img src="img/img-slider-1.png" alt="" class="img-responsive"></figure>
 			<div class="content-post">
 				<header class="container-flex space-between">
@@ -194,9 +211,9 @@
 					</div>
 				</footer>
 			</div>
-		</article>
+		</article> --}}
 
-		<article class="post image-w-text">
+		{{-- <article class="post image-w-text">
 			<div class="content-post">
 				<header class="container-flex space-between">
 					<div class="date">
@@ -226,7 +243,7 @@
 					</div>
 				</footer>
 			</div>
-		</article>
+		</article> --}}
 
 	</section>
 
@@ -236,15 +253,15 @@
 			<li><a href="#">2</a></li>
 			<li><a href="#">3</a></li>
 		</ul>
-    </div>
+  </div>
 @endsection
 
 
 {{-- Notas:
         | ----------------------------------------------------------------------------------------------------------------------------------
-        | *@extends('layout') Directiva que extiende de la vista resources\views\layout.blade.php
-        | *@section('content') Directiva que permite enlazar con la directiva @yield('content') en la vista resources\views\layout.blade.php
+				| *	@foreach ($posts as $post) Directiva para un foreach común de php pero expresado de forma simple
+				|		*Recorre el array $posts obtenido de `routes\web.php`
+				|		*Se pueden usar los campos de la tabla 'posts' mediante {{ $post->title }}
+				|			*Dónde 'title' es la columna en la tabla posts de la base de datos
         | ----------------------------------------------------------------------------------------------------------------------------------    
 --}}
-
-	
