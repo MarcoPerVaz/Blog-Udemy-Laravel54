@@ -11,7 +11,7 @@
 					{{-- header --}}
 						<header class="container-flex space-between">
 							<div class="date">
-								<span class="c-gray-1">{{ $post->published_at }}</span>
+								<span class="c-gray-1">{{ $post->published_at->diffForHumans() }}</span>
 							</div>
 							<div class="post-category">
 								<span class="category text-capitalize">i do travel</span>
@@ -259,9 +259,11 @@
 
 {{-- Notas:
         | ----------------------------------------------------------------------------------------------------------------------------------
-				| *	@foreach ($posts as $post) Directiva para un foreach común de php pero expresado de forma simple
-				|		*Recorre el array $posts obtenido de `routes\web.php`
-				|		*Se pueden usar los campos de la tabla 'posts' mediante {{ $post->title }}
-				|			*Dónde 'title' es la columna en la tabla posts de la base de datos
+				| *{{ $post->published_at->format('M d') }} Muestra la fecha formateada
+				|		*Ejemplo: May 06
+				| *{{ $post->published_at->diffForHumans() }} Muestra la diferencia entre la fecha de publicación y la fecha actual
+				|		*Ejemplo: Hace 2 semanas
         | ----------------------------------------------------------------------------------------------------------------------------------    
 --}}
+
+	

@@ -4,7 +4,7 @@
 <!-- end title -->
 
 <!-- commit name -->
-### Commit | __Mostrando los posts desde la base de datos__
+### Commit | __Mostrando la fecha de publicación de los posts__
 <!-- end commit name -->
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -17,9 +17,8 @@
 
 <!-- commit instructions -->
 #### Instrucciones Commit
-1. Crear 2 campos manualmente en la tabla `posts` de la base de datos
-2. Edición del archivo de rutas `routes\web.php`
-3. Edición de la vista `resources\views\welcome.blade.php`
+1. Edición del modelo `app\Post.php`
+2. Edición de la vista `resources\views\welcome.blade.php`
    
    **Se puso entre comentarios los demás posts para en un futuro usarlos*
 <!-- end commit instructions -->
@@ -28,6 +27,7 @@
 
 <!-- notes -->
 #### Notas:
+- [Librería Carbon](https://carbon.nesbot.com/docs/)
 <!-- end notes -->
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
