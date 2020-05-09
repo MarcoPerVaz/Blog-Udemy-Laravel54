@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePostsTable extends Migration
+class CreateCategoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,18 +14,14 @@ class CreatePostsTable extends Migration
     public function up()
     {
         /* 
-            | ----------------------------------------------------------------------------------------------------------
-            | *$table->unsignedInteger('category_id'); Campo de tipo entero sin signo (es decir, solo números positivos)
-            | ----------------------------------------------------------------------------------------------------------
+            | ----------------------------------------------
+            | *$table->string('name'); Campo de tipo varchar
+            | ----------------------------------------------
         */
-        Schema::create('posts', function (Blueprint $table) {
+        Schema::create('categories', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->string('title');
-            $table->mediumText('excerpt');
-            $table->text('body');
-            $table->timestamp('published_at')->nullable();
-            $table->unsignedInteger('category_id');
+            $table->string('name');
 
             $table->timestamps();
         });
@@ -38,7 +34,7 @@ class CreatePostsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('posts');
+        Schema::dropIfExists('categories');
     }
 }
 

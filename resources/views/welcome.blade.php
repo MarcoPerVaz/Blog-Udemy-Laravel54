@@ -14,7 +14,7 @@
 								<span class="c-gray-1">{{ $post->published_at->diffForHumans() }}</span>
 							</div>
 							<div class="post-category">
-								<span class="category text-capitalize">i do travel</span>
+								<span class="category text-capitalize">{{ $post->category->name }}</span>
 							</div>
 						</header>
 					{{-- end header --}}
@@ -258,12 +258,9 @@
 
 
 {{-- Notas:
-        | ----------------------------------------------------------------------------------------------------------------------------------
-				| *{{ $post->published_at->format('M d') }} Muestra la fecha formateada
-				|		*Ejemplo: May 06
-				| *{{ $post->published_at->diffForHumans() }} Muestra la diferencia entre la fecha de publicación y la fecha actual
-				|		*Ejemplo: Hace 2 semanas
-        | ----------------------------------------------------------------------------------------------------------------------------------    
+        | ---------------------------------------------------------------------------------------
+				| *{{ $post->category->name }} Se accede a la relación category() del modelo app\Post.php
+        | ---------------------------------------------------------------------------------------
 --}}
 
 	
