@@ -2,18 +2,19 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Bootstrap any application services.
-     *
-     * @return void
-     */
+    /* 
+        | --------------------------------------------------------------------
+        | *No olvidar importar la clase use Illuminate\Support\Facades\Schema;
+        | --------------------------------------------------------------------
+    */
     public function boot()
     {
-        //
+        Schema::defaultStringLength(191);
     }
 
     /**
@@ -26,3 +27,10 @@ class AppServiceProvider extends ServiceProvider
         //
     }
 }
+
+
+/* Notas:
+    | ---------------------------------------------------------------
+    | *Schema::defaultStringLength(191); Asigna un tamaño por defecto
+    | ---------------------------------------------------------------
+*/
