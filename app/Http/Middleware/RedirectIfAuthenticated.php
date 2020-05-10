@@ -17,8 +17,13 @@ class RedirectIfAuthenticated
      */
     public function handle($request, Closure $next, $guard = null)
     {
+        /* 
+            | ------------------------------------------------------------------
+            | *Si el usuario está autenticado lo reedirecciona a la url '/admin' 
+            | ------------------------------------------------------------------
+        */
         if (Auth::guard($guard)->check()) {
-            return redirect('/home');
+            return redirect('/admin');
         }
 
         return $next($request);

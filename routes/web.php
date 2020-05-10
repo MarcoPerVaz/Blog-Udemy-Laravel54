@@ -1,30 +1,7 @@
 <?php
 
-/*
-| --------------------------------------------------------------------------------------------------------------------
-| *Ruta que apunta a la raíz '/' asociada a la función home() del controlador app\Http\Controllers\PagesController.php
-| --------------------------------------------------------------------------------------------------------------------
-*/
 Route::get('/', 'PagesController@home');
 
-/* 
-    | ----------------------------------------------------------------------------------------------------------------
-    | *Ruta que apunta a '/home' asociada a la función index() del controlador app\Http\Controllers\HomeController.php
-    | ----------------------------------------------------------------------------------------------------------------
-*/
-Route::get('home', 'HomeController@index');
-
-/* 
-    | ----------------------------------------------------------------------------------------------------------
-    | *Grupo de rutas que apuntan a 'admin/' y otras rutas
-    | *'prefix' => 'admin', Significa que todas las rutas tendrán '/admin/' en la ruta
-    |   *Ejemplo: 'admin/posts'
-    | *'namespace' => 'Admin', Los controladores tendrán 'Admin/' en la ruta
-    |   *Ejemplo: 'Admin/PostsController@index'
-    | *'middleware' => 'auth' Todas las rutas incluídas en el grupo de rutas, el usuario deberá estar autenticado
-    |   *Middleware 'auth'
-    | ----------------------------------------------------------------------------------------------------------
-*/
 Route::group(
     [
         'prefix' => 'admin',
@@ -32,13 +9,13 @@ Route::group(
         'middleware' => 'auth'
     ],
     function () {
-        /* 
-            |-------------------------------------------------------------------------------------------------
-            | *Ruta con nombre que apunta a 'admin/posts' y está asociada a la función index() del controlador 
-            |  app\Http\Controllers\Admin\PostsController.php
-            |-------------------------------------------------------------------------------------------------
-        */
         Route::get('posts', 'PostsController@index')->name('admin.posts.index');
+        /* 
+            | -------------------------------------------------------------------------------------------------------------------
+            | *Ruta que apunta a '/' asociada a la función index() del controlador app\Http\Controllers\Admin\AdminController.php
+            | -------------------------------------------------------------------------------------------------------------------
+        */
+        Route::get('/', 'AdminController@index')->name('dashboard');
         // Otras rutas de administración
     }
 );
