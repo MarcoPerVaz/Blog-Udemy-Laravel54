@@ -4,7 +4,7 @@
 <!-- end title -->
 
 <!-- commit name -->
-### Commit | __Creación del formulario para crear posts__
+### Commit | __Implementación de un selector de fechas (datapicker de AdminLTE)__
 <!-- end commit name -->
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -18,17 +18,21 @@
 <!-- commit instructions -->
 #### Instrucciones Commit
 1. Edición del controlador `app\Http\Controllers\Admin\PostsController.php`
-   - Creación y edición de la función `create()`
-2. Edición de la vista `resources\views\admin\partials\nav.blade.php`
-3. Edición del archivo de rutas `routes\web.php`
-4. Creación y edición de la vista `resources\views\admin\posts\create.blade.php`
-4. Eedición de la vista `resources\views\admin\posts\index.blade.php`
+   - Edición de la función `create()`
+
+     **No olvidar importar el modelo `use App\Category;`*
+2. Edición de la vista `resources\views\admin\posts\create.blade.php`
+
+   **El datapicker para la fecha de publicación se obtuvo de los archivos de adminlte `\pages\forms\advanced.html` (línea 749 a la 754)*
+3. Edición de la vista `resources\views\admin\layout.blade.php`
+4. Edición de la vista `resources\views\admin\posts\index.blade.php`
 <!-- end commit instructions -->
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 <!-- notes -->
 #### Notas:
+- [Documentación | `Directiva @stack de Blade`](https://laravel.com/docs/5.4/blade#stacks)
 <!-- end notes -->
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -37,7 +41,9 @@
 #### Información:
 - Más información en `app\Http\Controllers\Admin\PostsController.php`
 
-- Más información en `resources\views\admin\partials\nav.blade.php`
+- Más información en `resources\views\admin\posts\create.blade.php`
 
-- Más información en `routes\web.php`
+- Más información en `resources\views\admin\layout.blade.php`
+
+- Más información en `resources\views\admin\posts\index.blade.php`
 <!-- end information -->

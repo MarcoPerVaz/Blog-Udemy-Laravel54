@@ -47,3 +47,36 @@
       <!-- /.box-body -->
     </div>
 @endsection
+
+@push('styles')
+  <!-- DataTables -->
+    <link rel="stylesheet" href="/adminlte/plugins/datatables/dataTables.bootstrap.css">
+@endpush
+
+@push('scripts')
+  <!-- DataTables -->
+    <script src="/adminlte/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="/adminlte/plugins/datatables/dataTables.bootstrap.min.js"></script>
+    <script>
+      $(function () {
+        $('#posts-table').DataTable({
+          "paging": true,
+          "lengthChange": false,
+          "searching": false,
+          "ordering": true,
+          "info": true,
+          "autoWidth": false
+        });
+      });
+    </script>
+@endpush
+
+
+{{-- Notas:
+      | ------------------------------------------------------------------------------------------------------------------------------
+      | *La directiva @push('') Permite agregar enlaces css y javascript pero que solo en las vista dónde lo necesitemos
+      |   *Más información en https://laravel.com/docs/5.4/blade#stacks
+      | *La directiva @push('styles') se enlaza con la directiva @stack('styles') de la vista resources\views\admin\layout.blade.php
+      | *La directiva @push('scripts') se enlaza con la directiva @stack('scripts') de la vista resources\views\admin\layout.blade.php
+      | ------------------------------------------------------------------------------------------------------------------------------
+--}}
