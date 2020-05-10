@@ -7,7 +7,7 @@
       <small>listado</small>
     </h1>
     <ol class="breadcrumb">
-      <li><a href="#"><i class="fa fa-dashboard"></i>Inicio</a></li>
+      <li><a href="{{ route('dashboard') }}"><i class="fa fa-dashboard"></i>Inicio</a></li>
       <li class="active">Posts</li>
     </ol>
 @endsection
@@ -47,13 +47,3 @@
       <!-- /.box-body -->
     </div>
 @endsection
-
-
-{{-- Notas:
-      | ------------------------------------------------------------------------------------------------------------------------------------------
-      | *@extends('admin.layout') Esta vista extiende de la vista resources\views\admin\layout.blade.php
-      | *@section('header') Esta directiva asocia su contenido con la directiva @yield('header')
-      | *@section('content') Esta directiva asocia su contenido con la directiva @yield('content')
-      | * @foreach ($posts as $post) La variable $posts viene de la función index() del controlador app\Http\Controllers\Admin\PostsController.php
-      | ------------------------------------------------------------------------------------------------------------------------------------------  
---}}

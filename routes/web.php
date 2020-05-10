@@ -10,13 +10,14 @@ Route::group(
     ],
     function () {
         Route::get('posts', 'PostsController@index')->name('admin.posts.index');
-        /* 
-            | -------------------------------------------------------------------------------------------------------------------
-            | *Ruta que apunta a '/' asociada a la función index() del controlador app\Http\Controllers\Admin\AdminController.php
-            | -------------------------------------------------------------------------------------------------------------------
-        */
         Route::get('/', 'AdminController@index')->name('dashboard');
-        // Otras rutas de administración
+
+        /* 
+            | --------------------------------------------------------------------------------------------------------------------------------
+            | *Ruta que apunta a '/posts/create' asociada a la función create() del controlador app\Http\Controllers\Admin\PostsController.php
+            | --------------------------------------------------------------------------------------------------------------------------------
+        */
+        Route::get('posts/create', 'PostsController@create')->name('admin.posts.create');
     }
 );
 
