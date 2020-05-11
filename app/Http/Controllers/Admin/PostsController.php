@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Tag;
 use App\Post;
 use App\Category;
 use Illuminate\Http\Request;
@@ -17,15 +18,16 @@ class PostsController extends Controller
 
     /* 
         | ------------------------------------------------------------------------------------------------------------
-        | *Category::all(); Obtiene todas las actegorías de la tabla 'categories' de la base de datos
+        | *Tag::all(); Obtiene todas las actegorías de la tabla 'categories' de la base de datos
         | *Devuelve la vista resources\views\admin\posts\create.blade.php que muestra el formulario para crear un post y se le
-        |  pasa la variable $categories
-        | *No olvidar importar el modelo use App\Category;
+        |  pasa la variable $tags
+        | *No olvidar importar el modelo use App\Tag;
         | ------------------------------------------------------------------------------------------------------------
     */
     public function create()
     {
         $categories = Category::all();
-        return view('admin.posts.create', compact('categories'));
+        $tags = Tag::all();
+        return view('admin.posts.create', compact('categories', 'tags'));
     }
 }
