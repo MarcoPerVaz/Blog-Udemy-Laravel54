@@ -15,7 +15,10 @@
 
 @section('content')
   <div class="row">
-    <form>
+    <form action="{{ route('admin.posts.store') }}" method="POST">
+
+      {{ csrf_field() }}
+
       <div class="col-md-8">
           <div class="box box-primary">
             <div class="box-body">
@@ -55,7 +58,7 @@
                 {{-- categories --}}
                   <div class="form-group">
                       <label for="">Categorías</label>
-                      <select name="" id="" class="form-control">
+                      <select name="category" id="" class="form-control">
                           <option value="">Selecciona una categoría</option>
                           @foreach ($categories as $category)
                               <option value="{{ $category->id }}">{{ $category->name }}</option>
@@ -67,7 +70,7 @@
                 {{-- tags --}}
                   <div class="form-group">
                       <label for="">Etiquetas</label>
-                      <select class="form-control select2" 
+                      <select class="form-control select2" name="tags[]" 
                               multiple="multiple" 
                               data-placeholder="Selecciona una o más etiquetas" style="width: 100%;">
                                 @foreach ($tags as $tag)
@@ -138,12 +141,8 @@
 
 
 {{-- Notas:
-      | ------------------------------------------------------------------------------------------------------------------------------
-      | *La directiva @push('') Permite agregar enlaces css y javascript pero que solo en las vista dónde lo necesitemos
-      |   *Más información en https://laravel.com/docs/5.4/blade#stacks
-      | *La directiva @push('styles') se enlaza con la directiva @stack('styles') de la vista resources\views\admin\layout.blade.php
-      | *La directiva @push('scripts') se enlaza con la directiva @stack('scripts') de la vista resources\views\admin\layout.blade.php
-      | *El plugin Select2 se encuentra dentro de los archivos de AdminLTE
-      | *Para descargar CkEditor ir a su sitio oficial https://ckeditor.com/
-      | ------------------------------------------------------------------------------------------------------------------------------
+      | -------------------------------------------------------------------------
+      | *{{ csrf_field() }} protege contra ataques de tipo csrf
+      |   *Más información en https://laravel.com/docs/5.4/csrf#csrf-introduction
+      | -------------------------------------------------------------------------
 --}}

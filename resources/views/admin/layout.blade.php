@@ -276,6 +276,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <!-- Main content -->
           <section class="content">
 
+            @if (session()->has('flash'))
+              <div class="alert alert-success">{{ session('flash') }}</div>
+            @endif
+
             <!-- El contenido de tu página va AQUÍ -->
             @yield('content')
 
@@ -394,11 +398,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 
 {{-- Notas:
-      | ----------------------------------------------------------------------------------------------------------------------------------
-      | *La directiva stack('') Permite cargar archivos solo en la vista que lo necesitemos
-      |   *Más información en https://laravel.com/docs/5.4/blade#stacks
-      | *@stack('styles') Se enlaza a cualquier vista que tenga la directiva @push('styles')
-      | *@stack('scripts') Se enlaza a cualquier vista que tenga la directiva @push('scripts')
-      | *Lo necesario para implementar datapicker de la fecha de publicación se pasó a la vista resources\views\admin\posts\index.blade.php
-      | ----------------------------------------------------------------------------------------------------------------------------------
+      | -------------------------------------------------------------------------
+      | *session()->has('flash') Verifica si existe la variable de sesión 'flash'
+      |   *De existir muestra el mensaje 
+      | -------------------------------------------------------------------------
 --}}

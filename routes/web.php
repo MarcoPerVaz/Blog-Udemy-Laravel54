@@ -11,13 +11,14 @@ Route::group(
     function () {
         Route::get('posts', 'PostsController@index')->name('admin.posts.index');
         Route::get('/', 'AdminController@index')->name('dashboard');
-
-        /* 
-            | --------------------------------------------------------------------------------------------------------------------------------
-            | *Ruta que apunta a '/posts/create' asociada a la función create() del controlador app\Http\Controllers\Admin\PostsController.php
-            | --------------------------------------------------------------------------------------------------------------------------------
-        */
         Route::get('posts/create', 'PostsController@create')->name('admin.posts.create');
+        /* 
+            | -------------------------------------------------------------------------------------
+            | *Ruta con nombre que apunta a '/posts' de tipo POST asociada a la función store() del
+            |  controlador app\Http\Controllers\Admin\PostsController.php
+            | -------------------------------------------------------------------------------------
+        */
+        Route::post('posts', 'PostsController@store')->name('admin.posts.store');
     }
 );
 
