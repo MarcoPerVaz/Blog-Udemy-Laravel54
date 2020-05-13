@@ -23,17 +23,20 @@
           <div class="box box-primary">
             <div class="box-body">
               {{-- title --}}
-                <div class="form-group">
+                <div class="form-group {{ $errors->has('title') ? 'has-error' : '' }}">
                   <label for="">Título de la publicación</label>
-                  <input type="text" class="form-control" name="title" placeholder="Ingresa aquí el título de la publicación">
+                  <input type="text" class="form-control" name="title" value="{{ old('title') }}"
+                         placeholder="Ingresa aquí el título de la publicación">
+                  {!! $errors->first('title', '<span class="help-block">:message</span>') !!}
                 </div>
               {{-- end title --}}
 
               {{-- content --}}
-                <div class="form-group">
+                <div class="form-group {{ $errors->has('body') ? 'has-error' : '' }}">
                   <label for="">Contenido de la publicación</label>
                   <textarea class="form-control" name="body" id="editor" rows="10" 
-                            placeholder="Ingresa el contenido completo de la publicación"></textarea>
+                            placeholder="Ingresa el contenido completo de la publicación">{{ old('body') }}</textarea>
+                  {!! $errors->first('body', '<span class="help-block">:message</span>') !!}
                 </div>
               {{-- end content --}}
             </div>
@@ -49,41 +52,47 @@
                       <div class="input-group-addon">
                           <i class="fa fa-calendar"></i>
                       </div>
-                      <input name="published_at" type="text" class="form-control pull-right" id="datepicker">
+                      <input class="form-control pull-right" name="published_at" type="text" id="datepicker"  value="{{ old('published_at') }}">
                       </div>
                       <!-- /.input group -->
                   </div>
                 {{-- end datapicker --}}
 
                 {{-- categories --}}
-                  <div class="form-group">
+                  <div class="form-group {{ $errors->has('category') ? 'has-error' : '' }}">
                       <label for="">Categorías</label>
                       <select name="category" id="" class="form-control">
-                          <option value="">Selecciona una categoría</option>
+                          <option>Selecciona una categoría</option>
                           @foreach ($categories as $category)
-                              <option value="{{ $category->id }}">{{ $category->name }}</option>
+                              <option value="{{ $category->id }}" {{ old('category') == $category->id ? 'selected' : '' }}>
+                                {{ $category->name }}
+                              </option>
                           @endforeach
                       </select>
+                      {!! $errors->first('category', '<span class="help-block">:message</span>') !!}
                   </div>
                 {{-- end categories --}}
 
                 {{-- tags --}}
-                  <div class="form-group">
+                  <div class="form-group {{ $errors->has('tags') ? 'has-error' : '' }}">
                       <label for="">Etiquetas</label>
-                      <select class="form-control select2" name="tags[]" 
-                              multiple="multiple" 
+                      <select class="form-control select2" name="tags[]" multiple="multiple" 
                               data-placeholder="Selecciona una o más etiquetas" style="width: 100%;">
                                 @foreach ($tags as $tag)
-                                    <option value="{{ $tag->id }}">{{ $tag->name }}</option>
+                                    <option {{ collect(old('tags'))->contains($tag->id) ? 'selected' : '' }} 
+                                     value="{{ $tag->id }}">{{ $tag->name }}</option>
                                 @endforeach
                       </select>
+                      {!! $errors->first('category', '<span class="help-block">:message</span>') !!}
                   </div>
                 {{-- end tags --}}
 
                 {{-- excerpt --}}
-                  <div class="form-group">
+                  <div class="form-group {{ $errors->has('excerpt') ? 'has-error' : '' }}">
                       <label for="">Extracto de la publicación</label>
-                      <textarea name="excerpt" placeholder="Ingresa un extracto de la publicación" class="form-control"></textarea>
+                      <textarea class="form-control" name="excerpt" 
+                                placeholder="Ingresa un extracto de la publicación">{{ old('excerpt') }}</textarea>
+                      {!! $errors->first('excerpt', '<span class="help-block">:message</span>') !!}
                   </div>
                 {{-- end excerpt --}}
 
@@ -141,8 +150,12 @@
 
 
 {{-- Notas:
-      | -------------------------------------------------------------------------
-      | *{{ csrf_field() }} protege contra ataques de tipo csrf
-      |   *Más información en https://laravel.com/docs/5.4/csrf#csrf-introduction
-      | -------------------------------------------------------------------------
+      | --------------------------------------------------------------------------------------------------------------------------------------
+      | *Mostrar errores se hace para los input: 'title', 'body', 'published_at', 'categories', 'tags' y 'excerpt' 
+      |   *{{ $errors->has('title') ? 'has-error' : '' }} Valida si existe el error 'title' y agrega la clase 'has-error' de lo contrario nada
+      |   * $errors->first('title', '<span class="help-block">:message</span>') Muestra el primer error del campo 'title' que encuentre
+      |   *{{ old('body') }} Guarda el valor del input en caso de recargar el navegador
+      |   *Para 'tags' collect(old('tags'))->contains($tag->id) Que es una colección de Eloquent y sirve para recordar la selección de tags
+      | *El placeholder de CkEditor no funciona (según Internet debe implementarse un plugin)
+      | --------------------------------------------------------------------------------------------------------------------------------------
 --}}
