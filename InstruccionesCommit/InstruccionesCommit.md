@@ -4,7 +4,7 @@
 <!-- end title -->
 
 <!-- commit name -->
-### Commit | __Validando el formulario para crear posts__
+### Commit | __Query scopes__
 <!-- end commit name -->
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -17,9 +17,12 @@
 
 <!-- commit instructions -->
 #### Instrucciones Commit
-1. Edición del controlador `app\Http\Controllers\Admin\PostsController.php`
-   - Edición de la función `store(Request $request)`
-2. Edición de la vista `resources\views\admin\posts\create.blade.php`
+1. Edición del modelo `app\Post.php`
+   - Creación y edición de la función scope `scopePublished($query)`
+
+     **No olvidar importar la librería `use Carbon\Carbon;`*
+2. Edición del controlador `app\Http\Controllers\PagesController.php`
+   - Edición de la función `home()`
 <!-- end commit instructions -->
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -32,7 +35,7 @@
 
 <!-- information -->
 #### Información:
-- Más información en `app\Http\Controllers\Admin\PostsController.php`
+- Más información en `app\Post.php`
 
-- Más información en `resources\views\admin\posts\create.blade.php`
+- Más información en `app\Http\Controllers\PagesController.php`
 <!-- end information -->
