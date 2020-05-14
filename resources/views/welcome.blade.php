@@ -32,7 +32,7 @@
 					{{-- footer --}}
 						<footer class="container-flex space-between">
 							<div class="read-more">
-								<a href="#" class="text-uppercase c-green">read more</a>
+								<a href="blog/{{ $post->id }}" class="text-uppercase c-green">Leer más</a>
 							</div>
 							<div class="tags container-flex">
 
@@ -257,13 +257,3 @@
 		</ul>
   </div>
 @endsection
-
-
-{{-- Notas:
-				| -------------------------------------------------------------------------------------------------------
-				| *Para poder acceder a la relación belongsToMany (Pertenece a muchos) incluida en el modelo app\Post.php
-				| 	*@foreach ($post->tags as $tag)
-				|			<span class="tag c-gray-1 text-capitalize">#{{ $tag->name }}</span>	
-				|	 	 @endforeach
-        | -------------------------------------------------------------------------------------------------------    
---}}
