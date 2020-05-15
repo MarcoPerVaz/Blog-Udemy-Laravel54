@@ -10,14 +10,13 @@ class PostsController extends Controller
     /* 
         | -----------------------------------------------------------------------------------
         | *Muestra la información de un post
-        | *Post::find($id); Encuentra el post mediante el 'id'
+        | *Se inyecta el modelo usando Model Binding - show(Post $post)
         | *Devuelve la vista resources\views\posts\show.blade.php y le pasa la variable $post
         | *No olvidar importar el modelo use App\Post;
         | -----------------------------------------------------------------------------------
     */
-    public function show($id)
+    public function show(Post $post)
     {
-        $post = Post::find($id);
         return view('posts.show', compact('post'));
     }
 }

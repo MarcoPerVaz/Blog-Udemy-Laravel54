@@ -4,11 +4,12 @@ Route::get('/', 'PagesController@home');
 
 /* 
     | --------------------------------------------------------------------------------------------------------------------------------
-    | *Ruta que apunta a 'blog/idPost' y está asociada a la función show($id) del controlador app\Http\Controllers\PostsController.php
+    | *Ruta que apunta a 'blog/idPost' y está asociada a la función show(Post $post) del controlador app\Http\Controllers\PostsController.php
     | *Ruta que no se necesita loguearse
+    | *El parámetro de la ruta `/{post}` debe llamarse igual al parámetro de la función `show(Post $post)`
     | --------------------------------------------------------------------------------------------------------------------------------
 */
-Route::get('blog/{id}', 'PostsController@show');
+Route::get('blog/{post}', 'PostsController@show');
 
 Route::group(
     [

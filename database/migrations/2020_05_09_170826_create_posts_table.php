@@ -14,14 +14,15 @@ class CreatePostsTable extends Migration
     public function up()
     {
         /* 
-            | ----------------------------------------------------------------------------------------------------------
-            | *$table->unsignedInteger('category_id'); Campo de tipo entero sin signo (es decir, solo números positivos)
-            | ----------------------------------------------------------------------------------------------------------
+            | ------------------------------------------------------------------
+            | *$table->string('url'); Campo de tipo varchar para la url amigable
+            | ------------------------------------------------------------------
         */
         Schema::create('posts', function (Blueprint $table) {
             $table->increments('id');
 
             $table->string('title');
+            $table->string('url');
             $table->mediumText('excerpt');
             $table->text('body');
             $table->timestamp('published_at')->nullable();

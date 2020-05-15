@@ -26,15 +26,6 @@ class PostsController extends Controller
 
     public function store(Request $request)
     {
-        /* 
-            | --------------
-            | *$this->validate() Se usa para las validaciones de formularios
-            | *'title' => 'required' El campo 'title' es obligatorio
-            | *'body' => 'required' El campo 'body' es obligatorio
-            | *'category' => 'required' El campo 'category' es obligatorio
-            | *'excerpt' => 'required' El campo 'excerpt' es obligatorio
-            | --------------
-        */
         $this->validate($request, [
             'title' => 'required',
             'body' => 'required',
@@ -44,16 +35,15 @@ class PostsController extends Controller
 
         $post = new Post;
         $post->title = $request->get('title');
+        /* 
+            | ------------------------------------------------------------------------------------------
+            | *$post->url = str_slug($request->get('title')); Convierte a slug lo que venga de $request->get('title') y lo 
+            |  guarda en el campo 'url' de la base de datos
+            | ------------------------------------------------------------------------------------------
+        */
+        $post->url = str_slug($request->get('title'));
         $post->body = $request->get('body');
         $post->excerpt = $request->get('excerpt');
-        /* 
-            | ---------------------------
-            | *$request->has('published_at') ?  Carbon::parse($request->get('published_at')) : null; Operación ternaria
-            | *Si tiene contenido el elemento input 'published_at' le da formato y lo guarda en el campo $post->published_at 
-            |  de lo contrario guarda null (Se hace esto porque si no se guarda fecha de publicación al querer mostrar los posts marca un error
-            |  ya que Carbon intenta darle formato a null y es incorrecto)
-            | ---------------------------
-        */
         $post->published_at = $request->has('published_at') ?  Carbon::parse($request->get('published_at')) : null;
         $post->category_id = $request->get('category');
         $post->save();

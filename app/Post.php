@@ -11,6 +11,19 @@ class Post extends Model
 
     protected $dates = ['published_at'];
 
+    /* 
+        | -------------------------------------------------------------------------------------------------
+        | *getRouteKeyName() Sobreescribe la función original que devuelve el campo 'id' por el campo 'url'
+        | *Rutas amigables
+        |   *Esto: /post/3 por esto: /post/mi-post-3
+        | *Más información en https://laravel.com/docs/5.4/routing#implicit-binding
+        | -------------------------------------------------------------------------------------------------
+    */
+    public function getRouteKeyName()
+    {
+        return 'url';
+    }
+
     public function category()
     {
         return $this->belongsTo(Category::class);
@@ -21,12 +34,6 @@ class Post extends Model
         return $this->belongsToMany(Tag::class);
     }
 
-    /* 
-        | -------------------------------------------------------------------------------------------------------------
-        | *QueryScope que obtiene a todos los posts de forma descendente omitiendo los posts sin fecha(nulos) o futuros
-        | *No olvidar importar la librería Carbon use Carbon\Carbon;
-        | -------------------------------------------------------------------------------------------------------------
-    */
     public function scopePublished($query)
     {
         $query->whereNotNull('published_at')
