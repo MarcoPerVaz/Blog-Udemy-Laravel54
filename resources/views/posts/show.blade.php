@@ -1,6 +1,10 @@
 
 @extends('layout')
 
+@section('meta-title', $post->title)
+
+@section('meta-description', $post->excerpt)
+
 @section('content')
   <article class="post image-w-text container">
     <div class="content-post">
@@ -50,17 +54,3 @@
   {{-- Disqus js --}}
     <script id="dsq-count-scr" src="//zendero.disqus.com/count.js" async></script>
 @endpush
-
-
-{{-- Notas:
-      | ----------------------------------------------------------------------------------------------------------------------------------------------
-      | *La variable $post viene de la función show($id) del controlador app\Http\Controllers\PostsController.php
-      | *<span class="c-gris">- {{ $post->published_at->diffForHumans() }}</span>
-      |   *Ejemplo: Hace 2 semanas (se muestra en inglés por defecto)
-      | *{{ $post->category->name }} Se obtiene el nombre de la categoría mediante la relación belongsTo o función categorie() del modelo app\Post.php
-      | *$post->tags Se obtiene la relación belongsToMany o función tags() del modelo app\Post.php
-      | *La directiva @push('') Permite agregar enlaces css y javascript pero que solo en las vista dónde lo necesitemos
-      |   *Más información en https://laravel.com/docs/5.4/blade#stacks
-      | *La directiva @push('scripts') se enlaza con la directiva @stack('scripts') de la vista resources\views\layout.blade.php
-      | ----------------------------------------------------------------------------------------------------------------------------------------------
---}}
