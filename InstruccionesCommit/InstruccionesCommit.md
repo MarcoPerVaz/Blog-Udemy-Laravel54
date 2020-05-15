@@ -4,7 +4,7 @@
 <!-- end title -->
 
 <!-- commit name -->
-### Commit | __Título y descripción para SEO__
+### Commit | __Social links__
 <!-- end commit name -->
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -17,8 +17,9 @@
 
 <!-- commit instructions -->
 #### Instrucciones Commit
-1. Edición de la vista `resources\views\layout.blade.php`
+1. Edición del archivo de estilos `public\css\style.css`
 2. Edición de la vista `resources\views\posts\show.blade.php`
+3. Creación y edición de la vista `resources\views\partials\social-links.blade.php`
 <!-- end commit instructions -->
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -31,5 +32,7 @@
 
 <!-- information -->
 #### Información:
-- Más información en `app\Http\Controllers\PostsController.php`
+- Más información en `resources\views\posts\show.blade.php`
+
+- Más información en `resources\views\partials\social-links.blade.php`
 <!-- end information -->
