@@ -388,6 +388,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
       <!-- AdminLTE App -->
         <script src="/adminlte/js/app.min.js"></script>
+
+      @include('admin.posts.create')
      
       <!-- Optionally, you can add Slimscroll and FastClick plugins.
           Both of these plugins are recommended to enhance the
@@ -398,8 +400,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 
 {{-- Notas:
-      | -------------------------------------------------------------------------
-      | *session()->has('flash') Verifica si existe la variable de sesión 'flash'
-      |   *De existir muestra el mensaje 
-      | -------------------------------------------------------------------------
+      | ---------------------------------------------------------------------------------------------------------------------------
+      | *@include('admin.posts.create') Vista resources\views\admin\posts\create.blade.php que contiene el modal para crear un post
+      | ---------------------------------------------------------------------------------------------------------------------------
 --}}

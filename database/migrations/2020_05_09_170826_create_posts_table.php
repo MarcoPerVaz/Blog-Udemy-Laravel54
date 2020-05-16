@@ -14,19 +14,21 @@ class CreatePostsTable extends Migration
     public function up()
     {
         /* 
-            | ------------------------------------------------------------------
-            | *$table->string('url'); Campo de tipo varchar para la url amigable
-            | ------------------------------------------------------------------
+            | ----------------------------------------------------------------------------------
+            | *$table->mediumText('excerpt')->nullable(); Acepta valores nulos o vacíos
+            | *$table->text('body')->nullable(); Acepta valores nulos o vacíos
+            | *$table->unsignedInteger('category_id')->nullable(); Acepta valores nulos o vacíos
+            | ----------------------------------------------------------------------------------
         */
         Schema::create('posts', function (Blueprint $table) {
             $table->increments('id');
 
             $table->string('title');
             $table->string('url');
-            $table->mediumText('excerpt');
-            $table->text('body');
+            $table->mediumText('excerpt')->nullable();
+            $table->text('body')->nullable();
             $table->timestamp('published_at')->nullable();
-            $table->unsignedInteger('category_id');
+            $table->unsignedInteger('category_id')->nullable();
 
             $table->timestamps();
         });

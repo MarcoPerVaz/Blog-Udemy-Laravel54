@@ -14,9 +14,14 @@
 
 {{-- DataTable --}}
 @section('content')
-    <div class="box">
+    <div class="box box-primary">
       <div class="box-header">
         <h3 class="box-title">Listado de publicaciones</h3>
+
+        <button class="btn btn-primary pull-right" data-toggle="modal" data-target="#myModal">
+          <i class="fa fa-plus"></i> Crear publicación
+        </button>
+
       </div>
       <!-- /.box-header -->
       <div class="box-body">
@@ -70,13 +75,3 @@
       });
     </script>
 @endpush
-
-
-{{-- Notas:
-      | ------------------------------------------------------------------------------------------------------------------------------
-      | *La directiva @push('') Permite agregar enlaces css y javascript pero que solo en las vista dónde lo necesitemos
-      |   *Más información en https://laravel.com/docs/5.4/blade#stacks
-      | *La directiva @push('styles') se enlaza con la directiva @stack('styles') de la vista resources\views\admin\layout.blade.php
-      | *La directiva @push('scripts') se enlaza con la directiva @stack('scripts') de la vista resources\views\admin\layout.blade.php
-      | ------------------------------------------------------------------------------------------------------------------------------
---}}

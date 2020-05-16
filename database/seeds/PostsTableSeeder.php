@@ -1,5 +1,6 @@
 <?php
 
+use App\Tag;
 use App\Post;
 use App\Category;
 use Carbon\Carbon;
@@ -14,8 +15,15 @@ class PostsTableSeeder extends Seeder
      */
     public function run()
     {
+        /* 
+            | ---------------------------------------------------------------------------------------------
+            | *Tag::truncate(); El ejecutar los seeds se borra la infrmación para evitar duplicar registros
+            | *No olvidar importar el modelo use App\Tag;
+            | ---------------------------------------------------------------------------------------------
+        */
         Post::truncate();
         Category::truncate();
+        Tag::truncate();
 
         /* 
             |-------------
@@ -36,12 +44,10 @@ class PostsTableSeeder extends Seeder
         $category->save();
 
         /* 
-            |-------------------------------------------------------------------------------------
+            |-----------------------------------------------------------------------------------------------------------------
             | *Mi primer post
-            |   *$post->url = str_slug($post->title);
-            |       *str_slug() Es un Helper de Laravel que convierte cadenas en "rutas amigables"
-            |           *Ejemplo: Esto: "Mi primer post" por esto: "mi-primer-post"
-            |-------------------------------------------------------------------------------------
+            | *$post->tags()->attach(Tag::create(['name' => 'Etiqueta 1'])); Le añade una etiqueta (etiqueta 1) al primer post
+            |-----------------------------------------------------------------------------------------------------------------
         */
         $post = new Post;
         $post->title = "Mi primer post";
@@ -51,14 +57,13 @@ class PostsTableSeeder extends Seeder
         $post->published_at = Carbon::now()->subDays(4);
         $post->category_id = 1;
         $post->save();
+        $post->tags()->attach(Tag::create(['name' => 'Etiqueta 1']));
 
         /* 
-            |-------------------------------------------------------------------------------------
+            |------------------------------------------------------------------------------------------------------------------
             | *Mi segundo post
-            |   *$post->url = str_slug($post->title);
-            |       *str_slug() Es un Helper de Laravel que convierte cadenas en "rutas amigables"
-            |           *Ejemplo: Esto: "Mi segundo post" por esto: "mi-segundo-post"
-            |-------------------------------------------------------------------------------------
+            | *$post->tags()->attach(Tag::create(['name' => 'Etiqueta 2'])); Le añade una etiqueta (etiqueta 2) al segundo post
+            |------------------------------------------------------------------------------------------------------------------
         */
         $post = new Post;
         $post->title = "Mi segundo post";
@@ -68,14 +73,13 @@ class PostsTableSeeder extends Seeder
         $post->published_at = Carbon::now()->subDays(3);
         $post->category_id = 2;
         $post->save();
+        $post->tags()->attach(Tag::create(['name' => 'Etiqueta 2']));
 
         /* 
-            |-------------------------------------------------------------------------------------
+            |-----------------------------------------------------------------------------------------------------------------
             | *Mi tercer post
-            |   *$post->url = str_slug($post->title);
-            |       *str_slug() Es un Helper de Laravel que convierte cadenas en "rutas amigables"
-            |           *Ejemplo: Esto: "Mi tercer post" por esto: "mi-tercer-post"
-            |-------------------------------------------------------------------------------------
+            | *$post->tags()->attach(Tag::create(['name' => 'Etiqueta 3'])); Le añade una etiqueta (etiqueta 3) al tercer post
+            |-----------------------------------------------------------------------------------------------------------------
         */
         $post = new Post;
         $post->title = "Mi tercer post";
@@ -85,13 +89,6 @@ class PostsTableSeeder extends Seeder
         $post->published_at = Carbon::now()->subDays(2);
         $post->category_id = 1;
         $post->save();
+        $post->tags()->attach(Tag::create(['name' => 'Etiqueta 3']));
     }
 }
-
-
-/* Notas:
-    | -------------------------------------------------------
-    | *Más información sobre str_slug()
-    |   *https://laravel.com/docs/5.2/helpers#method-str-slug
-    | -------------------------------------------------------
-*/

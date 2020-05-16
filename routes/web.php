@@ -1,14 +1,6 @@
 <?php
 
 Route::get('/', 'PagesController@home');
-
-/* 
-    | --------------------------------------------------------------------------------------------------------------------------------
-    | *Ruta que apunta a 'blog/idPost' y está asociada a la función show(Post $post) del controlador app\Http\Controllers\PostsController.php
-    | *Ruta que no se necesita loguearse
-    | *El parámetro de la ruta `/{post}` debe llamarse igual al parámetro de la función `show(Post $post)`
-    | --------------------------------------------------------------------------------------------------------------------------------
-*/
 Route::get('blog/{post}', 'PostsController@show');
 
 Route::group(
@@ -22,6 +14,18 @@ Route::group(
         Route::get('/', 'AdminController@index')->name('dashboard');
         Route::get('posts/create', 'PostsController@create')->name('admin.posts.create');
         Route::post('posts', 'PostsController@store')->name('admin.posts.store');
+        /* 
+            | ------------------------------------------------------------------------------------------------------------------
+            | *Ruta con nombre que apunta a 'posts/rutaAmigablePost' asociada a la función edit(Post $post) usando el método GET
+            | ------------------------------------------------------------------------------------------------------------------
+        */
+        Route::get('posts/{post}', 'PostsController@edit')->name('admin.posts.edit');
+        /* 
+            | ------------------------------------------------------------------------------------------------------------------
+            | *Ruta con nombre que apunta a 'posts/rutaAmigablePost' asociada a la función edit(Post $post) usando el método PUT
+            | ------------------------------------------------------------------------------------------------------------------
+        */
+        Route::put('posts/{post}', 'PostsController@update')->name('admin.posts.update');
     }
 );
 
