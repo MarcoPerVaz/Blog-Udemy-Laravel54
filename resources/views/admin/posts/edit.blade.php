@@ -97,6 +97,12 @@
                           {!! $errors->first('excerpt', '<span class="help-block">:message</span>') !!}
                       </div>
                     {{-- end excerpt --}}
+
+                    {{-- dropzone upload images --}}
+                      <div class="form-group">
+                          <div class="dropzone"></div>
+                      </div>
+                    {{-- end dropzone upload images --}}
                     
                     {{-- button save --}}
                       <div class="form-group">
@@ -111,6 +117,8 @@
 @endsection
 
 @push('styles')
+    {{-- DropzoneJs 5.0.1 Css  Existen versiones posteriores --}}
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.0.1/dropzone.css">
     <!-- bootstrap datepicker -->
       <link rel="stylesheet" href="/adminlte/plugins/datepicker/datepicker3.css">
     <!-- Select2 -->
@@ -118,6 +126,8 @@
 @endpush
 
 @push('scripts')
+    {{-- DropzoneJs 5.0.1 JS Existen versiones posteriores--}}
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.0.1/min/dropzone.min.js"></script>
     <!-- CK Editor -->
       <script src="https://cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script>
     <!-- Select2 -->
@@ -147,13 +157,27 @@
           | ----------
         */
         CKEDITOR.replace('editor');
+
+        /* 
+          | ----------
+          | *Dropzone 5.0.1
+          | ----------
+        */
+        new Dropzone('.dropzone', {
+            url: '/admin/posts/{{ $post->url }}/photos',
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            dictDefaultMessage: 'Arrastra las fotos aquí para subirlas'
+        });
+        Dropzone.autoDiscover = false;
       </script>
 @endpush
 
 
 {{-- Notas:
       | ---------------------------------------------------------------------------------------------------------------------------------
-      | *{{ method_field('PUT') }} El método PUT no es soportado por los navegadores actuales pero Laravel provee lo necesario para poder
-      |  usarlo creando un elemento input HTML de tipo hidden
+      | *Los CDN (CSS y JS) de Dropzone JS fueron obtenidos desde
+      |   *https://cdnjs.com/libraries/dropzone/5.0.1
       | ---------------------------------------------------------------------------------------------------------------------------------
 --}}

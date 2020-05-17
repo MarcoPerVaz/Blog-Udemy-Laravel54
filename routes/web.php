@@ -14,18 +14,15 @@ Route::group(
         Route::get('/', 'AdminController@index')->name('dashboard');
         Route::get('posts/create', 'PostsController@create')->name('admin.posts.create');
         Route::post('posts', 'PostsController@store')->name('admin.posts.store');
-        /* 
-            | ------------------------------------------------------------------------------------------------------------------
-            | *Ruta con nombre que apunta a 'posts/rutaAmigablePost' asociada a la función edit(Post $post) usando el método GET
-            | ------------------------------------------------------------------------------------------------------------------
-        */
         Route::get('posts/{post}', 'PostsController@edit')->name('admin.posts.edit');
-        /* 
-            | ------------------------------------------------------------------------------------------------------------------
-            | *Ruta con nombre que apunta a 'posts/rutaAmigablePost' asociada a la función edit(Post $post) usando el método PUT
-            | ------------------------------------------------------------------------------------------------------------------
-        */
         Route::put('posts/{post}', 'PostsController@update')->name('admin.posts.update');
+        /* 
+            | -----------------------------------------------------------------------------------------------------
+            | *Ruta con nombre que apunta a 'posts/rutaAmigable/photos' asociada a la función store(Post $post) del 
+            |  controlador app\Http\Controllers\PhotoController.php y usa el método POST
+            | -----------------------------------------------------------------------------------------------------
+        */
+        Route::post('posts/{post}/photos', 'PhotosController@store')->name('admin.posts.photos.update');
     }
 );
 
