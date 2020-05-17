@@ -159,16 +159,32 @@
         CKEDITOR.replace('editor');
 
         /* 
-          | ----------
+          | --------------------------------------------------------------------------------------------------------------------
           | *Dropzone 5.0.1
-          | ----------
+          | *acceptedFiles: 'image/*' Solo acepte archivos de tipo imagen y el * es para indicar que cualquier formato de imagen
+          | *maxFilesize: 2, Máximo de tamaño or imagen 2 MB
+          | *paramName: 'photo', Edita el nombre del parámetro que por defecto es 'file'
+          | *myDropzone.on() Para mostrar los errores dentro del árede dropzone
+          | *.dz-error-message es la clase del elemento de Dropzone
+          | *:last es para que solo vaya modificando el último elemento y no todos
+          | * > span es para todo lo que está adentro de la etiqueta span
+          | *Para obtener los errores en Laravel 5.4 es res.photo[0];
+          | *Para obtener los errores en Laravel 5.7 es res.errors.photo[0];
+          | --------------------------------------------------------------------------------------------------------------------
         */
-        new Dropzone('.dropzone', {
-            url: '/admin/posts/{{ $post->url }}/photos',
-            headers: {
-                'X-CSRF-TOKEN': '{{ csrf_token() }}'
-            },
-            dictDefaultMessage: 'Arrastra las fotos aquí para subirlas'
+        var myDropzone = new Dropzone('.dropzone', {
+                          url: '/admin/posts/{{ $post->url }}/photos',
+                          acceptedFiles: 'image/*',
+                          maxFilesize: 2,
+                          paramName: 'photo',
+                          headers: {
+                              'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                          },
+                          dictDefaultMessage: 'Arrastra las fotos aquí para subirlas'
+                      });
+        myDropzone.on('error', function(file, res){
+            var msg = res.photo[0];
+            $('.dz-error-message:last > span').text(msg); 
         });
         Dropzone.autoDiscover = false;
       </script>
