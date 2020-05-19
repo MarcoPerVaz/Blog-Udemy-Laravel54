@@ -6,15 +6,20 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreatePhotosTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
+    /* 
+        | -------------------------------------------------------------------
+        | *$table->unsignedInteger('post_id'); Campo de tipo entero sin signo
+        | *$table->string('url'); Campo de tipo varchar
+        | -------------------------------------------------------------------
+    */
     public function up()
     {
         Schema::create('photos', function (Blueprint $table) {
             $table->increments('id');
+
+            $table->unsignedInteger('post_id');
+            $table->string('url');
+
             $table->timestamps();
         });
     }

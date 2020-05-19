@@ -52,7 +52,11 @@
 
       > php artisan key:generate
 
-8. **Fin**
+8. Crear el enlace símbolico de `storage` a `public`
+   
+   > php artisan storage:link
+
+9. **Fin**
 
 <!-- Notas -->
 #### Notas:

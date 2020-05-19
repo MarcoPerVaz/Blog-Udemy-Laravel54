@@ -34,6 +34,20 @@ class Post extends Model
         return $this->belongsToMany(Tag::class);
     }
 
+    /* 
+        | ------------------------------------------------------------------
+        | *Relación hasMany (Tiene muchos) - Un post tiene muchas fotos
+        | *Más información sobre hasMany
+        |   *https://laravel.com/docs/5.4/eloquent-relationships#one-to-many
+        | *Para poder acceder a la relación
+        |   *$post->photos->name
+        | ------------------------------------------------------------------
+    */
+    public function photos()
+    {
+        return $this->hasMany(Photo::class);
+    }
+
     public function scopePublished($query)
     {
         $query->whereNotNull('published_at')
@@ -41,11 +55,3 @@ class Post extends Model
               ->latest('published_at');
     }
 }
-
-
-/* Notas:
-    | -------------------------------------------------------------
-    | *Más información sobre la protección contra asignación masiva
-    |   *https://laravel.com/docs/5.4/eloquent#mass-assignment
-    | -------------------------------------------------------------
-*/
