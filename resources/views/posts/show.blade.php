@@ -6,7 +6,14 @@
 @section('meta-description', $post->excerpt)
 
 @section('content')
-  <article class="post image-w-text container">
+  <article class="post container">
+
+    {{-- images --}}
+      @if ($post->photos->count() === 1)
+        <figure><img src="{{ $post->photos->first()->url }}" class="img-responsive"></figure>
+      @endif
+    {{-- end images --}}
+
     <div class="content-post">
       <header class="container-flex space-between">
         <div class="date">
@@ -52,7 +59,7 @@
 
 
 {{-- Notas:
-      | ---------------------------------------------------------------------------------------------------------------------------------------
-      | *@include('partials.social-links', ['description' => $post->title]) Se incluye la vista resources\views\partials\social-links.blade.php
-      | ---------------------------------------------------------------------------------------------------------------------------------------
+      | ------------------------------------------------------------------------
+      | *$post->photos->count() === 1 - Si el post solo contiene solo una imagen
+      | ------------------------------------------------------------------------
 --}}

@@ -6,7 +6,25 @@
 
 		@foreach ($posts as $post)
 
-			<article class="post no-image">
+			<article class="post">
+
+				{{-- images --}}
+					@if ($post->photos->count() === 1)
+						<figure><img src="{{ $post->photos->first()->url }}" class="img-responsive"></figure>
+					@elseif($post->photos->count() > 1)
+						<div class="gallery-photos masonry">
+							@foreach ($post->photos->take(4) as $photo)
+								<figure class="gallery-image">
+									@if ($loop->iteration === 4)
+											<div class="overlay">{{ $post->photos->count() }} Fotos</div>
+									@endif
+									<img src="{{ url($photo->url) }}">
+								</figure>
+							@endforeach
+						</div>
+					@endif
+				{{-- end images --}}
+
 				<div class="content-post">
 					{{-- header --}}
 						<header class="container-flex space-between">
@@ -257,3 +275,14 @@
 		</ul>
   </div>
 @endsection
+
+
+
+{{-- Notas:
+			| -------------------------------------------------------------------------------------------------
+			| *$post->photos->count() === 1 - Si existe una imagen
+			| *$post->photos->count() > 1 - Si existe más de una imagen
+			| *$post->photos->take(4) as $photo - Toma solo 4 imágenes si llegará a tener más de 4
+			| *$loop->iteration === 4 - Inicia un conteo a partir de 4 para saber cuántas imágenes son en total
+			| -------------------------------------------------------------------------------------------------
+--}}
