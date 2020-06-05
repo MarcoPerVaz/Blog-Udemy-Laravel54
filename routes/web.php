@@ -1,12 +1,6 @@
 <?php
 
 Route::get('/', 'PagesController@home');
-/* 
-    | --------------------------------------------------------------------------------------------
-    | *Ruta con nombre que apunta a 'blog/rutaAmigable' asociada a la función show(Post $post) del 
-    |  controlador app\Http\Controllers\PostsController.php
-    | --------------------------------------------------------------------------------------------
-*/
 Route::get('blog/{post}', 'PostsController@show')->name('posts.show');
 
 Route::group(
@@ -23,6 +17,13 @@ Route::group(
         Route::get('posts/{post}', 'PostsController@edit')->name('admin.posts.edit');
         Route::put('posts/{post}', 'PostsController@update')->name('admin.posts.update');
         Route::post('posts/{post}/photos', 'PhotosController@store')->name('admin.posts.photos.update');
+
+        /* 
+            | --------------------------------------------------------------------------------------------------------------------------------------------
+            | Ruta con nombre que apunta a 'photos/imagen' asociada a la función destroy() del controlador app\Http\Controllers\Admin\PhotosController.php
+            | --------------------------------------------------------------------------------------------------------------------------------------------
+        */
+        Route::delete('photos/{photo}', 'PhotosController@destroy')->name('admin.photos.destroy');
     }
 );
 

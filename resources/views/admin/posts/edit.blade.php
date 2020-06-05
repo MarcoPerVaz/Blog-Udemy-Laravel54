@@ -15,6 +15,29 @@
 
 @section('content')
 <div class="row">
+
+    {{-- images --}}
+      @if ($post->photos->count())
+        <div class="col-md-12">
+          <div class="box box-primary">
+              <div class="box-body">
+                  <div class="row">
+                      @foreach ($post->photos as $photo)
+                      <form action="{{ route('admin.photos.destroy', $photo) }}" method="post">
+                          {{ method_field('DELETE') }}  {{ csrf_field() }}
+                          <div class="col-md-2">
+                              <button class="btn btn-danger btn-xs" style="position: absolute;"><i class="fa fa-remove"></i></button>
+                              <img src="{{ url($photo->url) }}" class="img-responsive">
+                          </div>
+                      </form>
+                      @endforeach
+                  </div>
+              </div>
+          </div>
+        </div>
+      @endif
+    {{-- end images --}}
+
     <form action="{{ route('admin.posts.update', $post) }}" method="POST">
         {{ csrf_field() }} {{ method_field('PUT') }}
         <div class="col-md-8">
@@ -152,24 +175,17 @@
 
         $(".select2").select2();
         /* 
-          | ----------
+          | -----------------------------------------------------------
           | *CKEditor
-          | ----------
+          | *CKEDITOR.config.height = 330; Aumntal el alto del textarea
+          | -----------------------------------------------------------
         */
         CKEDITOR.replace('editor');
+        CKEDITOR.config.height = 330;
 
         /* 
           | --------------------------------------------------------------------------------------------------------------------
           | *Dropzone 5.0.1
-          | *acceptedFiles: 'image/*' Solo acepte archivos de tipo imagen y el * es para indicar que cualquier formato de imagen
-          | *maxFilesize: 2, Máximo de tamaño or imagen 2 MB
-          | *paramName: 'photo', Edita el nombre del parámetro que por defecto es 'file'
-          | *myDropzone.on() Para mostrar los errores dentro del árede dropzone
-          | *.dz-error-message es la clase del elemento de Dropzone
-          | *:last es para que solo vaya modificando el último elemento y no todos
-          | * > span es para todo lo que está adentro de la etiqueta span
-          | *Para obtener los errores en Laravel 5.4 es res.photo[0];
-          | *Para obtener los errores en Laravel 5.7 es res.errors.photo[0];
           | --------------------------------------------------------------------------------------------------------------------
         */
         var myDropzone = new Dropzone('.dropzone', {
@@ -192,8 +208,11 @@
 
 
 {{-- Notas:
-      | ---------------------------------------------------------------------------------------------------------------------------------
-      | *Los CDN (CSS y JS) de Dropzone JS fueron obtenidos desde
-      |   *https://cdnjs.com/libraries/dropzone/5.0.1
-      | ---------------------------------------------------------------------------------------------------------------------------------
+      | -----------------------------------------------------------------------------------------------------------------------------------
+      | *@if ($post->photos->count()) Verifica si el post contiene imágenes
+      | *route('admin.photos.destroy', $photo) Los nombres a las rutas se definen en routes\web.php
+      |   *$photo se le pasa como parámetro la variable $photo a la ruta con nombre
+      | *Los navegadores actuales no soportan el método DELETE por lo que Laravel crea un campo oculto solo con usar method_field('DELETE')
+      | *{{ csrf_field() }} Protección contra ataques csrf
+      | -----------------------------------------------------------------------------------------------------------------------------------
 --}}

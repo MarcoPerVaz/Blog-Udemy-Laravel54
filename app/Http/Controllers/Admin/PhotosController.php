@@ -10,15 +10,6 @@ use Illuminate\Support\Facades\Storage;
 
 class PhotosController extends Controller
 {
-    /* 
-        | ------------------------------------------------------------
-        | *Función que guardará las imagenes asociadas al post
-        | *->store('public'); Guarda las imágenes en public
-        | *Photo::create(); Crea un post con las imágenes
-        | *No olvidar importar el modelo use App\Photo;
-        | *No olvidar importar use Illuminate\Support\Facades\Storage;
-        | ------------------------------------------------------------
-    */
     public function store(Post $post)
     {
         $this->validate(request(), [
@@ -29,5 +20,22 @@ class PhotosController extends Controller
             'url' => Storage::url($photo),
             'post_id' => $post->id
         ]);
+    }
+
+    /* 
+        | ---------------------------------------------------------------------------------------------------------------------------------------
+        | *Función que elimina imágenes
+        | *$photo->delete(); Elimina la imagen de la base de datos
+        | *$photoPath = str_replace('storage', 'public', $photo->url); Remplaza la url de la imagen (storage por public)
+        | *Storage::delete($photoPath); Elimina físicamente la imagen del proyecto
+        | * return back()->with('flash', 'Foto eliminada'); Retorna a la página anterior con el mensaje en la variable de sesión 'Foto eliminada'
+        | ---------------------------------------------------------------------------------------------------------------------------------------
+    */
+    public function destroy(Photo $photo)
+    {
+        $photo->delete();
+        $photoPath = str_replace('storage', 'public', $photo->url);
+        Storage::delete($photoPath);
+        return back()->with('flash', 'Foto eliminada');
     }
 }
