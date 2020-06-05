@@ -307,5 +307,8 @@ a.btn-bar{
 	font-size: 30px;
 	background-color: rgba(0, 0, 0, .5);
 }
+.carousel-inner .item img{
+	width: 100% !important; height: 500px !important;
+}
 
 
