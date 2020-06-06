@@ -61,6 +61,15 @@
                           {!! $errors->first('body', '<span class="help-block">:message</span>') !!}
                       </div>
                     {{-- end body --}}
+
+                    {{-- iframe --}}
+                      <div class="form-group {{ $errors->has('iframe') ? 'has-error' : '' }}">
+                          <label for="">Contenido embebido (iframe)</label>
+                          <textarea  class="form-control" id="editor" name="iframe" rows="2" 
+                              placeholder="Ingresa contenido embebido (iframe) de audio o vídeo">{{ old('iframe', $post->iframe) }}</textarea>
+                          {!! $errors->first('iframe', '<span class="help-block">:message</span>') !!}
+                      </div>
+                    {{-- end iframe --}}
                 </div>
                 </div>
             </div>
@@ -209,10 +218,7 @@
 
 {{-- Notas:
       | -----------------------------------------------------------------------------------------------------------------------------------
-      | *@if ($post->photos->count()) Verifica si el post contiene imágenes
-      | *route('admin.photos.destroy', $photo) Los nombres a las rutas se definen en routes\web.php
-      |   *$photo se le pasa como parámetro la variable $photo a la ruta con nombre
-      | *Los navegadores actuales no soportan el método DELETE por lo que Laravel crea un campo oculto solo con usar method_field('DELETE')
-      | *{{ csrf_field() }} Protección contra ataques csrf
+      | *{!! $post->iframe !!} Información no protegida contra ataques XSS
+			| 	*Más información en Displaying Unescaped Data - https://laravel.com/docs/5.4/blade#displaying-data
       | -----------------------------------------------------------------------------------------------------------------------------------
 --}}

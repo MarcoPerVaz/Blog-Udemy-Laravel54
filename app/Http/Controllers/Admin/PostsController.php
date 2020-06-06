@@ -37,14 +37,13 @@ class PostsController extends Controller
     }
 
     /* 
-        | -----------------------------------------------------------------------------------------------------------------------------------
+        | ----------------------------------------------------------------------------------------
         | *Actualiza un post
-        | *Redirecciona a la ruta con nombre 'admin.posts.edit', se le pasa la variable $post y la variable de sesión 'flash'
-        | -----------------------------------------------------------------------------------------------------------------------------------
+        | *$post->iframe = $request->get('iframe'); Guarda el iframe del vídeo en la base de datos
+        | ----------------------------------------------------------------------------------------
     */
     public function update(Post $post, Request $request)
     {
-
         $this->validate($request, [
             'title' => 'required',
             'body' => 'required',
@@ -56,6 +55,7 @@ class PostsController extends Controller
         $post->title = $request->get('title');
         $post->url = str_slug($request->get('title'));
         $post->body = $request->get('body');
+        $post->iframe = $request->get('iframe');
         $post->excerpt = $request->get('excerpt');
         $post->published_at = $request->has('published_at') ?  Carbon::parse($request->get('published_at')) : null;
         $post->category_id = $request->get('category');

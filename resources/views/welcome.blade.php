@@ -4,67 +4,76 @@
 @section('content')
 	<section class="posts container">
 
-		@foreach ($posts as $post)
+		{{-- posts --}}
+			@foreach ($posts as $post)
 
-			<article class="post">
+				<article class="post">
+						{{-- images --}}
+							@if ($post->photos->count() === 1)
+								<figure><img src="{{ $post->photos->first()->url }}" class="img-responsive"></figure>
+							@elseif($post->photos->count() > 1)
+								<div class="gallery-photos masonry">
+									@foreach ($post->photos->take(4) as $photo)
+										<figure class="gallery-image">
+											@if ($loop->iteration === 4)
+													<div class="overlay">{{ $post->photos->count() }} Fotos</div>
+											@endif
+											<img src="{{ url($photo->url) }}">
+										</figure>
+									@endforeach
+								</div>
+						{{-- end images --}}
 
-				{{-- images --}}
-					@if ($post->photos->count() === 1)
-						<figure><img src="{{ $post->photos->first()->url }}" class="img-responsive"></figure>
-					@elseif($post->photos->count() > 1)
-						<div class="gallery-photos masonry">
-							@foreach ($post->photos->take(4) as $photo)
-								<figure class="gallery-image">
-									@if ($loop->iteration === 4)
-											<div class="overlay">{{ $post->photos->count() }} Fotos</div>
-									@endif
-									<img src="{{ url($photo->url) }}">
-								</figure>
-							@endforeach
-						</div>
-					@endif
-				{{-- end images --}}
+						{{-- video --}}
+							@elseif($post->iframe)
+								<div class="video">
+									{!! $post->iframe !!}
+								</div>
+						{{-- end video --}}
 
-				<div class="content-post">
-					{{-- header --}}
-						<header class="container-flex space-between">
-							<div class="date">
-								<span class="c-gray-1">{{ $post->published_at->diffForHumans() }}</span>
-							</div>
-							<div class="post-category">
-								<span class="category text-capitalize">{{ $post->category->name }}</span>
-							</div>
-						</header>
-					{{-- end header --}}
+								@endif
 
-					{{-- title --}}
-						<h1>{{ $post->title }}</h1>
-					{{-- end title --}}
-					
-					<div class="divider"></div>
+					<div class="content-post">
+						{{-- header --}}
+							<header class="container-flex space-between">
+								<div class="date">
+									<span class="c-gray-1">{{ $post->published_at->diffForHumans() }}</span>
+								</div>
+								<div class="post-category">
+									<span class="category text-capitalize">{{ $post->category->name }}</span>
+								</div>
+							</header>
+						{{-- end header --}}
 
-					{{-- excerpt --}}
-						<p>{{ $post->excerpt }}</p>
-					{{-- end excerpt --}}
+						{{-- title --}}
+							<h1>{{ $post->title }}</h1>
+						{{-- end title --}}
+						
+						<div class="divider"></div>
 
-					{{-- footer --}}
-						<footer class="container-flex space-between">
-							<div class="read-more">
-								<a href="blog/{{ $post->url }}" class="text-uppercase c-green">Leer más</a>
-							</div>
-							<div class="tags container-flex">
+						{{-- excerpt --}}
+							<p>{{ $post->excerpt }}</p>
+						{{-- end excerpt --}}
 
-								@foreach ($post->tags as $tag)
-									<span class="tag c-gray-1 text-capitalize">#{{ $tag->name }}</span>	
-								@endforeach
-								
-							</div>
-						</footer>
-					{{-- end footer --}}
-				</div>
-			</article>
+						{{-- footer --}}
+							<footer class="container-flex space-between">
+								<div class="read-more">
+									<a href="blog/{{ $post->url }}" class="text-uppercase c-green">Leer más</a>
+								</div>
+								<div class="tags container-flex">
 
-		@endforeach
+									@foreach ($post->tags as $tag)
+										<span class="tag c-gray-1 text-capitalize">#{{ $tag->name }}</span>	
+									@endforeach
+									
+								</div>
+							</footer>
+						{{-- end footer --}}
+					</div>
+				</article>
+
+			@endforeach
+		{{-- end posts --}}
 
 		{{-- <article class="post w-image">
 			<figure><img src="img/img-post-1.png" alt="" class="img-responsive"></figure>
@@ -279,10 +288,8 @@
 
 
 {{-- Notas:
-			| -------------------------------------------------------------------------------------------------
-			| *$post->photos->count() === 1 - Si existe una imagen
-			| *$post->photos->count() > 1 - Si existe más de una imagen
-			| *$post->photos->take(4) as $photo - Toma solo 4 imágenes si llegará a tener más de 4
-			| *$loop->iteration === 4 - Inicia un conteo a partir de 4 para saber cuántas imágenes son en total
-			| -------------------------------------------------------------------------------------------------
+			| ----------------------------------------------------------------------------------------------------
+			| *{!! $post->iframe !!} Información no protegida contra ataques XSS
+			| 	*Más información en Displaying Unescaped Data - https://laravel.com/docs/5.4/blade#displaying-data
+			| ----------------------------------------------------------------------------------------------------
 --}}

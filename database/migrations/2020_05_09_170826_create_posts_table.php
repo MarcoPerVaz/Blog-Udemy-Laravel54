@@ -14,22 +14,21 @@ class CreatePostsTable extends Migration
     public function up()
     {
         /* 
-            | ----------------------------------------------------------------------------------
-            | *$table->mediumText('excerpt')->nullable(); Acepta valores nulos o vacíos
-            | *$table->text('body')->nullable(); Acepta valores nulos o vacíos
-            | *$table->unsignedInteger('category_id')->nullable(); Acepta valores nulos o vacíos
-            | ----------------------------------------------------------------------------------
+            | ---------------------------------------------------------------------------
+            | *$table->text('iframe')->nullable(); Campo de tipo text y acepta valor nulo
+            | ---------------------------------------------------------------------------
         */
         Schema::create('posts', function (Blueprint $table) {
             $table->increments('id');
-
             $table->string('title');
             $table->string('url');
             $table->mediumText('excerpt')->nullable();
+
+            $table->text('iframe')->nullable();
+
             $table->text('body')->nullable();
             $table->timestamp('published_at')->nullable();
             $table->unsignedInteger('category_id')->nullable();
-
             $table->timestamps();
         });
     }
@@ -44,11 +43,3 @@ class CreatePostsTable extends Migration
         Schema::dropIfExists('posts');
     }
 }
-
-
-/* Notas:
-    | -----------------------------------------------------------------------
-    | *Para saber que tipos de columnas se pueden crear desde las migraciones
-    |   *https://laravel.com/docs/5.4/migrations#creating-columns
-    | -----------------------------------------------------------------------
-*/
