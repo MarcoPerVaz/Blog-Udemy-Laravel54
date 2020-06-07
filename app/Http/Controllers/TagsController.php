@@ -2,21 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Category;
+use App\Tag;
 use Illuminate\Http\Request;
 
-class CategoriesController extends Controller
+class TagsController extends Controller
 {
     /* 
         | ----------------------------------------------------------------------------------------------
         | *Devuelve la vista resources\views\welcome.blade.php y le pasa las variables 'title' y 'posts'
+        | *No olvidar el modelo use App\Tag;
         | ----------------------------------------------------------------------------------------------
     */
-    public function show(Category $category)
+    public function show(Tag $tag)
     {
         return view('welcome', [
-            'title' => "Publicaciones de la categoría '{$category->name}'",
-            'posts' => $category->posts()->paginate()
+            'title' => "Publicaciones de la etiqueta '{$tag->name}'",
+            'posts' => $tag->posts()->paginate()
         ]);
     }
 }

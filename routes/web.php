@@ -2,12 +2,13 @@
 
 Route::get('/', 'PagesController@home');
 Route::get('blog/{post}', 'PostsController@show')->name('posts.show');
-/* 
-    | ----------------------------------------------------------------------------------------------------------------------------------------------------
-    | *Ruta con nombre que apunta a 'categories/nombreCategory' asociada a la función show() del controlador app\Http\Controllers\CategoriesController.php
-    | ----------------------------------------------------------------------------------------------------------------------------------------------------
-*/
 Route::get('categories/{category}', 'CategoriesController@show')->name('categories.show');
+/* 
+    | -----------------------------------------------------------------------------------------------------------------------------------
+    | *Ruta con nombre que apunta a 'tags/nombreTag' asociada a la función show() del controlador app\Http\Controllers\TagsController.php
+    | -----------------------------------------------------------------------------------------------------------------------------------
+*/
+Route::get('tags/{tag}', 'TagsController@show')->name('tags.show');
 
 Route::group(
     [

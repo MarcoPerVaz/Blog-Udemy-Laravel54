@@ -4,8 +4,8 @@
 @section('content')
 	<section class="posts container">
 
-			@if (isset($category))
-				<h3>Publicaciones de la categoría {{ $category->name }}</h3>
+			@if (isset($title))
+				<h3>{{ $title }}</h3>
 			@endif
 
 		{{-- posts --}}
@@ -69,7 +69,7 @@
 								<div class="tags container-flex">
 
 									@foreach ($post->tags as $tag)
-										<span class="tag c-gray-1 text-capitalize">#{{ $tag->name }}</span>	
+										<span class="tag c-gris text-capitalize"><a href="{{ route('tags.show', $tag) }}">#{{ $tag->name }}</a></span>
 									@endforeach
 									
 								</div>
@@ -92,8 +92,7 @@
 
 {{-- Notas:
 			| -----------------------------------------------------------------------------------------------------------------
-			| *@if (isset($category)) Verifica si la variable $category está definida
+			| *$title Variable dinámica que tendrá la información de si se busca por categoría o por etiqueta
 			| *route('categories.show', $post->category) El nombre de la ruta se define en routes\web.php
-			| *$post->category->name Dónde category es la relación belongsTo de la función category() en el modelo app\Post.php
 			| -----------------------------------------------------------------------------------------------------------------
 --}}
