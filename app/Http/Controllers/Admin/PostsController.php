@@ -17,14 +17,16 @@ class PostsController extends Controller
         return view('admin.posts.index', compact('posts'));
     }
 
+    /* 
+        | -----------------------------------------------------------------------------------------------------------------------
+        | *El campo 'url' se asigna en la base de datos usando mutador, función setTitleAttribute($title) del modelo app\Post.php
+        | -----------------------------------------------------------------------------------------------------------------------
+    */
     public function store(Request $request)
     {
         $this->validate($request, ['title' => 'required']);
 
-        $post = Post::create([
-            'title' => $request->get('title'),
-            'url' => str_slug($request->get('title')),
-        ]);
+        $post = Post::create($request->only('title'));
 
         return redirect()->route('admin.posts.edit', $post);
     }
@@ -37,10 +39,9 @@ class PostsController extends Controller
     }
 
     /* 
-        | ----------------------------------------------------------------------------------------
-        | *Actualiza un post
-        | *$post->iframe = $request->get('iframe'); Guarda el iframe del vídeo en la base de datos
-        | ----------------------------------------------------------------------------------------
+        | --------------------------------------------------------------------------------------------------------------------------
+        | *El campo 'url' se actualiza en la base de datos usando mutador, función setTitleAttribute($title) del modelo app\Post.php
+        | --------------------------------------------------------------------------------------------------------------------------
     */
     public function update(Post $post, Request $request)
     {
@@ -53,7 +54,6 @@ class PostsController extends Controller
         ]);
 
         $post->title = $request->get('title');
-        $post->url = str_slug($request->get('title'));
         $post->body = $request->get('body');
         $post->iframe = $request->get('iframe');
         $post->excerpt = $request->get('excerpt');

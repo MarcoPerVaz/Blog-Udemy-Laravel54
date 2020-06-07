@@ -7,16 +7,17 @@ use Illuminate\Database\Migrations\Migration;
 class CreateTagsTable extends Migration
 {
     /* 
-        | ----------------------------------------------
-        | *$table->string('name'); Campo de tipo varchar
-        | ----------------------------------------------
+        | --------------------------------------------------------------------------------
+        | *$table->string('url')->nullable(); Campo de tipo varchar y acepta valores nulos
+        | --------------------------------------------------------------------------------
     */
     public function up()
     {
         Schema::create('tags', function (Blueprint $table) {
             $table->increments('id');
-
             $table->string('name');
+
+            $table->string('url')->nullable;
 
             $table->timestamps();
         });

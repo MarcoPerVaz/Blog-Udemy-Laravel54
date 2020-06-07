@@ -4,7 +4,7 @@
 <!-- end title -->
 
 <!-- commit name -->
-### Commit | __Filtrar posts por etiqueta__
+### Commit | __Accesores y mutadores de Eloquent__
 <!-- end commit name -->
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -17,39 +17,43 @@
 
 <!-- commit instructions -->
 #### Instrucciones Commit
-1. Edición de la vista `resources\views\welcome.blade.php`
-2. Edición del archivo de estilos `public\css\style.css`
-3. Edición del archivo de rutas `routes\web.php`
-4. Creación y edición del controlador `app\Http\Controllers\TagsController.php`
-   > php artisan make:controller TagsController
-   - Creación y edición de la función `show(Tag $tag)`
-     
-     **No olvidar importar el modelo `use App\Tag;`*
-5. Edición del modelo `app\Tag.php`
-   - Creación y edición de la función `getRouteKeyName()`
-   - Creación y edición de la relación `posts()`
-6. Edición del controlador `app\Http\Controllers\CategoriesController.php`
-   - Edición de la función `show(Category $category)`
+1. Edición del modelo `app\Category.php`
+   - Edición de la función `getRouteKeyName()`
+   - Creación y edición del mutator `setNameAttribute($name)`
+2. Edición de la migración `database\migrations\2020_05_09_172611_create_categories_table.php`
+3. Edición de la migración `database\migrations\2020_05_09_174944_create_tags_table.php`
+4. Edición del modelo `app\Tag.php`
+   - Edición de la función `getRouteKeyName()`
+   - Creación y ediciól del mutator `setNameAttribute($name)`
+5. Edición del modelo `app\Post.php`
+   - Creación y edición del mutator `setTitleAttribute($title)`
+6. Rehacer las migraciones con seeds
+   > php artisan migrate:refresh --seed
+7. Edición del controlador `app\Http\Controllers\Admin\PostsController.php`
+   - Edición de la función `store(Request $request)`
+   - Edición de la función `update(Post $post, Request $request)`
 <!-- end commit instructions -->
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 <!-- notes -->
 #### Notas:
-- [Documentación - `Customizing The Key Name`](https://laravel.com/docs/5.4/routing#implicit-binding)
+- [Documentación | `Accessors & Mutators`](https://laravel.com/docs/5.4/eloquent-mutators#accessors-and-mutators)
 <!-- end notes -->
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 <!-- information -->
 #### Información:
-- Más información en `resources\views\welcome.blade.php`
+- Más información en `app\Category.php`
 
-- Más información en `routes\web.php`
+- Más información en `database\migrations\2020_05_09_172611_create_categories_table.php`
 
-- Más información en `app\Http\Controllers\TagsController.php`
+- Más información en `database\migrations\2020_05_09_174944_create_tags_table.php`
 
 - Más información en `app\Tag.php`
 
-- Más información en `app\Http\Controllers\CategoriesController.php`
+- Más información en `app\Post.php`
+
+- Más información en `app\Http\Controllers\Admin\PostsController.php`
 <!-- end information -->

@@ -14,14 +14,15 @@ class CreateCategoriesTable extends Migration
     public function up()
     {
         /* 
-            | ----------------------------------------------
-            | *$table->string('name'); Campo de tipo varchar
-            | ----------------------------------------------
+            | --------------------------------------------------------------------------------
+            | *$table->string('url')->nullable(); Campo de tipo varchar y acepta valores nulos
+            | --------------------------------------------------------------------------------
         */
         Schema::create('categories', function (Blueprint $table) {
             $table->increments('id');
-
             $table->string('name');
+            
+            $table->string('url')->nullable();
 
             $table->timestamps();
         });

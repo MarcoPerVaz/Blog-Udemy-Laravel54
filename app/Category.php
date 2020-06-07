@@ -15,19 +15,27 @@ class Category extends Model
     */
     public function getRouteKeyName()
     {
-        return 'name';
+        return 'url';
     }
 
-    /* 
-        | ------------------------------------------------------------------------------------
-        | *Relación hasMany(Tiene muchos)
-        |   *Más informción en https://laravel.com/docs/5.4/eloquent-relationships#one-to-many
-        | *No olvidar importar el modelo use App\Post;
-        | ------------------------------------------------------------------------------------
-    */
     public function posts()
     {
         return $this->hasMany(Post::class);
+    }
+
+    /* 
+        | ---------------------------------------------------------------------------------------
+        | *Mutador o mutator 
+        |   *Más información en https://laravel.com/docs/5.4/eloquent-mutators#defining-a-mutator
+        | *Los mutadores se ejecutan automáticamente
+        | *La función str_slug() de Laravel permite tranformar cadenas en url's amigables
+        |   *Más información en https://laravel.com/docs/7.x/helpers#method-str-slug
+        | ---------------------------------------------------------------------------------------
+    */
+    public function setNameAttribute($name)
+    {
+        $this->attributes['name'] = $name;
+        $this->attributes['url'] = str_slug($name);
     }
 }
 
