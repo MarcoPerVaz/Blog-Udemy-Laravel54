@@ -310,5 +310,7 @@ a.btn-bar{
 .carousel-inner .item img{
 	width: 100% !important; height: 500px !important;
 }
-
-
+.post-category a{
+	color: inherit;
+	font-size: inherit;
+}

@@ -4,6 +4,10 @@
 @section('content')
 	<section class="posts container">
 
+			@if (isset($category))
+				<h3>Publicaciones de la categoría {{ $category->name }}</h3>
+			@endif
+
 		{{-- posts --}}
 			@foreach ($posts as $post)
 
@@ -40,7 +44,9 @@
 									<span class="c-gray-1">{{ $post->published_at->diffForHumans() }}</span>
 								</div>
 								<div class="post-category">
-									<span class="category text-capitalize">{{ $post->category->name }}</span>
+									<span class="category text-capitalize">
+									<a href="{{ route('categories.show', $post->category) }}">{{ $post->category->name }}</a>
+								</span>
 								</div>
 							</header>
 						{{-- end header --}}
@@ -85,8 +91,9 @@
 
 
 {{-- Notas:
-			| ----------------------------------------------------------------------------------------------------------------
-			| *{{ $posts->links() }} Muestra la paginación que incluye por defecto Laravel y que proviene de la función home() 
-			|	 del controlador app\Http\Controllers\PagesController.php
-			| ----------------------------------------------------------------------------------------------------------------
+			| -----------------------------------------------------------------------------------------------------------------
+			| *@if (isset($category)) Verifica si la variable $category está definida
+			| *route('categories.show', $post->category) El nombre de la ruta se define en routes\web.php
+			| *$post->category->name Dónde category es la relación belongsTo de la función category() en el modelo app\Post.php
+			| -----------------------------------------------------------------------------------------------------------------
 --}}

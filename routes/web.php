@@ -2,6 +2,12 @@
 
 Route::get('/', 'PagesController@home');
 Route::get('blog/{post}', 'PostsController@show')->name('posts.show');
+/* 
+    | ----------------------------------------------------------------------------------------------------------------------------------------------------
+    | *Ruta con nombre que apunta a 'categories/nombreCategory' asociada a la función show() del controlador app\Http\Controllers\CategoriesController.php
+    | ----------------------------------------------------------------------------------------------------------------------------------------------------
+*/
+Route::get('categories/{category}', 'CategoriesController@show')->name('categories.show');
 
 Route::group(
     [
@@ -17,12 +23,6 @@ Route::group(
         Route::get('posts/{post}', 'PostsController@edit')->name('admin.posts.edit');
         Route::put('posts/{post}', 'PostsController@update')->name('admin.posts.update');
         Route::post('posts/{post}/photos', 'PhotosController@store')->name('admin.posts.photos.update');
-
-        /* 
-            | --------------------------------------------------------------------------------------------------------------------------------------------
-            | Ruta con nombre que apunta a 'photos/imagen' asociada a la función destroy() del controlador app\Http\Controllers\Admin\PhotosController.php
-            | --------------------------------------------------------------------------------------------------------------------------------------------
-        */
         Route::delete('photos/{photo}', 'PhotosController@destroy')->name('admin.photos.destroy');
     }
 );
