@@ -7,7 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
-    protected $guarded = [];
+    /* 
+        | -----------------------------------------------------------------------------------------------------------------------------
+        | *La propiedad $fillable permite indicarle a Laravel que campos pueden ser almacenados en la base de datos e ignorar los demás
+        |   *Más información sobre la propiedad $fillable en https://laravel.com/docs/5.4/eloquent#mass-assignment
+        | -----------------------------------------------------------------------------------------------------------------------------
+    */
+    protected $fillable = [
+        'title', 'body', 'iframe', 'excerpt', 'published_at', 'category_id',
+    ];
 
     protected $dates = ['published_at'];
 
@@ -37,18 +45,50 @@ class Post extends Model
               ->latest('published_at');
     }
 
+    public function setTitleAttribute($title)
+    {
+        $this->attributes['title'] = $title;
+        $this->attributes['url'] = str_slug($title);
+    }
+
     /* 
         | ---------------------------------------------------------------------------------------
         | *Mutador o mutator 
         |   *Más información en https://laravel.com/docs/5.4/eloquent-mutators#defining-a-mutator
         | *Los mutadores se ejecutan automáticamente
-        | *La función str_slug() de Laravel permite tranformar cadenas en url's amigables
-        |   *Más información en https://laravel.com/docs/7.x/helpers#method-str-slug
         | ---------------------------------------------------------------------------------------
     */
-    public function setTitleAttribute($title)
+    public function setPublishedAtAttribute($published_at)
     {
-        $this->attributes['title'] = $title;
-        $this->attributes['url'] = str_slug($title);
+        $this->attributes['published_at'] = $published_at ?  Carbon::parse($published_at) : null;;
+    }
+
+    /* 
+        | ---------------------------------------------------------------------------------------
+        | *Mutador o mutator 
+        |   *Más información en https://laravel.com/docs/5.4/eloquent-mutators#defining-a-mutator
+        | *Los mutadores se ejecutan automáticamente
+        | ---------------------------------------------------------------------------------------
+    */
+    public function setCategoryIdAttribute($category)
+    {
+        $this->attributes['category_id'] = Category::find($category) ? $category : Category::create(['name' => $category])->id;;
+    }
+
+    /* 
+        | -------------------------------------------------------------------------------------------------------
+        | *Función para guardar las etiquetas que antes estaba en la función update(Post $post, Request $request) 
+        |  del controlador app\Http\Controllers\Admin\PostsController.php
+        | *Se crea una colección
+        |   *Más información sobre colleciones en https://laravel.com/docs/5.4/collections#introduction
+        | -------------------------------------------------------------------------------------------------------
+    */
+    public function syncTags($tags)
+    {
+        $tagIds = collect($tags)->map(function ($tag) {
+            return Tag::find($tag) ? $tag : Tag::create(['name' => $tag])->id;
+        });
+
+        return $this->tags()->sync($tagIds);
     }
 }
