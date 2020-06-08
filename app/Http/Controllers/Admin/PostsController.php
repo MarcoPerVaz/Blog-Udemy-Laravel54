@@ -17,11 +17,6 @@ class PostsController extends Controller
         return view('admin.posts.index', compact('posts'));
     }
 
-    /* 
-        | -----------------------------------------------------------------------------------------------------------------------
-        | *El campo 'url' se asigna en la base de datos usando mutador, función setTitleAttribute($title) del modelo app\Post.php
-        | -----------------------------------------------------------------------------------------------------------------------
-    */
     public function store(Request $request)
     {
         $this->validate($request, ['title' => 'required']);
@@ -39,9 +34,20 @@ class PostsController extends Controller
     }
 
     /* 
-        | --------------------------------------------------------------------------------------------------------------------------
-        | *El campo 'url' se actualiza en la base de datos usando mutador, función setTitleAttribute($title) del modelo app\Post.php
-        | --------------------------------------------------------------------------------------------------------------------------
+        | --------------------------------------------------------------------------------------------------------------------------------------------
+        | *Category::find($cat = $request->get('category')) ? $cat : Category::create(['name' => $cat])->id;
+        |   *$cat = $request->get('category') Obtiene los valores del elemento html que la propiedad name sea category y lo guarda en la variable $cat
+        |   *? $cat Si lo encuentra solo guarda lo que exista en la variable $cat
+        |   *: Category::create(['name' => $cat])->id De lo contrario crea la nueva categoría
+        | *$tags = []; Inicializa vacío el array $tags
+        | *foreach ($request->get('tags') as $tag) Recorre todas las etiquetas que obtenga del elemento html con la propieda name=tags
+        | *Tag::find($tag) ? $tag : Tag::create(['name' => $tag])->id;
+        |   *Tag::find($tag) Obtiene la información del foreach
+        |   *? $tag Si contiene la misma información lo pasa como está
+        |   *: Tag::create(['name' => $tag])->id; De lo contrario crea la o las nuevas etiquetas y las guarda en el array $tags[]
+        | *Se guardan las etiquetas usando la función sync()
+        |   *Más información en https://laravel.com/docs/5.4/eloquent-relationships#updating-many-to-many-relationships
+        | --------------------------------------------------------------------------------------------------------------------------------------------
     */
     public function update(Post $post, Request $request)
     {
@@ -58,10 +64,20 @@ class PostsController extends Controller
         $post->iframe = $request->get('iframe');
         $post->excerpt = $request->get('excerpt');
         $post->published_at = $request->has('published_at') ?  Carbon::parse($request->get('published_at')) : null;
-        $post->category_id = $request->get('category');
+
+        $post->category_id = Category::find($cat = $request->get('category'))
+                             ? $cat
+                             : Category::create(['name' => $cat])->id;
+
         $post->save();
 
-        $post->tags()->sync($request->get('tags'));
+        $tags = [];
+        foreach ($request->get('tags') as $tag) {
+            $tags[] = Tag::find($tag)
+                      ? $tag
+                      : Tag::create(['name' => $tag])->id;
+        }
+        $post->tags()->sync($tags);
 
         return redirect()->route('admin.posts.edit', $post)->with('flash', 'Tu publicación ha sido guardada');
     }

@@ -94,7 +94,7 @@
                     {{-- categories --}}
                       <div class="form-group {{ $errors->has('category') ? 'has-error' : '' }}">
                           <label>Categorías</label>
-                          <select class="form-control" name="category">
+                          <select class="form-control select2" name="category">
                               <option>Selecciona una categoría</option>
                               @foreach ($categories as $category)
                                   <option value="{{ $category->id }}"
@@ -182,7 +182,9 @@
           | ----------
         */
 
-        $(".select2").select2();
+        $(".select2").select2({
+          tags:true
+        });
         /* 
           | -----------------------------------------------------------
           | *CKEditor
