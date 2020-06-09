@@ -45,7 +45,14 @@
                       <i class="fa fa-eye"></i>
                     </a>
                     <a href="{{ route('admin.posts.edit', $post) }}" class="btn btn-xs btn-info"><i class="fa fa-pencil"></i></a>
-                    <a href="#" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></a>
+                    
+                    <form action="{{ route('admin.posts.destroy', $post) }}" method="post" style="display: inline;">
+                      {{ csrf_field() }} {{ method_field('DELETE') }}
+                      <button class="btn btn-xs btn-danger" onclick="return confirm('¿Estás seguro de querer eliminar esta publicación?')">
+                        <i class="fa fa-times"></i>
+                      </button>
+                    </form>
+
                   </td>
                 </tr>
             @endforeach
@@ -78,3 +85,13 @@
       });
     </script>
 @endpush
+
+
+{{-- Notas:
+      | --------------------------------------------------------------------------------------------------------------------------------
+      | *csrf_field() Protección contra ataques csrf
+      |   *Más información en https://laravel.com/docs/5.4/csrf#csrf-introduction
+      | *method_field('DELETE') Los navegadores actuales no soportan el método httpm DELETE pero Laravel ofrece la posibilidad de usarlo
+      |   *Más información en https://laravel.com/docs/5.4/routing#form-method-spoofing
+      | --------------------------------------------------------------------------------------------------------------------------------
+--}}

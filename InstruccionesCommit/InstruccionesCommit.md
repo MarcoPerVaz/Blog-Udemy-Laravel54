@@ -4,7 +4,7 @@
 <!-- end title -->
 
 <!-- commit name -->
-### Commit | __Reestructuración de Admin/PhotosController__
+### Commit | __Eliminar posts y sus relaciones__
 <!-- end commit name -->
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -17,26 +17,21 @@
 
 <!-- commit instructions -->
 #### Instrucciones Commit
-1. Edición del controlador `app\Http\Controllers\Admin\PhotosController.php`
-   - Edición de la función `store(Post $post)`
-   - Edición de la función `destroy(Photo $photo)`
-2. Edición de la vista `resources\views\posts\show.blade.php`
-3. Edición del modelo `app\Photo.php`
+1. Edición de la vista `resources\views\admin\posts\index.blade.php`
+2. Edición del archivo de rutas `routes\web.php`
+3. Edición del controlador `app\Http\Controllers\Admin\PostsController.php`
+   - Creación y edición de la función `destroy(Post $post)`
+4. Edición del modelo `app\Post.php`
    - Creación y edición de la función `boot()`
-     
-     **No olvidar importar `use Illuminate\Support\Facades\Storage;`*
-4. Edición del archivo seed `database\seeds\PostsTableSeeder.php`
-
-   **No olvidar importar `use Illuminate\Support\Facades\Storage;`*
-   - > php artisan migrate:refresh --seed
-       
-       **Para comprobar si se elimina el directorio `storage\app\public\posts` y el directorio `public\storage\posts` (Si se eliminan)*
 <!-- end commit instructions -->
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 <!-- notes -->
 #### Notas:
+- [Documentación | `Introduction CSRF`](https://laravel.com/docs/5.4/csrf#csrf-introduction)
+- [Documentación | `Form Method Spoofing`](https://laravel.com/docs/5.4/routing#form-method-spoofing)
+- [Documentación | `Detaching`](https://laravel.com/docs/5.4/eloquent-relationships#updating-many-to-many-relationships)
 - [Documentación | `Events Eloquent`](https://laravel.com/docs/5.4/eloquent#events)
 <!-- end notes -->
 
@@ -44,9 +39,11 @@
 
 <!-- information -->
 #### Información:
-- Más información en `app\Http\Controllers\Admin\PhotosController.php`
+- Más información en `resources\views\admin\posts\index.blade.php`
 
-- Más información en `app\Photo.php`
+- Más información en `routes\web.php`
 
-- Más información en `database\seeds\PostsTableSeeder.php`
+- Más información en `app\Http\Controllers\Admin\PostsController.php`
+
+- Más información en `app\Post.php`
 <!-- end information -->

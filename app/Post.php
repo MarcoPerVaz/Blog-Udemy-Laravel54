@@ -7,17 +7,32 @@ use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
-    /* 
-        | -----------------------------------------------------------------------------------------------------------------------------
-        | *La propiedad $fillable permite indicarle a Laravel que campos pueden ser almacenados en la base de datos e ignorar los demás
-        |   *Más información sobre la propiedad $fillable en https://laravel.com/docs/5.4/eloquent#mass-assignment
-        | -----------------------------------------------------------------------------------------------------------------------------
-    */
     protected $fillable = [
         'title', 'body', 'iframe', 'excerpt', 'published_at', 'category_id',
     ];
 
     protected $dates = ['published_at'];
+
+    /* 
+        | ----------------------------------------------------------------------------------------------------------------------------------------------------------------
+        | *Evento para eliminar las imágenes de la base de datos
+        |   *Más información en https://laravel.com/docs/5.4/eloquent#events
+        | *$post->tags()->detach(); Elimina las etiquetas a tráves de la relación tags() en el modelo app\Post.php
+        |   *Más información sobre detach en https://laravel.com/docs/5.4/eloquent-relationships#updating-many-to-many-relationships
+        | *$post->photos->each->delete(); Recorre todas las fotos usando colecciones y las elimina de la base de datos usando la relación photos() del modelo app\Post.php
+        | ----------------------------------------------------------------------------------------------------------------------------------------------------------------
+    */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($post) {
+
+            $post->tags()->detach();
+            $post->photos->each->delete();
+
+        });
+    }
 
     public function getRouteKeyName()
     {

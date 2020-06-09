@@ -3,11 +3,6 @@
 Route::get('/', 'PagesController@home');
 Route::get('blog/{post}', 'PostsController@show')->name('posts.show');
 Route::get('categories/{category}', 'CategoriesController@show')->name('categories.show');
-/* 
-    | -----------------------------------------------------------------------------------------------------------------------------------
-    | *Ruta con nombre que apunta a 'tags/nombreTag' asociada a la función show() del controlador app\Http\Controllers\TagsController.php
-    | -----------------------------------------------------------------------------------------------------------------------------------
-*/
 Route::get('tags/{tag}', 'TagsController@show')->name('tags.show');
 
 Route::group(
@@ -23,6 +18,17 @@ Route::group(
         Route::post('posts', 'PostsController@store')->name('admin.posts.store');
         Route::get('posts/{post}', 'PostsController@edit')->name('admin.posts.edit');
         Route::put('posts/{post}', 'PostsController@update')->name('admin.posts.update');
+
+        /* 
+            | --------------------------------------------------------------------------------------------------------
+            | *Ruta con nombre que apunta a 'posts/nombrepost' asociada a la función destroy(Post $post) 
+            |  del controlador app\Http\Controllers\Admin\PostsController.php
+            | ¨Los navegadores actuales no soportan el método http DELETE pero Laravel ofrece lo necesario para usarlo
+            |   *Más información en https://laravel.com/docs/5.4/routing#form-method-spoofing
+            | --------------------------------------------------------------------------------------------------------
+        */
+        Route::delete('posts/{post}', 'PostsController@destroy')->name('admin.posts.destroy');
+
         Route::post('posts/{post}/photos', 'PhotosController@store')->name('admin.posts.photos.update');
         Route::delete('photos/{photo}', 'PhotosController@destroy')->name('admin.photos.destroy');
     }
