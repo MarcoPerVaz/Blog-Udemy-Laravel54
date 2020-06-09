@@ -10,7 +10,7 @@
 
     {{-- images --}}
       @if ($post->photos->count() === 1)
-        <figure><img src="{{ $post->photos->first()->url }}" class="img-responsive"></figure>
+        <figure><img src="{{ url($post->photos->first()->url) }}" class="img-responsive"></figure>
       @elseif($post->photos->count() > 1)
         @include('posts.carousel')
       @elseif($post->iframe)
@@ -79,7 +79,7 @@
 
 {{-- Notas:
       | -----------------------------------------------------------------------------------------------------------------------------------
-      | *{!! $post->iframe !!} Información no protegida contra ataques XSS
-			| 	*Más información en Displaying Unescaped Data - https://laravel.com/docs/5.4/blade#displaying-data
+      | *El helper url() permite usar la url directamente (las rutas se definen en routes\web.php)
+      |   *Más información sobre el helper url() - https://laravel.com/docs/5.4/helpers#urls
       | -----------------------------------------------------------------------------------------------------------------------------------
 --}}

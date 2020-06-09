@@ -5,6 +5,7 @@ use App\Post;
 use App\Category;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Storage;
 
 class PostsTableSeeder extends Seeder
 {
@@ -16,11 +17,13 @@ class PostsTableSeeder extends Seeder
     public function run()
     {
         /* 
-            | ---------------------------------------------------------------------------------------------
-            | *Tag::truncate(); El ejecutar los seeds se borra la infrmación para evitar duplicar registros
-            | *No olvidar importar el modelo use App\Tag;
-            | ---------------------------------------------------------------------------------------------
+            | -----------------------------------------------------------------------------------------------------------------------------------
+            | *Storage::disk('public')->deleteDirectory('posts'); Elimina todas las imágenes físicamente del proyecto al usar php artisan refresh
+            | *No olvidar importar use Illuminate\Support\Facades\Storage;
+            | -----------------------------------------------------------------------------------------------------------------------------------
         */
+        Storage::disk('public')->deleteDirectory('posts');
+
         Post::truncate();
         Category::truncate();
         Tag::truncate();
@@ -44,10 +47,9 @@ class PostsTableSeeder extends Seeder
         $category->save();
 
         /* 
-            |-----------------------------------------------------------------------------------------------------------------
+            |----------------
             | *Mi primer post
-            | *$post->tags()->attach(Tag::create(['name' => 'Etiqueta 1'])); Le añade una etiqueta (etiqueta 1) al primer post
-            |-----------------------------------------------------------------------------------------------------------------
+            |----------------
         */
         $post = new Post;
         $post->title = "Mi primer post";
@@ -60,10 +62,9 @@ class PostsTableSeeder extends Seeder
         $post->tags()->attach(Tag::create(['name' => 'Etiqueta 1']));
 
         /* 
-            |------------------------------------------------------------------------------------------------------------------
+            |-----------------
             | *Mi segundo post
-            | *$post->tags()->attach(Tag::create(['name' => 'Etiqueta 2'])); Le añade una etiqueta (etiqueta 2) al segundo post
-            |------------------------------------------------------------------------------------------------------------------
+            |-----------------
         */
         $post = new Post;
         $post->title = "Mi segundo post";
@@ -76,10 +77,9 @@ class PostsTableSeeder extends Seeder
         $post->tags()->attach(Tag::create(['name' => 'Etiqueta 2']));
 
         /* 
-            |-----------------------------------------------------------------------------------------------------------------
+            |----------------
             | *Mi tercer post
-            | *$post->tags()->attach(Tag::create(['name' => 'Etiqueta 3'])); Le añade una etiqueta (etiqueta 3) al tercer post
-            |-----------------------------------------------------------------------------------------------------------------
+            |----------------
         */
         $post = new Post;
         $post->title = "Mi tercer post";

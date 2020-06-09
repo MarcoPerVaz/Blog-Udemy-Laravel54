@@ -4,7 +4,7 @@
 <!-- end title -->
 
 <!-- commit name -->
-### Commit | __Reestructuración de Admin/PostsController__
+### Commit | __Reestructuración de Admin/PhotosController__
 <!-- end commit name -->
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -17,38 +17,36 @@
 
 <!-- commit instructions -->
 #### Instrucciones Commit
-1. Creación y edición del form request `app\Http\Requests\StorePostRequest.php`
-
-   **Si el directorio `app\Http\Requests` no existe Laravel lo crea automáticamente al usar el comando*
-   - Edición de la función `authorize()`
-   - Edición de la función `rules()`
-2. Edición del controlador `app\Http\Controllers\Admin\PostsController.php`
-   - Edición de la función `update(Post $post, Request $request)`
+1. Edición del controlador `app\Http\Controllers\Admin\PhotosController.php`
+   - Edición de la función `store(Post $post)`
+   - Edición de la función `destroy(Photo $photo)`
+2. Edición de la vista `resources\views\posts\show.blade.php`
+3. Edición del modelo `app\Photo.php`
+   - Creación y edición de la función `boot()`
      
-     **No olvidar importar `use App\Http\Requests\StorePostRequest;`*
-3. Edición del modelo `app\Post.php`
-   - Creación y edición del mutador `setPublishedAtAttribute($published_at)`
-   - Creación y edición del mutador `setCategoryIdAttribute($category)`
-   - Creación y edición de la función `syncTags($tags)`
-4. Edición de la vista `resources\views\admin\posts\edit.blade.php`
+     **No olvidar importar `use Illuminate\Support\Facades\Storage;`*
+4. Edición del archivo seed `database\seeds\PostsTableSeeder.php`
+
+   **No olvidar importar `use Illuminate\Support\Facades\Storage;`*
+   - > php artisan migrate:refresh --seed
+       
+       **Para comprobar si se elimina el directorio `storage\app\public\posts` y el directorio `public\storage\posts` (Si se eliminan)*
 <!-- end commit instructions -->
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 <!-- notes -->
 #### Notas:
-- Los Form Requests se usan para almacenar las validaciones del lado del servidor, la recomendación es que si tu aplicación es pequeña entonces las validaciones vayan en la función en el controlador [Documentación | `Form Request`](https://laravel.com/docs/5.4/validation#form-request-validation)
-- [Documentación | `Mass Assignment`](https://laravel.com/docs/5.4/eloquent#mass-assignment)
-- [Documentación | `Defining A Mutator`](https://laravel.com/docs/5.4/eloquent-mutators#defining-a-mutator)
+- [Documentación | `Events Eloquent`](https://laravel.com/docs/5.4/eloquent#events)
 <!-- end notes -->
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 <!-- information -->
 #### Información:
-- Más información en `app\Http\Requests\StorePostRequest.php`
+- Más información en `app\Http\Controllers\Admin\PhotosController.php`
 
-- Más información en `app\Http\Controllers\Admin\PostsController.php`
+- Más información en `app\Photo.php`
 
-- Más información en `app\Post.php`
+- Más información en `database\seeds\PostsTableSeeder.php`
 <!-- end information -->
