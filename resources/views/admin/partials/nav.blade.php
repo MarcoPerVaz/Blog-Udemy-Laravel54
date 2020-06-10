@@ -22,11 +22,23 @@
         {{-- end show posts --}}
 
         {{-- create post --}}
-          <li {{ request()->is('admin/posts/create') ?  'class=active' : '' }}>
-            <a href="#" data-toggle="modal" data-target="#myModal"><i class="fa fa-pencil"></i> Crear un post</a>
+          <li>
+            @if (request()->is('admin/posts/*'))
+              <a href="{{ route('admin.posts.index', '#create') }}"><i class="fa fa-pencil"></i> Crear un post</a> 
+            @else
+              <a href="#" data-toggle="modal" data-target="#myModal"><i class="fa fa-pencil"></i> Crear un post</a> 
+            @endif
           </li>
         {{-- end create post --}}
       </ul>
     </li>
   {{-- end posts --}}
 </ul>
+
+
+{{-- Notas:
+      | --------------------------------------------------------------------------------------------------------------------------------------------
+      | *@if (request()->is('admin/posts/*')) Verifica si la url es 'admin/posts/algunaOtraCosa' le agrega '#create' a la url y muestra el modal, de
+      |  lo contrario quita el '#create' de la url y cierra el modal
+      | --------------------------------------------------------------------------------------------------------------------------------------------
+--}}

@@ -384,6 +384,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <!-- Bootstrap 3.3.6 -->
         <script src="/adminlte/bootstrap/js/bootstrap.min.js"></script>
 
+      <!-- Modal to create a post -->
+        @unless (request()->is('admin/posts/*'))
+            @include('admin.posts.create') 
+        @endunless
+
       @stack('scripts')
 
       <!-- AdminLTE App -->
@@ -400,7 +405,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 
 {{-- Notas:
-      | ---------------------------------------------------------------------------------------------------------------------------
-      | *@include('admin.posts.create') Vista resources\views\admin\posts\create.blade.php que contiene el modal para crear un post
-      | ---------------------------------------------------------------------------------------------------------------------------
+      | --------------------------------------------------------------------------------------------------------------------------------
+      | *@unless - A menos
+      | *@unless (request()->is('admin/posts/*')) Es una condicional inversa a if
+      | *@unless (request()->is('admin/posts/*')) A menos que estemos en la url 'admin/posts/*' es decir 'admin/posts/cualquierOtraCosa'
+      | --------------------------------------------------------------------------------------------------------------------------------
 --}}
