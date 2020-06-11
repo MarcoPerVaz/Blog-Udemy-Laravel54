@@ -4,7 +4,7 @@
 <!-- end title -->
 
 <!-- commit name -->
-### Commit | __Mantener el modal si hay errores__
+### Commit | __Generando URL's únicas__
 <!-- end commit name -->
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -17,11 +17,13 @@
 
 <!-- commit instructions -->
 #### Instrucciones Commit
-1. Edición de la vista `resources\views\admin\layout.blade.php`
-2. Edición de la vista `resources\views\admin\posts\create.blade.php`
-3. Edición del controlador `app\Http\Controllers\Admin\PostsController.php`
+1. Edición del modelo `app\Post.php`
+   - Creación y edición de la función `create(array $attributes = [])`
+2. Edición del controlador `app\Http\Controllers\Admin\PostsController.php`
    - Edición de la función `store(Request $request)`
-4. Edición de la vista `resources\views\admin\partials\nav.blade.php`
+3. Edición de la migración `database\migrations\2020_05_09_170826_create_posts_table.php`
+4. Rehacer las migraciones con seeds
+   > php artisan migrate:refresh --seed
 <!-- end commit instructions -->
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -34,11 +36,9 @@
 
 <!-- information -->
 #### Información:
-- Más información en `resources\views\admin\layout.blade.php`
-
-- Más información en `resources\views\admin\posts\create.blade.php`
+- Más información en `app\Post.php`
 
 - Más información en `app\Http\Controllers\Admin\PostsController.php`
 
-- Más información en `resources\views\admin\partials\nav.blade.php`
+- Más información en `database\migrations\2020_05_09_170826_create_posts_table.php`
 <!-- end information -->

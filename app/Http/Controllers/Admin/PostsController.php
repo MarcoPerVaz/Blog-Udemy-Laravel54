@@ -20,14 +20,19 @@ class PostsController extends Controller
 
     public function store(Request $request)
     {
-        /*
-            | ---------------------------------------------------------------------------------------------
-            | *'title' => 'required|min:3' El campo 'title' es obligatorio y mínimo debe tener 3 caracteres
-            | --------------------------------------------------------------------------------------------- 
-        */
         $this->validate($request, ['title' => 'required|min:3']);
 
         $post = Post::create($request->only('title'));
+
+        /* 
+            | -------------------------------------------------------------------------------------------------------------------------------------
+            | *Crear url's únicas desde el controlador, funciona pero se pasó a la función create(array $attributes = []) en el modelo app\Post.php
+            |   *$post->url = str_slug($request->get('title')) . "-{$post->id}";
+            |       *str_slug($request->get('title')) Convierte el nombre del post en slug
+            |       *-{$post->id}" Le agreg el campo 'id'
+            |   *$post->save();
+            | -------------------------------------------------------------------------------------------------------------------------------------
+        */
 
         return redirect()->route('admin.posts.edit', $post);
     }

@@ -14,18 +14,18 @@ class CreatePostsTable extends Migration
     public function up()
     {
         /* 
-            | ---------------------------------------------------------------------------
-            | *$table->text('iframe')->nullable(); Campo de tipo text y acepta valor nulo
-            | ---------------------------------------------------------------------------
+            | ----------------------------------------------------------------------------------------------------------------
+            | *$table->string('url')->unique()->nullable(); Campo de tipo varchar, no se puede repetir y aceptar valores nulos
+            | ----------------------------------------------------------------------------------------------------------------
         */
         Schema::create('posts', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title');
-            $table->string('url');
+
+            $table->string('url')->unique()->nullable();
+
             $table->mediumText('excerpt')->nullable();
-
             $table->text('iframe')->nullable();
-
             $table->text('body')->nullable();
             $table->timestamp('published_at')->nullable();
             $table->unsignedInteger('category_id')->nullable();

@@ -13,15 +13,6 @@ class Post extends Model
 
     protected $dates = ['published_at'];
 
-    /* 
-        | ----------------------------------------------------------------------------------------------------------------------------------------------------------------
-        | *Evento para eliminar las imágenes de la base de datos
-        |   *Más información en https://laravel.com/docs/5.4/eloquent#events
-        | *$post->tags()->detach(); Elimina las etiquetas a tráves de la relación tags() en el modelo app\Post.php
-        |   *Más información sobre detach en https://laravel.com/docs/5.4/eloquent-relationships#updating-many-to-many-relationships
-        | *$post->photos->each->delete(); Recorre todas las fotos usando colecciones y las elimina de la base de datos usando la relación photos() del modelo app\Post.php
-        | ----------------------------------------------------------------------------------------------------------------------------------------------------------------
-    */
     protected static function boot()
     {
         parent::boot();
@@ -60,44 +51,51 @@ class Post extends Model
               ->latest('published_at');
     }
 
-    public function setTitleAttribute($title)
+    /* 
+        | --------------------------------
+        | *Función para crear url's únicas
+        | --------------------------------
+    */
+    public static function create(array $attributes = [])
     {
-        $this->attributes['title'] = $title;
-        $this->attributes['url'] = str_slug($title);
+        $post = static::query()->create($attributes);
+
+        $post->generateUrl();
+
+        return $post;
     }
 
     /* 
-        | ---------------------------------------------------------------------------------------
-        | *Mutador o mutator 
-        |   *Más información en https://laravel.com/docs/5.4/eloquent-mutators#defining-a-mutator
-        | *Los mutadores se ejecutan automáticamente
-        | ---------------------------------------------------------------------------------------
+        | --------------------------------------------------------------------------------------------------------------------------------------
+        | *Función para convierte el nmbre del post en url's únicas y amigable y lo guarda en la base de datos
+        | *Sustituye al mutator setTitleAttribute($title) que es eliminado
+        | *$url = str_slug($this->title); Convierte el campo 'title' en slug y lo guarda en la variable $url
+        | *if ($this::whereUrl($url)->exists()) Verficia si ya existe la url y de existir le agrega el campo 'id' - $url = "{$url}-{$this->id}";
+        | *$this->url = $url; Asigna la url nueva al campo 'url' de la base de datos
+        | *$this->save();¨Guarda el campo en la base de datos
+        | --------------------------------------------------------------------------------------------------------------------------------------
     */
+    public function generateUrl()
+    {
+        $url = str_slug($this->title);
+
+        if ($this::whereUrl($url)->exists()) {
+            $url = "{$url}-{$this->id}";
+        }
+        $this->url = $url;
+        $this->save();
+    }
+
     public function setPublishedAtAttribute($published_at)
     {
         $this->attributes['published_at'] = $published_at ?  Carbon::parse($published_at) : null;;
     }
 
-    /* 
-        | ---------------------------------------------------------------------------------------
-        | *Mutador o mutator 
-        |   *Más información en https://laravel.com/docs/5.4/eloquent-mutators#defining-a-mutator
-        | *Los mutadores se ejecutan automáticamente
-        | ---------------------------------------------------------------------------------------
-    */
     public function setCategoryIdAttribute($category)
     {
         $this->attributes['category_id'] = Category::find($category) ? $category : Category::create(['name' => $category])->id;;
     }
 
-    /* 
-        | -------------------------------------------------------------------------------------------------------
-        | *Función para guardar las etiquetas que antes estaba en la función update(Post $post, Request $request) 
-        |  del controlador app\Http\Controllers\Admin\PostsController.php
-        | *Se crea una colección
-        |   *Más información sobre colleciones en https://laravel.com/docs/5.4/collections#introduction
-        | -------------------------------------------------------------------------------------------------------
-    */
     public function syncTags($tags)
     {
         $tagIds = collect($tags)->map(function ($tag) {
