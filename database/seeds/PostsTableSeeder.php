@@ -16,14 +16,7 @@ class PostsTableSeeder extends Seeder
      */
     public function run()
     {
-        /* 
-            | -----------------------------------------------------------------------------------------------------------------------------------
-            | *Storage::disk('public')->deleteDirectory('posts'); Elimina todas las imágenes físicamente del proyecto al usar php artisan refresh
-            | *No olvidar importar use Illuminate\Support\Facades\Storage;
-            | -----------------------------------------------------------------------------------------------------------------------------------
-        */
         Storage::disk('public')->deleteDirectory('posts');
-
         Post::truncate();
         Category::truncate();
         Tag::truncate();
@@ -58,6 +51,14 @@ class PostsTableSeeder extends Seeder
         $post->body = "<p>Contenido de mi primer post</p>";
         $post->published_at = Carbon::now()->subDays(4);
         $post->category_id = 1;
+
+        /* 
+            | ------------------------------------------
+            | *Al primer post le asigna el 'user_id' = 1
+            | ------------------------------------------
+        */
+        $post->user_id = 1;
+
         $post->save();
         $post->tags()->attach(Tag::create(['name' => 'Etiqueta 1']));
 
@@ -73,6 +74,14 @@ class PostsTableSeeder extends Seeder
         $post->body = "<p>Contenido de mi segundo post</p>";
         $post->published_at = Carbon::now()->subDays(3);
         $post->category_id = 2;
+
+        /* 
+            | -------------------------------------------
+            | *Al segundo post le asigna el 'user_id' = 1
+            | -------------------------------------------
+        */
+        $post->user_id = 1;
+
         $post->save();
         $post->tags()->attach(Tag::create(['name' => 'Etiqueta 2']));
 
@@ -88,6 +97,14 @@ class PostsTableSeeder extends Seeder
         $post->body = "<p>Contenido de mi tercer post</p>";
         $post->published_at = Carbon::now()->subDays(2);
         $post->category_id = 1;
+
+        /* 
+            | ------------------------------------------
+            | *Al tercer post le asigna el 'user_id' = 1
+            | ------------------------------------------
+        */
+        $post->user_id = 1;
+
         $post->save();
         $post->tags()->attach(Tag::create(['name' => 'Etiqueta 3']));
     }

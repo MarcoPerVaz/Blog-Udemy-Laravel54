@@ -41,7 +41,7 @@
 						{{-- header --}}
 							<header class="container-flex space-between">
 								<div class="date">
-									<span class="c-gray-1">{{ $post->published_at->diffForHumans() }}</span>
+									<span class="c-gray-1">{{ $post->published_at->diffForHumans() }} / {{ $post->owner->name }}</span>
 								</div>
 								<div class="post-category">
 									<span class="category text-capitalize">
@@ -91,8 +91,8 @@
 
 
 {{-- Notas:
-			| -----------------------------------------------------------------------------------------------------------------
-			| *$title Variable dinámica que tendrá la información de si se busca por categoría o por etiqueta
-			| *route('categories.show', $post->category) El nombre de la ruta se define en routes\web.php
-			| -----------------------------------------------------------------------------------------------------------------
+			| ---------------------------------------------------------
+			| *$post->owner->name
+			|		*owner es la relación owner() en el modelo app\Post.php
+			| ---------------------------------------------------------
 --}}

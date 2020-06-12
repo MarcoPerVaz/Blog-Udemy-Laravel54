@@ -4,7 +4,7 @@
 <!-- end title -->
 
 <!-- commit name -->
-### Commit | __Acceso a posts no públicos__
+### Commit | __Asignar posts a usuarios__
 <!-- end commit name -->
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -17,28 +17,32 @@
 
 <!-- commit instructions -->
 #### Instrucciones Commit
-1. Edición de la vista `resources\views\posts\show.blade.php`
-2. Edición del controlador `app\Http\Controllers\PostsController.php`
-   - Edición de la función `show(Post $post)`
-3. Edición del modelo `app\Post.php`
-   - Creación y edición de la función `isPublished()`
-4. Creación del directorio `resources\views\errors`
-   - Creación y edición de la vista `resources\views\errors\404.blade.php`
+1. Edición de la migración `database\migrations\2020_05_09_170826_create_posts_table.php`
+2. Edición del controlador `app\Http\Controllers\Admin\PostsController.php`
+   - Edición de la función `store(Request $request)`
+3. Edición del seeder `database\seeds\PostsTableSeeder.php`
+4. Rehacer las migraciones con seeds
+   > php artisan migrate:refresh --seed
+5. Edición del modelo `app\Post.php`
+6. Edición del modelo `app\User.php`
+7. Edición de la vista `resources\views\pages\home.blade.php`
 <!-- end commit instructions -->
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 <!-- notes -->
 #### Notas:
-- Hay un error que se explica en la vista `resources\views\posts\show.blade.php`
+- [Documentación | `Eloquent: Relationships`](https://laravel.com/docs/5.5/eloquent-relationships)
 <!-- end notes -->
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 <!-- information -->
 #### Información:
-- Más información en `resources\views\posts\show.blade.php`
-- Más información en `app\Http\Controllers\PostsController.php`
+- Más información en `database\migrations\2020_05_09_170826_create_posts_table.php`
+- Más información en `app\Http\Controllers\Admin\PostsController.php`
+- Más información en `database\seeds\PostsTableSeeder.php`
 - Más información en `app\Post.php`
-- Más información en `resources\views\errors\404.blade.php`
+- Más información en `app\User.php`
+- Más información en `resources\views\pages\home.blade.php`
 <!-- end information -->

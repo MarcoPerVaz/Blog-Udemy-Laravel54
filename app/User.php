@@ -26,4 +26,22 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /* 
+        | -------------------------------------------------------------------------------------
+        | *Relación hasMany (Tiene muchos) Un usuario puede tener muchos posts
+        |   *Más información en https://laravel.com/docs/5.5/eloquent-relationships#one-to-many
+        | -------------------------------------------------------------------------------------
+    */
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
 }
+
+
+/* Notas:
+    | --------------------------------------------------------------------------------------------------
+    | *Más información sobre relaciones con Eloquent https://laravel.com/docs/5.5/eloquent-relationships
+    | --------------------------------------------------------------------------------------------------
+*/

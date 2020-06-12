@@ -7,8 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
+    /* 
+        | -------------------------------
+        | *Se agrega 'user_id a fillable'
+        | -------------------------------
+    */
     protected $fillable = [
-        'title', 'body', 'iframe', 'excerpt', 'published_at', 'category_id',
+        'title', 'body', 'iframe', 'excerpt', 'published_at', 'category_id', 'user_id',
     ];
 
     protected $dates = ['published_at'];
@@ -44,6 +49,18 @@ class Post extends Model
         return $this->hasMany(Photo::class);
     }
 
+    /* 
+        | --------------------------------------------------------------------------------------------------------------------
+        | *Relación belongsTo (Pertenece a) Un port pertenece a un usuario
+        |   *Más información en https://laravel.com/docs/5.5/eloquent-relationships#one-to-many-inverse
+        | *belongsTo(User::class, 'user_id'); Se le indica 'user_id' porque de mo ponerlo Laravel buscaría el campo 'owner_id'
+        | --------------------------------------------------------------------------------------------------------------------
+    */
+    public function owner()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
     public function scopePublished($query)
     {
         $query->whereNotNull('published_at')
@@ -51,11 +68,6 @@ class Post extends Model
               ->latest('published_at');
     }
 
-    /* 
-        | ----------------------------------------------------------------------------------------
-        | *Función que verifica si el post tiene fecha de publicación o es menor a la fecha actual
-        | ----------------------------------------------------------------------------------------
-    */
     public function isPublished()
     {
         return !is_null($this->published_at) && $this->published_at < today();
@@ -100,3 +112,10 @@ class Post extends Model
         return $this->tags()->sync($tagIds);
     }
 }
+
+
+/* Notas:
+    | -------------------------------------------------------------------------------------------------
+    | *Más información sobre relaciones de Eloquent https://laravel.com/docs/5.5/eloquent-relationships
+    | -------------------------------------------------------------------------------------------------
+*/
