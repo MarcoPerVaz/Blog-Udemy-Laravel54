@@ -8,13 +8,13 @@ use Illuminate\Http\Request;
 class CategoriesController extends Controller
 {
     /* 
-        | ----------------------------------------------------------------------------------------------
-        | *Devuelve la vista resources\views\welcome.blade.php y le pasa las variables 'title' y 'posts'
-        | ----------------------------------------------------------------------------------------------
+        | -------------------------------------------------------------------------------------------------
+        | *Devuelve la vista resources\views\pages\home.blade.php y le pasa las variables 'title' y 'posts'
+        | -------------------------------------------------------------------------------------------------
     */
     public function show(Category $category)
     {
-        return view('welcome', [
+        return view('pages.home', [
             'title' => "Publicaciones de la categoría '{$category->name}'",
             'posts' => $category->posts()->paginate()
         ]);
