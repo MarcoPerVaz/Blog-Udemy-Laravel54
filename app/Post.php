@@ -52,10 +52,15 @@ class Post extends Model
     }
 
     /* 
-        | --------------------------------
-        | *Función para crear url's únicas
-        | --------------------------------
+        | ----------------------------------------------------------------------------------------
+        | *Función que verifica si el post tiene fecha de publicación o es menor a la fecha actual
+        | ----------------------------------------------------------------------------------------
     */
+    public function isPublished()
+    {
+        return !is_null($this->published_at) && $this->published_at < today();
+    }
+
     public static function create(array $attributes = [])
     {
         $post = static::query()->create($attributes);
@@ -65,16 +70,6 @@ class Post extends Model
         return $post;
     }
 
-    /* 
-        | --------------------------------------------------------------------------------------------------------------------------------------
-        | *Función para convierte el nmbre del post en url's únicas y amigable y lo guarda en la base de datos
-        | *Sustituye al mutator setTitleAttribute($title) que es eliminado
-        | *$url = str_slug($this->title); Convierte el campo 'title' en slug y lo guarda en la variable $url
-        | *if ($this::whereUrl($url)->exists()) Verficia si ya existe la url y de existir le agrega el campo 'id' - $url = "{$url}-{$this->id}";
-        | *$this->url = $url; Asigna la url nueva al campo 'url' de la base de datos
-        | *$this->save();¨Guarda el campo en la base de datos
-        | --------------------------------------------------------------------------------------------------------------------------------------
-    */
     public function generateUrl()
     {
         $url = str_slug($this->title);

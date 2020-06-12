@@ -7,23 +7,18 @@ use Illuminate\Http\Request;
 
 class PostsController extends Controller
 {
-    /* 
-        | -----------------------------------------------------------------------------------
-        | *Muestra la información de un post
-        | *Se inyecta el modelo usando Model Binding - show(Post $post)
-        | *Devuelve la vista resources\views\posts\show.blade.php y le pasa la variable $post
-        | *No olvidar importar el modelo use App\Post;
-        | -----------------------------------------------------------------------------------
-    */
     public function show(Post $post)
     {
-        return view('posts.show', compact('post'));
+        /* 
+            | --------------------------------------------------------------------------------------------------------------------------------------------------
+            | *if ($post->isPublished() || auth()->check()) Verifica si el post tiene fecha de publicación ó si el usuario está autenticado,
+            |  de ser cierto muestra la vista resources\views\posts\show.blade.php y le pasa la variable $post pero de ser falso muestra el error 404 Not found
+            | *isPublished() Es una función incluída en el modelo app\Post.php para verificar si el post tiene fecha de publicación o es menor a la fecha actual
+            | --------------------------------------------------------------------------------------------------------------------------------------------------
+        */
+        if ($post->isPublished() || auth()->check()) {
+            return view('posts.show', compact('post'));
+        }
+        abort(404);
     }
 }
-
-
-/* Notas:
-    | ------------------------------------------------------------------------------------------
-    | *Este controlador es para mostrar la información de un post si necesidad de iniciar sesión
-    | ------------------------------------------------------------------------------------------
-*/

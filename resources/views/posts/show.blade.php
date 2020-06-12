@@ -22,12 +22,19 @@
 
     <div class="content-post">
       <header class="container-flex space-between">
+        {{-- published date --}}
         <div class="date">
-          	<span class="c-gris">{{ $post->published_at->format('M d') }}</span>
+          	<span class="c-gris">{{ optional($post->published_at)->format('M d') }}</span>
         </div>
-        <div class="post-category">
-          <span class="category">{{ $post->category->name }}</span>
-        </div>
+        {{-- end published date --}}
+
+        {{-- category --}}
+        @if ($post->category)
+          <div class="post-category">
+            <span class="category">{{ $post->category->name }}</span>
+          </div>
+        @endif
+        {{-- end category --}}
       </header>
 
       <h1>{{ $post->title }}</h1>
@@ -42,11 +49,13 @@
 
         @include('partials.social-links', ['description' => $post->title])
 
+        {{-- tags --}}
           <div class="tags container-flex">
             @foreach ($post->tags as $tag)
 							<span class="tag c-gris">#{{ $tag->name }}</span>	
 						@endforeach
           </div>
+          {{-- end tags --}}
       </footer>
 
       <div class="comments">
@@ -78,8 +87,10 @@
 
 
 {{-- Notas:
-      | -----------------------------------------------------------------------------------------------------------------------------------
-      | *El helper url() permite usar la url directamente (las rutas se definen en routes\web.php)
-      |   *Más información sobre el helper url() - https://laravel.com/docs/5.4/helpers#urls
-      | -----------------------------------------------------------------------------------------------------------------------------------
+      | ------------------------------------------------------------------------------------------------------------------------------------------------------------
+      | *Al momnento de querer ver un post individual desde el administrador o colocando la url manualmente en el navegador y el post no tiene fecha de publicación, 
+      |  mostrará un error Call to a member function format() esto es debido a que se le quiere dar formato a una fecha nue no existe ya que no tiene fecha de 
+      |  publicación, para solucionar esto se usar el helper optional() incluído en Laravel
+      | *@if ($post->category) Verifica si el post tiene una categoría asignada
+      | ------------------------------------------------------------------------------------------------------------------------------------------------------------
 --}}

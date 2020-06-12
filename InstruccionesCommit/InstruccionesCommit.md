@@ -4,7 +4,7 @@
 <!-- end title -->
 
 <!-- commit name -->
-### Commit | __Agregando las páginas estáticas del menú__
+### Commit | __Acceso a posts no públicos__
 <!-- end commit name -->
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -17,31 +17,28 @@
 
 <!-- commit instructions -->
 #### Instrucciones Commit
-1. Edición de la vista `resources\views\pages\about.blade.php`
-   - Copiar el contenido de la sección `<section class="pages container">` del archivo `about.html` del directorio descargado `Zendero` y pegar en la vista `resources\views\pages\about.blade.php`
-2. Edición de la vista `resources\views\pages\archive.blade.php`
-   - Copiar el contenido de la sección `<section class="pages container">` del archivo `archive.html` del directorio descargado `Zendero` y pegar en la vista `resources\views\pages\archive.blade.php`
-3. Edición de la vista `resources\views\pages\contact.blade.php`
-   - Copiar el contenido de la sección `<section class="pages container">` del archivo `contact.html` del directorio descargado `Zendero` y pegar en la vista `resources\views\pages\contact.blade.php`
-4. Edición del controlador `app\Http\Controllers\CategoriesController.php`
-   - Edición de la función `show(Category $category)`
-5. Edición del controlador `app\Http\Controllers\TagsController.php`
-   - Edición de la función `show(Tag $tag)`
-6. Edición del archivo de estilos `public\css\twitter-bootstrap.css`
-
-   **Se quita todo de la línea `10` a la `333`*
+1. Edición de la vista `resources\views\posts\show.blade.php`
+2. Edición del controlador `app\Http\Controllers\PostsController.php`
+   - Edición de la función `show(Post $post)`
+3. Edición del modelo `app\Post.php`
+   - Creación y edición de la función `isPublished()`
+4. Creación del directorio `resources\views\errors`
+   - Creación y edición de la vista `resources\views\errors\404.blade.php`
 <!-- end commit instructions -->
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 <!-- notes -->
 #### Notas:
+- Hay un error que se explica en la vista `resources\views\posts\show.blade.php`
 <!-- end notes -->
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 <!-- information -->
 #### Información:
-- Más información en `app\Http\Controllers\CategoriesController.php`
-- Más información en `app\Http\Controllers\TagsController.php`
+- Más información en `resources\views\posts\show.blade.php`
+- Más información en `app\Http\Controllers\PostsController.php`
+- Más información en `app\Post.php`
+- Más información en `resources\views\errors\404.blade.php`
 <!-- end information -->
