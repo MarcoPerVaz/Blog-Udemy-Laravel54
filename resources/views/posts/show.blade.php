@@ -8,17 +8,21 @@
 @section('content')
   <article class="post container">
 
-    {{-- images --}}
-      @if ($post->photos->count() === 1)
-        <figure><img src="{{ url($post->photos->first()->url) }}" class="img-responsive"></figure>
-      @elseif($post->photos->count() > 1)
-        @include('posts.carousel')
-      @elseif($post->iframe)
-      <div class="video">
-        {!! $post->iframe !!}
-      </div>
-      @endif
-    {{-- end images --}}
+    @if ($post->photos->count() === 1)
+      {{-- images --}}
+        @include('posts.photo')
+      {{-- end images --}}
+    @elseif($post->photos->count() > 1)
+      {{-- images --}}
+        @include('posts.carousel-preview')
+      {{-- end images --}}
+
+    @elseif($post->iframe)
+      {{-- iframe --}}
+        @include('posts.iframe')
+      {{-- end iframe --}}
+    @endif
+    
 
     <div class="content-post">
       <header class="container-flex space-between">
@@ -50,12 +54,8 @@
         @include('partials.social-links', ['description' => $post->title])
 
         {{-- tags --}}
-          <div class="tags container-flex">
-            @foreach ($post->tags as $tag)
-							<span class="tag c-gris">#{{ $tag->name }}</span>	
-						@endforeach
-          </div>
-          {{-- end tags --}}
+          @include('posts.tags')
+        {{-- end tags --}}
       </footer>
 
       <div class="comments">
@@ -87,10 +87,10 @@
 
 
 {{-- Notas:
-      | ------------------------------------------------------------------------------------------------------------------------------------------------------------
-      | *Al momnento de querer ver un post individual desde el administrador o colocando la url manualmente en el navegador y el post no tiene fecha de publicación, 
-      |  mostrará un error Call to a member function format() esto es debido a que se le quiere dar formato a una fecha nue no existe ya que no tiene fecha de 
-      |  publicación, para solucionar esto se usar el helper optional() incluído en Laravel
-      | *@if ($post->category) Verifica si el post tiene una categoría asignada
-      | ------------------------------------------------------------------------------------------------------------------------------------------------------------
+      | -----------------------------------------------------------------------------------------------------
+      | *@include('posts.photo') Incluye la vista resources\views\posts\photo.blade.php
+      | *@include('posts.carousel-preview') Incluye la vista resources\views\posts\carousel-preview.blade.php
+      | *@include('posts.iframe') Incluye la vista resources\views\posts\iframe.blade.php
+      | *@include('posts.tags') Incluye la vista resources\views\posts\tags.blade.php
+      | -----------------------------------------------------------------------------------------------------
 --}}
