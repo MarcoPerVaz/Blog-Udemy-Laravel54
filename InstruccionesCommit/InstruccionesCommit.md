@@ -4,7 +4,7 @@
 <!-- end title -->
 
 <!-- commit name -->
-### Commit | __Reestructuración de vistas__
+### Commit | __Vistas polimórficas__
 <!-- end commit name -->
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -17,30 +17,24 @@
 
 <!-- commit instructions -->
 #### Instrucciones Commit
-1. Creación y edición de la vista `resources\views\posts\header.blade.php`
-2. Creación y edición de la vista `resources\views\posts\tags.blade.php`
-3. Creación y edición de la vista `resources\views\posts\carousel-preview.blade.php`
-4. Creación y edición de la vista `resources\views\posts\photo.blade.php`
-5. Creación y edición de la vista `resources\views\posts\iframe.blade.php`
-6. Edición de la vista `resources\views\posts\show.blade.php`
-7. Edición de la vista `resources\views\pages\home.blade.php`
+1. Edición del modelo `app\Post.php`
+2. Creación de la vista `resources\views\posts\text.blade.php`
+3. Edición de la vista `resources\views\pages\home.blade.php`
+4. Edición de la vista `resources\views\posts\show.blade.php`
 <!-- end commit instructions -->
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 <!-- notes -->
 #### Notas:
+- No encontré documentación sobre vistas polimórficas pero el punto es mostrar la vista dependiendo sea el caso
 <!-- end notes -->
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 <!-- information -->
 #### Información:
-- Más información en `resources\views\posts\header.blade.php`
-- Más información en `resources\views\posts\tags.blade.php`
-- Más información en `resources\views\posts\carousel-preview.blade.php`
-- Más información en `resources\views\posts\photo.blade.php`
-- Más información en `resources\views\posts\iframe.blade.php`
-- Más información en `resources\views\posts\show.blade.php`
+- Más información en `app\Post.php`
 - Más información en `resources\views\pages\home.blade.php`
+- Más información en `resources\views\posts\show.blade.php`
 <!-- end information -->

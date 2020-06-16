@@ -8,21 +8,9 @@
 @section('content')
   <article class="post container">
 
-    @if ($post->photos->count() === 1)
-      {{-- images --}}
-        @include('posts.photo')
-      {{-- end images --}}
-    @elseif($post->photos->count() > 1)
-      {{-- images --}}
-        @include('posts.carousel-preview')
-      {{-- end images --}}
-
-    @elseif($post->iframe)
-      {{-- iframe --}}
-        @include('posts.iframe')
-      {{-- end iframe --}}
-    @endif
-    
+        {{-- polimorfic view --}}
+          @include( $post->viewType() ) 
+        {{-- end polimorfic view --}}
 
     <div class="content-post">
       <header class="container-flex space-between">
@@ -87,10 +75,7 @@
 
 
 {{-- Notas:
-      | -----------------------------------------------------------------------------------------------------
-      | *@include('posts.photo') Incluye la vista resources\views\posts\photo.blade.php
-      | *@include('posts.carousel-preview') Incluye la vista resources\views\posts\carousel-preview.blade.php
-      | *@include('posts.iframe') Incluye la vista resources\views\posts\iframe.blade.php
-      | *@include('posts.tags') Incluye la vista resources\views\posts\tags.blade.php
-      | -----------------------------------------------------------------------------------------------------
+			| ---------------------------------------------------------------------------------------------------------------------------------
+			| *	@include( $post->viewType('home') ) Vista polimórfica y se encuentra en la función viewType($home = '') del modelo app\Post.php
+			| ---------------------------------------------------------------------------------------------------------------------------------
 --}}

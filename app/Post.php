@@ -7,11 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
-    /* 
-        | -------------------------------
-        | *Se agrega 'user_id a fillable'
-        | -------------------------------
-    */
     protected $fillable = [
         'title', 'body', 'iframe', 'excerpt', 'published_at', 'category_id', 'user_id',
     ];
@@ -49,13 +44,6 @@ class Post extends Model
         return $this->hasMany(Photo::class);
     }
 
-    /* 
-        | --------------------------------------------------------------------------------------------------------------------
-        | *Relación belongsTo (Pertenece a) Un port pertenece a un usuario
-        |   *Más información en https://laravel.com/docs/5.5/eloquent-relationships#one-to-many-inverse
-        | *belongsTo(User::class, 'user_id'); Se le indica 'user_id' porque de mo ponerlo Laravel buscaría el campo 'owner_id'
-        | --------------------------------------------------------------------------------------------------------------------
-    */
     public function owner()
     {
         return $this->belongsTo(User::class, 'user_id');
@@ -111,11 +99,32 @@ class Post extends Model
 
         return $this->tags()->sync($tagIds);
     }
+
+    /* 
+        | ---------------------------------------------------------------------------------------------------
+        | *Vistas polimórficas
+        | *No encontré documentación sobre las vistas polimórficas
+        | *El punto de las vistas polimórficas es que se muestre la vista que se necesite dependiendo el caso
+        | ---------------------------------------------------------------------------------------------------
+    */
+    public function viewType($home = '')
+    {
+        if ($this->photos->count() === 1) :
+
+            return 'posts.photo';
+
+        elseif ($this->photos->count() > 1) :
+
+            return $home === 'home' ? 'posts.carousel-preview' : 'posts.carousel';
+
+        elseif ($this->iframe) :
+
+            return 'posts.iframe';
+
+        else :
+
+            return 'posts.text';
+
+        endif;
+    }
 }
-
-
-/* Notas:
-    | -------------------------------------------------------------------------------------------------
-    | *Más información sobre relaciones de Eloquent https://laravel.com/docs/5.5/eloquent-relationships
-    | -------------------------------------------------------------------------------------------------
-*/
