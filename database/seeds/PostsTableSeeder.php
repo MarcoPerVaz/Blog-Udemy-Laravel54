@@ -100,12 +100,21 @@ class PostsTableSeeder extends Seeder
 
         /* 
             | ------------------------------------------
-            | *Al tercer post le asigna el 'user_id' = 1
+            | *Al tercer post le asigna el 'user_id' = 2
             | ------------------------------------------
         */
-        $post->user_id = 1;
+        $post->user_id = 2;
 
         $post->save();
         $post->tags()->attach(Tag::create(['name' => 'Etiqueta 3']));
     }
 }
+
+
+/* Notas:
+    | ---------------------------------------
+    | *El primer post pertenece al usuario 1
+    | *El segundo post pertenece al usuario 1
+    | *El tercer post pertenece al usuario 2
+    | ---------------------------------------
+*/

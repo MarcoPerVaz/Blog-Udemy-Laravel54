@@ -61,8 +61,15 @@ class Post extends Model
         return !is_null($this->published_at) && $this->published_at < today();
     }
 
+    /* 
+        | -----------------------------------------------------------------------------------------------------------------------------------------
+        | *$attributes['user_id'] = auth()->id(); Asigna el 'id' del usuario autenticado al campo 'user_id' de la tabla 'users' de la base de datos
+        | -----------------------------------------------------------------------------------------------------------------------------------------
+    */
     public static function create(array $attributes = [])
     {
+        $attributes['user_id'] = auth()->id();
+
         $post = static::query()->create($attributes);
 
         $post->generateUrl();
@@ -100,13 +107,6 @@ class Post extends Model
         return $this->tags()->sync($tagIds);
     }
 
-    /* 
-        | ---------------------------------------------------------------------------------------------------
-        | *Vistas polimórficas
-        | *No encontré documentación sobre las vistas polimórficas
-        | *El punto de las vistas polimórficas es que se muestre la vista que se necesite dependiendo el caso
-        | ---------------------------------------------------------------------------------------------------
-    */
     public function viewType($home = '')
     {
         if ($this->photos->count() === 1) :

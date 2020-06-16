@@ -183,7 +183,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <!-- The user image in the navbar-->
                     <img src="/adminlte/img/user2-160x160.jpg" class="user-image" alt="User Image">
                     <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                    <span class="hidden-xs">Alexander Pierce</span>
+                    <span class="hidden-xs">{{ auth()->user()->name }}</span>
                   </a>
                   <ul class="dropdown-menu">
                     <!-- The user image in the menu -->
@@ -191,8 +191,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                       <img src="/adminlte/img/user2-160x160.jpg" class="img-circle" alt="User Image">
 
                       <p>
-                        Alexander Pierce - Web Developer
-                        <small>Member since Nov. 2012</small>
+                        {{ auth()->user()->name }}
+                        <small>Desde {{ auth()->user()->created_at->format('d/m/Y') }}</small>
                       </p>
                     </li>
                     <!-- Menu Body -->
@@ -212,12 +212,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     </li>
                     <!-- Menu Footer-->
                     <li class="user-footer">
-                      <div class="pull-left">
-                        <a href="#" class="btn btn-default btn-flat">Profile</a>
-                      </div>
-                      <div class="pull-right">
-                        <a href="#" class="btn btn-default btn-flat">Sign out</a>
-                      </div>
+                      <form action="{{ route('logout') }}" method="post">
+                        {{ csrf_field() }}
+                        <button class="btn btn-default btn-flat btn-block">Cerrar sesión</button>
+                      </form>
                     </li>
                   </ul>
                 </li>
@@ -405,9 +403,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 
 {{-- Notas:
-      | --------------------------------------------------------------------------------------------------------------------------------
-      | *@unless - A menos
-      | *@unless (request()->is('admin/posts/*')) Es una condicional inversa a if
-      | *@unless (request()->is('admin/posts/*')) A menos que estemos en la url 'admin/posts/*' es decir 'admin/posts/cualquierOtraCosa'
-      | --------------------------------------------------------------------------------------------------------------------------------
+      | -------------------------------------------------------------------------------------------------------------------------------------------------
+      | *{{ auth()->user()->name }} Obtiene el nombre de la tabla users de la base de datos del usuario autenticado
+      | *{{ auth()->user()->created_at->format('d/m/Y') }} Obtiene la fecha del campo created_at de la tabla users de la base de datos y le da un formato
+      | *Se agrega el cierre de sesión línea 215-218 (debe ser con formulario, es decir etiqueta form)
+      |   *route('logout') }} Las rutas se definen en routes\web.php
+      |   *{{ csrf_field() }} Protección contra ataques csrf 
+      |     *Más información en https://laravel.com/docs/5.5/csrf#csrf-introduction
+      | -------------------------------------------------------------------------------------------------------------------------------------------------
 --}}

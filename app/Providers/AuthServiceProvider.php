@@ -12,8 +12,15 @@ class AuthServiceProvider extends ServiceProvider
      *
      * @var array
      */
+    /* 
+        | ---------------------------------------------------------------
+        | *'App\Post' => 'App\Policies\PostPolicy',
+        |   *'App\Post' Es el modelo
+        |   *'App\Policies\PostPolicy' Es la ruta de la Policy o Política
+        | ---------------------------------------------------------------
+    */
     protected $policies = [
-        'App\Model' => 'App\Policies\ModelPolicy',
+        'App\Post' => 'App\Policies\PostPolicy',
     ];
 
     /**
@@ -28,3 +35,11 @@ class AuthServiceProvider extends ServiceProvider
         //
     }
 }
+
+
+/* Notas:
+    | -------------------------------------------------------------------------------------
+    | *Se registran las Policies o Políticas en la propiedad $policies
+    |   *Más información en https://laravel.com/docs/5.5/authorization#registering-policies
+    | -------------------------------------------------------------------------------------
+*/

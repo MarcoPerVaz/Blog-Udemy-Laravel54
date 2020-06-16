@@ -6,21 +6,25 @@ use Illuminate\Database\Seeder;
 class UsersTableSeeder extends Seeder
 {
     /* 
-        | -----------------------------------------------------------------------------------------
-        | *Cada que se ejecuten los seeders se borrar la información para evitar duplicar registros
-        | *new User; Nueva instancia del modelo app\User.php
-        | *bcrypt() es una función para encriptación
-        | *$user->save(); Se crea el nuevo usuario
-        | *No olvidar importar el modelo use App\User;
-        | -----------------------------------------------------------------------------------------
+        | -------------------------------------------------
+        | *Se crean 2 usuarios, uno será admin y el otro no
+        | -------------------------------------------------
     */
     public function run()
     {
         User::truncate();
 
+        /* user 1 */
         $user = new User;
         $user->name = 'Marco';
         $user->email = 'admin@mail.com';
+        $user->password = bcrypt('123456');
+        $user->save();
+
+        /* user 2 */
+        $user = new User;
+        $user->name = 'Antonio';
+        $user->email = 'anotheruser@mail.com';
         $user->password = bcrypt('123456');
         $user->save();
     }
