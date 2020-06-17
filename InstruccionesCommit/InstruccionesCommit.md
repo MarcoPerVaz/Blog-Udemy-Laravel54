@@ -4,7 +4,7 @@
 <!-- end title -->
 
 <!-- commit name -->
-### Commit | __Políticas de acceso a publicaciones__
+### Commit | __Instalando el paquete laravel-permission__
 <!-- end commit name -->
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -17,55 +17,36 @@
 
 <!-- commit instructions -->
 #### Instrucciones Commit
-1. Edición del archivo seed `database\seeds\UsersTableSeeder.php`
-2. Edición del archivo seed `database\seeds\PostsTableSeeder.php`
-3. Rehacer las migraciones con los seeds
-   > php artisan migrate:fresh --seed
-4. Creación y edición de la Policy `app\Policies\PostPolicy.php`
-   > php artisan make:policy PostPolicy -m Post
+1. [Instalar Laravel Permission
+   > composer require spatie/laravel-permission "^2.37"
+2. Edición del archivo `composer.json`
 
-     **-m Post Vincula la Policy al modelo `app\Post.php` y crea funciones por defecto `view(User $user, Post $post)`, `create(User $user)`, `update(User $user, Post $post)` y `delete(User $user, Post $post)`*
+   **Algunos de los cambios se obtienen de link `Repositorio de Laravel 5.5 - composer.json` que está en notas (favor de comparar)*
+3. Usar el comando para actualizar las dependencias de composer
+   > composer update
+4. Publicar las migraciones de Laravel Permission
+   > php artisan vendor:publish --provider="Spatie\Permission\PermissionServiceProvider" --tag="migrations"
 
-     **Laravel crea el directorio `app\Policies` si no existe al usar el comando*
-   - Edición de la función `view(User $user, Post $post)`
-   - Edición de la función `create(User $user)`
-   - Edición de la función `update(User $user, Post $post)`
-   - Edición de la función `delete(User $user, Post $post)`
-5. Edción del archivo `app\Providers\AuthServiceProvider.php`
-6. Edición del controlador `app\Http\Controllers\Admin\PostsController.php`
-   - Edición de la función `index()`
-   - Edición de la función `store(Request $request)`
-   - Edición de la función `edit(Post $post)`
-   - Edición de la función `update(Post $post, StorePostRequest $request)`
-   - Edición de la función `destroy(Post $post)`
-7. Edición de la vista `resources\views\admin\layout.blade.php`
-8. Creación y edición de la vista `resources\views\errors\403.blade.php`
+     **Publicar significa que se pueden editar los archivos del paquete*
+5. Ejecutar la migración de Laravel Permission
+   > php artisan migrate
+6. Edición del modelo `app\User.php`
 
-   **Vista para mostrar el error 403 - Forbidden o prohibida cuando no se tenga autorización de ver la página*
-9. Edición del modelo `app\Post.php`
-   - Edición de la función `create(array $attributes = [])`
+   **No olvidar importar `use Spatie\Permission\Traits\HasRoles;`*
 <!-- end commit instructions -->
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 <!-- notes -->
 #### Notas:
-- [Documentación | `Introduction csrf protection`](https://laravel.com/docs/5.5/csrf#csrf-introduction)
-- [Documentación | `Generating Policies`](https://laravel.com/docs/5.5/authorization#creating-policies)
-- [Documentación | `Registering Policies`](https://laravel.com/docs/5.5/authorization#registering-policies)
-- [Documentación | `Writing Policies`](https://laravel.com/docs/5.5/authorization#writing-policies)
+- [Documentación | `Laravel Permission`](https://docs.spatie.be/laravel-permission/v2/installation-laravel/)
+- Ir a [Repositorio de Laravel 5.5 - `composer.json`](https://github.com/laravel/laravel/blob/5.5/composer.json)
+- En el modelo `app\User.php` solo se importo `use Spatie\Permission\Traits\HasRoles;`
 <!-- end notes -->
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 <!-- information -->
 #### Información:
-- Más información en `database\seeds\UsersTableSeeder.php`
-- Más información en `database\seeds\PostsTableSeeder.php`
-- Más información en `app\Policies\PostPolicy.php`
-- Más información en `app\Providers\AuthServiceProvider.php`
-- Más información en `app\Http\Controllers\Admin\PostsController.php`
-- Más información en `resources\views\admin\layout.blade.php`
-- Más información en `resources\views\errors\403.blade.php`
-- Más información en `app\Post.php`
+- Más información en `app\User.php`
 <!-- end information -->

@@ -4,35 +4,20 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, HasRoles;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
         'name', 'email', 'password',
     ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
     protected $hidden = [
         'password', 'remember_token',
     ];
-
-    /* 
-        | -------------------------------------------------------------------------------------
-        | *Relación hasMany (Tiene muchos) Un usuario puede tener muchos posts
-        |   *Más información en https://laravel.com/docs/5.5/eloquent-relationships#one-to-many
-        | -------------------------------------------------------------------------------------
-    */
+    
     public function posts()
     {
         return $this->hasMany(Post::class);
@@ -41,7 +26,8 @@ class User extends Authenticatable
 
 
 /* Notas:
-    | --------------------------------------------------------------------------------------------------
-    | *Más información sobre relaciones con Eloquent https://laravel.com/docs/5.5/eloquent-relationships
-    | --------------------------------------------------------------------------------------------------
+    | ------------------------------------------------------------------------------
+    | *No olvidar importar use Spatie\Permission\Traits\HasRoles;
+    | *No olvidar importar el trait use Notifiable, HasRoles; (Notifiable ya existe)
+    | ------------------------------------------------------------------------------
 */
