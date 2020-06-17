@@ -10,6 +10,20 @@ class PostPolicy
 {
     use HandlesAuthorization;
 
+    /* 
+        | ----------------------------------------------------------------------------------------
+        | *La función before() se ejecuta antes que cualquier otra función
+        | *if ($user->hasRole('Admin')) Verifica si el usuario autenticado tiene el role 'Admin'
+        |   *Si es verdadero el usuario puede ver, editar, crear y eliminar posts con return true;
+        | ----------------------------------------------------------------------------------------
+    */
+    public function before($user)
+    {
+        if ($user->hasRole('Admin')) {
+            return true;
+        }
+    }
+
     /**
      * Determine whether the user can view the post.
      *
@@ -17,12 +31,6 @@ class PostPolicy
      * @param  \App\Post  $post
      * @return mixed
      */
-    /* 
-        | ----------------------------------------------------------------------------------------------------------------------------------
-        | *Permite al usuario ver un post que le pertenezca
-        | *return $user->id === $post->user_id; Autoriza si el 'id' del usuario autenticado es igual al 'id' del usuario en la tabla 'posts'
-        | ----------------------------------------------------------------------------------------------------------------------------------
-    */
     public function view(User $user, Post $post)
     {
         return $user->id === $post->user_id;
@@ -34,12 +42,6 @@ class PostPolicy
      * @param  \App\User  $user
      * @return mixed
      */
-    /* 
-        | ------------------------------------------------------------
-        | *Permite al usuario crear un post
-        | *return true; Verdadero el usuario puede crear un nuevo post
-        | ------------------------------------------------------------
-    */
     public function create(User $user)
     {
         return true;
@@ -52,12 +54,6 @@ class PostPolicy
      * @param  \App\Post  $post
      * @return mixed
      */
-    /* 
-        | ----------------------------------------------------------------------------------------------------------------------------------
-        | *Permite al usuario actualizar un post que le pertenezca
-        | *return $user->id === $post->user_id; Autoriza si el 'id' del usuario autenticado es igual al 'id' del usuario en la tabla 'posts'
-        | ----------------------------------------------------------------------------------------------------------------------------------
-    */
     public function update(User $user, Post $post)
     {
         return $user->id === $post->user_id;
@@ -70,21 +66,8 @@ class PostPolicy
      * @param  \App\Post  $post
      * @return mixed
      */
-    /* 
-        | ----------------------------------------------------------------------------------------------------------------------------------
-        | *Permite al usuario eliminar un post que le pertenezca
-        | *return $user->id === $post->user_id; Autoriza si el 'id' del usuario autenticado es igual al 'id' del usuario en la tabla 'posts'
-        | ----------------------------------------------------------------------------------------------------------------------------------
-    */
     public function delete(User $user, Post $post)
     {
         return $user->id === $post->user_id;
     }
 }
-
-
-/* Notas:
-    | ----------------------------------------------------------------------------------------------------------
-    | *Más información sobre Policies o Políticas en https://laravel.com/docs/5.5/authorization#writing-policies
-    | ----------------------------------------------------------------------------------------------------------
-*/

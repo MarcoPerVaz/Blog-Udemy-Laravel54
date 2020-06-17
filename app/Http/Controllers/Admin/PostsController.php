@@ -13,27 +13,24 @@ use App\Http\Requests\StorePostRequest;
 class PostsController extends Controller
 {
     /* 
-        | -------------------------------------------------------------------------------------------------------------------
-        | *Las 2 formas obtienen los posts de un usuario autenticado
-        |   *$posts = Post::where('user_id', auth()->id())->get(); Obtiene los posts que tengan el id del usuario
-        |   *$posts = auth()->user()->posts; Obtiene los posts del usuario usando la relación posts() del modelo app\User.php
-        | -------------------------------------------------------------------------------------------------------------------
+        | ----------------------------------------------------------------------------------------------------------------------------
+        | *Lógica para mostrar todos los posts o solo los posts del usuario (Se pasó a la función allowed() en el modelo app\Post.php)
+        |   *if (auth()->user()->hasRole('Admin')) {
+        |     * $posts = Post::all();
+        |    *}
+        |    *else {
+        |       *$posts = Post::where('user_id', auth()->id())->get();
+        |       *$posts = auth()->user()->posts;
+        |    *}
+        | *$posts = Post::allowed()->get(); Función Scope allowed() en el modelo app\Post.php
+        | ----------------------------------------------------------------------------------------------------------------------------
     */
     public function index()
     {
-        $posts = auth()->user()->posts;
+        $posts = Post::allowed()->get();
         return view('admin.posts.index', compact('posts'));
     }
     
-    /* 
-        | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        | *$this->authorize('create', new Post); Usa Policy o Política para asignar el permiso para crear un usuario
-        |   *$this->authorize Usa la función authorize() para especificar la política a usar
-        |   *'create' Es el nombre de la función que contiene la política create(User $user) de la Policy app\Policies\PostPolicy.php
-        |   *new Post Nueva instancia del modelo app\Post.php
-        | *$post = Post::create($request->all()); Obtiene todos los elementos html que incluyan la propiedad name y que estén asignados en la propiedad $fillable del modelo app\Post.php
-        | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    */
     public function store(Request $request)
     {
         $this->authorize('create', new Post);
@@ -45,18 +42,6 @@ class PostsController extends Controller
         return redirect()->route('admin.posts.edit', $post);
     }
 
-    /* 
-        | -----------------------------------------------------------------------------------------------------------------------------------
-        | *$this->authorize('view', $post); Usa Policy o Política para asignar el permiso para editar un usuario
-        |   *$this->authorize Usa la función authorize() para especificar la política a usar
-        |   *'view' Es el nombre de la función que contiene la política view(User $user, Post $post) de la Policy app\Policies\PostPolicy.php
-        |   *$post Obtiene la información del modelo app\Post.php
-        | *Devuelve la vista resources\views\admin\posts\edit.blade.php y le pasa las variables 'post', 'tags' y 'categories' como parámetro
-        | *'post' => $post, Obtiene toda la información del post
-        | *'tags' => Tag::all(), Obtiene todas las etiquetas del modelo app\Tag.php
-        | *'categories' => Category::all() Obtiene todas las categorías del modelo app\Category.php
-        | -----------------------------------------------------------------------------------------------------------------------------------
-    */
     public function edit(Post $post)
     {
         $this->authorize('view', $post);
@@ -68,14 +53,6 @@ class PostsController extends Controller
         ]);
     }
 
-    /* 
-        | ---------------------------------------------------------------------------------------------------------------------------------------
-        | *$this->authorize('update', $post); Usa Policy o Política para asignar el permiso para actualizar un usuario
-        |   *$this->authorize Usa la función authorize() para especificar la política a usar
-        |   *'update' Es el nombre de la función que contiene la política update(User $user, Post $post) de la Policy app\Policies\PostPolicy.php
-        |   *$post Obtiene la información del modelo app\Post.php
-        | ---------------------------------------------------------------------------------------------------------------------------------------
-    */
     public function update(Post $post, StorePostRequest $request)
     {
         $this->authorize('update', $post);
@@ -87,14 +64,6 @@ class PostsController extends Controller
         return redirect()->route('admin.posts.edit', $post)->with('flash', 'Tu publicación ha sido guardada');
     }
 
-    /* 
-        | ----------------------------------------------------------------------------------------------------------
-        | *$this->authorize('delete', $post); Usa Policy o Política para asignar el permiso para eliminar un usuario
-        |   *$this->authorize Usa la función authorize() para especificar la política a usar
-        |   *'delete' Es el nombre de la función que contiene la política delete(User $user, Post $post) de la Policy app\Policies\PostPolicy.php
-        |   *$post Obtiene la información del modelo app\Post.php
-        | ----------------------------------------------------------------------------------------------------------
-    */
     public function destroy(Post $post)
     {
         $post->delete();

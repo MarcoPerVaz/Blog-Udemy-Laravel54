@@ -56,16 +56,30 @@ class Post extends Model
               ->latest('published_at');
     }
 
+    /* 
+        | ------------------------------------------------------------------------------------------------------------------------------------------------------
+        | *Función scope y se referencia como allowed() en la función index() del controlador app\Http\Controllers\Admin\PostsController.php
+        | *if (auth()->user()->hasRole('Admin')) Verifica si el usuario autenticado tiene el role 'Admin'
+        |   *return $query; Devuelve la consulta sin restricciones 
+        |       *El usuario con el role 'Admin' puede ver todos los posts
+        |   * return $query->where('user_id', auth()->id()); De lo contrario devuelve el permiso de ver los posts con 'id' igual al 'id' del usuario autenticado
+        |       *Cualquier otro usuario con el role de 'Writer' solo puede ver sus posts
+        | ------------------------------------------------------------------------------------------------------------------------------------------------------
+    */
+    public function scopeAllowed($query)
+    {
+        if (auth()->user()->hasRole('Admin')) {
+            return $query;
+        }
+
+        return $query->where('user_id', auth()->id());
+    }
+
     public function isPublished()
     {
         return !is_null($this->published_at) && $this->published_at < today();
     }
 
-    /* 
-        | -----------------------------------------------------------------------------------------------------------------------------------------
-        | *$attributes['user_id'] = auth()->id(); Asigna el 'id' del usuario autenticado al campo 'user_id' de la tabla 'users' de la base de datos
-        | -----------------------------------------------------------------------------------------------------------------------------------------
-    */
     public static function create(array $attributes = [])
     {
         $attributes['user_id'] = auth()->id();

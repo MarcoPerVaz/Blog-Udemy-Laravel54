@@ -4,7 +4,7 @@
 <!-- end title -->
 
 <!-- commit name -->
-### Commit | __Instalando el paquete laravel-permission__
+### Commit | __Roles y usuarios__
 <!-- end commit name -->
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -17,36 +17,57 @@
 
 <!-- commit instructions -->
 #### Instrucciones Commit
-1. [Instalar Laravel Permission
-   > composer require spatie/laravel-permission "^2.37"
-2. Edición del archivo `composer.json`
+1. Abrir `Tinker`
+   > php artisan tinker
 
-   **Algunos de los cambios se obtienen de link `Repositorio de Laravel 5.5 - composer.json` que está en notas (favor de comparar)*
-3. Usar el comando para actualizar las dependencias de composer
-   > composer update
-4. Publicar las migraciones de Laravel Permission
-   > php artisan vendor:publish --provider="Spatie\Permission\PermissionServiceProvider" --tag="migrations"
+   > use Spatie\Permission\Models\Role;
 
-     **Publicar significa que se pueden editar los archivos del paquete*
-5. Ejecutar la migración de Laravel Permission
-   > php artisan migrate
-6. Edición del modelo `app\User.php`
+   > $adminRole = Role::create(['name' => 'Admin']);
 
-   **No olvidar importar `use Spatie\Permission\Traits\HasRoles;`*
+   **Se crea el role 'admin' en la tabla roles de la base de datos*
+   > $u = App\User::first();
+   
+     **Se obtiene el primer usuario de la tabla users*
+   > $u->assignRole($adminRole);
+
+   **Se le asigna el role admin al primer usuario*
+
+   **Se puede usar la función assignRole() porque se importó el trait `use HasRoles` en el modelo User*
+   > $u->hasRole('Admin')
+
+   **Preguntar si el primer usuario tiene el role admin (devuelve true porque existe el role y lo tiene asignado)*
+   > $u->hasRole('Writer')
+
+   **Preguntar si el primer usuario tiene el role admin (devuelve false porque no existe el role y no lo tiene asignado)*
+   > exit
+
+   **Salir de Tinker*
+
+2. Edición del seed `database\seeds\UsersTableSeeder.php`
+
+   **No olvidar importar el modelo `use Spatie\Permission\Models\Role;`*
+3. Edición del archivo `database\seeds\DatabaseSeeder.php`
+4. Rehacer las migraciones con los seeds
+   > php artisan migrate:fresh --seed
+5. Edición del modelo `app\Post.php`
+6. Edición del controlador `app\Http\Controllers\Admin\PostsController.php`
+   - Edición de la función `index()`
+7. Edición de la Policy `app\Policies\PostPolicy.php`
 <!-- end commit instructions -->
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 <!-- notes -->
 #### Notas:
-- [Documentación | `Laravel Permission`](https://docs.spatie.be/laravel-permission/v2/installation-laravel/)
-- Ir a [Repositorio de Laravel 5.5 - `composer.json`](https://github.com/laravel/laravel/blob/5.5/composer.json)
-- En el modelo `app\User.php` solo se importo `use Spatie\Permission\Traits\HasRoles;`
 <!-- end notes -->
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 <!-- information -->
 #### Información:
-- Más información en `app\User.php`
+- Más información en `database\seeds\UsersTableSeeder.php`
+- Más información en `database\seeds\DatabaseSeeder.php`
+- Más información en `app\Post.php`
+- Más información en `app\Http\Controllers\Admin\PostsController.php`
+- Más información en `app\Policies\PostPolicy.php`
 <!-- end information -->

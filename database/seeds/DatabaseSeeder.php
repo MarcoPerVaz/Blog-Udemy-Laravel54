@@ -9,16 +9,20 @@ class DatabaseSeeder extends Seeder
      *
      * @return void
      */
+    /* 
+        | ---------------------------------------------------------------------------------------------------------------------------------
+        | *La idea es primero deshabilitar las llaves foráneas, luego ejecutar los seeders y después volver a habilitar las llaves foráneas
+        |   *DB::statement('SET FOREIGN_KEY_CHECKS=0'); Deshabilita la revisión de llaves foráneas
+        |   *DB::statement('SET FOREIGN_KEY_CHECKS=1'); Habilita la revisión de llaves foráneas
+        | ---------------------------------------------------------------------------------------------------------------------------------
+    */
     public function run()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0');
+
         $this->call(UsersTableSeeder::class);
         $this->call(PostsTableSeeder::class);
+
+        DB::statement('SET FOREIGN_KEY_CHECKS=1');
     }
 }
-
-
-/* Notas:
-    | ----------------------------------------------------------------------------------------------------
-    | *$this->call(UsersTableSeeder::class); Hace un llamado al seeder database\seeds\UsersTableSeeder.php
-    | ----------------------------------------------------------------------------------------------------
-*/
