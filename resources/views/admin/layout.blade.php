@@ -191,7 +191,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                       <img src="/adminlte/img/user2-160x160.jpg" class="img-circle" alt="User Image">
 
                       <p>
-                        {{ auth()->user()->name }}
+                        {{ auth()->user()->name }} - {{ auth()->user()->roles->first()->name }}
                         <small>Desde {{ auth()->user()->created_at->format('d/m/Y') }}</small>
                       </p>
                     </li>
@@ -403,12 +403,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 
 {{-- Notas:
-      | -------------------------------------------------------------------------------------------------------------------------------------------------
-      | *{{ auth()->user()->name }} Obtiene el nombre de la tabla users de la base de datos del usuario autenticado
-      | *{{ auth()->user()->created_at->format('d/m/Y') }} Obtiene la fecha del campo created_at de la tabla users de la base de datos y le da un formato
-      | *Se agrega el cierre de sesión línea 215-218 (debe ser con formulario, es decir etiqueta form)
-      |   *route('logout') }} Las rutas se definen en routes\web.php
-      |   *{{ csrf_field() }} Protección contra ataques csrf 
-      |     *Más información en https://laravel.com/docs/5.5/csrf#csrf-introduction
-      | -------------------------------------------------------------------------------------------------------------------------------------------------
+      | ------------------------------------------------------------------------------------------------
+      | *auth()->user()->roles->first()->name Obtiene el primer role del usuario autenticado - línea 194
+      |   *La relación roles() se obtiene de vendor\spatie\laravel-permission\src\Traits\HasRoles.php
+      | ------------------------------------------------------------------------------------------------
 --}}

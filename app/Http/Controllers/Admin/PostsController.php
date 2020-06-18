@@ -12,19 +12,6 @@ use App\Http\Requests\StorePostRequest;
 
 class PostsController extends Controller
 {
-    /* 
-        | ----------------------------------------------------------------------------------------------------------------------------
-        | *Lógica para mostrar todos los posts o solo los posts del usuario (Se pasó a la función allowed() en el modelo app\Post.php)
-        |   *if (auth()->user()->hasRole('Admin')) {
-        |     * $posts = Post::all();
-        |    *}
-        |    *else {
-        |       *$posts = Post::where('user_id', auth()->id())->get();
-        |       *$posts = auth()->user()->posts;
-        |    *}
-        | *$posts = Post::allowed()->get(); Función Scope allowed() en el modelo app\Post.php
-        | ----------------------------------------------------------------------------------------------------------------------------
-    */
     public function index()
     {
         $posts = Post::allowed()->get();
@@ -42,9 +29,14 @@ class PostsController extends Controller
         return redirect()->route('admin.posts.edit', $post);
     }
 
+    /* 
+        | --------------------------------------------------------------------------------------------------------------------------
+        | *$this->authorize('update', $post); Usa la función update(User $user, Post $post) de la Policy app\Policies\PostPolicy.php
+        | --------------------------------------------------------------------------------------------------------------------------
+    */
     public function edit(Post $post)
     {
-        $this->authorize('view', $post);
+        $this->authorize('update', $post);
 
         return view('admin.posts.edit', [
             'post' => $post,

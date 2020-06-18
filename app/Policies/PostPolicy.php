@@ -31,9 +31,17 @@ class PostPolicy
      * @param  \App\Post  $post
      * @return mixed
      */
+    /* 
+        | ---------------------------------------------------------------------------------------------------------------------------
+        | *$user->id === $post->user_id || $user->hasPermissionTo('View posts');
+        |   *Se usa el condicional OR - ||
+        |   *$user->id === $post->user_id Si el 'id' del usuario autenticado es igual al 'id' de la tabla 'users' de la base de datos
+        |   *$user->hasPermissionTo('View posts') Si el usuario autenticado tiene el permiso Ver todos los posts
+        | ---------------------------------------------------------------------------------------------------------------------------
+    */
     public function view(User $user, Post $post)
     {
-        return $user->id === $post->user_id;
+        return $user->id === $post->user_id || $user->hasPermissionTo('View posts');
     }
 
     /**
@@ -42,9 +50,14 @@ class PostPolicy
      * @param  \App\User  $user
      * @return mixed
      */
+    /* 
+        | --------------------------------------------------------------------------------------------------
+        | *$user->hasPermissionTo('Create posts'); Si el usuario autenticado tiene el permiso de crear posts
+        | --------------------------------------------------------------------------------------------------
+    */
     public function create(User $user)
     {
-        return true;
+        return $user->hasPermissionTo('Create posts');
     }
 
     /**
@@ -54,9 +67,17 @@ class PostPolicy
      * @param  \App\Post  $post
      * @return mixed
      */
+    /* 
+        | ---------------------------------------------------------------------------------------------------------------------------
+        | *$user->id === $post->user_id || $user->hasPermissionTo('View posts');
+        |   *Se usa el condicional OR - ||
+        |   *$user->id === $post->user_id Si el 'id' del usuario autenticado es igual al 'id' de la tabla 'users' de la base de datos
+        |   *$user->hasPermissionTo('View posts') Si el usuario autenticado tiene el permiso Actualizar posts
+        | ---------------------------------------------------------------------------------------------------------------------------
+    */
     public function update(User $user, Post $post)
     {
-        return $user->id === $post->user_id;
+        return $user->id === $post->user_id || $user->hasPermissionTo('Update posts');
     }
 
     /**
@@ -66,8 +87,16 @@ class PostPolicy
      * @param  \App\Post  $post
      * @return mixed
      */
+    /* 
+        | ---------------------------------------------------------------------------------------------------------------------------
+        | *$user->id === $post->user_id || $user->hasPermissionTo('View posts');
+        |   *Se usa el condicional OR - ||
+        |   *$user->id === $post->user_id Si el 'id' del usuario autenticado es igual al 'id' de la tabla 'users' de la base de datos
+        |   *$user->hasPermissionTo('View posts') Si el usuario autenticado tiene el permiso Eliminar posts
+        | ---------------------------------------------------------------------------------------------------------------------------
+    */
     public function delete(User $user, Post $post)
     {
-        return $user->id === $post->user_id;
+        return $user->id === $post->user_id || $user->hasPermissionTo('Delete posts');
     }
 }

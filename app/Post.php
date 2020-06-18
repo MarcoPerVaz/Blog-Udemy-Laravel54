@@ -59,16 +59,14 @@ class Post extends Model
     /* 
         | ------------------------------------------------------------------------------------------------------------------------------------------------------
         | *Función scope y se referencia como allowed() en la función index() del controlador app\Http\Controllers\Admin\PostsController.php
-        | *if (auth()->user()->hasRole('Admin')) Verifica si el usuario autenticado tiene el role 'Admin'
-        |   *return $query; Devuelve la consulta sin restricciones 
-        |       *El usuario con el role 'Admin' puede ver todos los posts
-        |   * return $query->where('user_id', auth()->id()); De lo contrario devuelve el permiso de ver los posts con 'id' igual al 'id' del usuario autenticado
-        |       *Cualquier otro usuario con el role de 'Writer' solo puede ver sus posts
+        | *if (auth()->user()->can('view', $this)) Verifica si tiene permitido ver todos los posts
+        |   *can() no tiene nada que ver con el paquete laravel-permission
+        |   *$this es una instancia del modelo post
         | ------------------------------------------------------------------------------------------------------------------------------------------------------
     */
     public function scopeAllowed($query)
     {
-        if (auth()->user()->hasRole('Admin')) {
+        if (auth()->user()->can('view', $this)) { 
             return $query;
         }
 
