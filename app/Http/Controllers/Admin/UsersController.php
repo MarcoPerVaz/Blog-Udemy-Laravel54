@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 
 class UsersController extends Controller
@@ -46,12 +47,6 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    /* 
-        | --------------------------------------------------------------------------------------------------------
-        | *show(User $user) Se inyecta el modelo como parámetro en la función
-        | *Devuelve la vista  y le pasa la variable $user
-        | --------------------------------------------------------------------------------------------------------
-    */
     public function show(User $user)
     {
         return view('admin.users.show', compact('user'));
@@ -63,9 +58,14 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    /* 
+        | -----------------------------------------------------------------------------------------
+        | *Devuelve la vista resources\views\admin\users\edit.blade.php y le pasa la variable $user
+        | -----------------------------------------------------------------------------------------
+    */
+    public function edit(User $user)
     {
-        //
+        return view('admin.users.edit', compact('user'));
     }
 
     /**
@@ -75,9 +75,30 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    /* 
+        | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        | *Inyectar el modelo app\User.php como parámetro en la función update(Request $request, User $user)
+        | *$request->validate() Valida los elementos input html que tengan asignada la propiedad name
+        |   *'name' => 'required' El campo 'name' es obligatorio
+        |   *'email' => ['required', Rule::unique('users')->ignore(($user->id))], El campo 'email' es obligatorio, se crea una regla donde el campo 'email' debe ser único y que permita actualizar si el campo 'email'
+        |    es el mismo que el del usuario autenticado
+        |    para evitar que lo tome como duplicado y se pueda guardar
+        | *$user->update($data); Actualiza el usuario
+        | *Devuelve a la vista anterior con el mensaje de sesión 'Usuario actualizado'
+        |   *withFlash() es un método magico de Laravel que une la función with() con la función flash()
+        | *No olvidar importar use Illuminate\Validation\Rule;
+        | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    */
+    public function update(Request $request, User $user)
     {
-        //
+        $data = $request->validate([
+            'name' => 'required',
+            'email' => ['required', Rule::unique('users')->ignore(($user->id))],
+        ]);
+
+        $user->update($data);
+
+        return back()->withFlash('Usuario actualizado');
     }
 
     /**
