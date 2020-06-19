@@ -13,13 +13,6 @@ class UsersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    /* 
-        | --------------------------------------------------------------------------------------------------------
-        | *$users = User::all(); Obtiene todos los registros de la tabla 'users' y lo guarda en la variable $users
-        | *Devuelve la vista resources\views\admin\users\index.blade.php y le pasa la variable $users
-        | *No olvidar importar el modelo use App\User;
-        | --------------------------------------------------------------------------------------------------------
-    */
     public function index()
     {
         $users = User::all();
@@ -53,9 +46,15 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    /* 
+        | --------------------------------------------------------------------------------------------------------
+        | *show(User $user) Se inyecta el modelo como parámetro en la función
+        | *Devuelve la vista  y le pasa la variable $user
+        | --------------------------------------------------------------------------------------------------------
+    */
+    public function show(User $user)
     {
-        //
+        return view('admin.users.show', compact('user'));
     }
 
     /**

@@ -191,7 +191,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
                       <img src="/adminlte/img/user2-160x160.jpg" class="img-circle" alt="User Image">
 
                       <p>
-                        {{ auth()->user()->name }} - {{ auth()->user()->roles->first()->name }}
+                        @if (auth()->user()->roles->count())
+                          {{ auth()->user()->name }} - {{ auth()->user()->roles->first()->name }}
+                        @else
+                          {{ auth()->user()->name }} - Sin roles asignados
+                        @endif
                         <small>Desde {{ auth()->user()->created_at->format('d/m/Y') }}</small>
                       </p>
                     </li>
@@ -404,7 +408,19 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 {{-- Notas:
       | ------------------------------------------------------------------------------------------------
-      | *auth()->user()->roles->first()->name Obtiene el primer role del usuario autenticado - línea 194
-      |   *La relación roles() se obtiene de vendor\spatie\laravel-permission\src\Traits\HasRoles.php
+      | *Existe un error en el menú de cerrar sesión ya que si el usuario no tiene roles asignados muestra un error Trying to get property 'name' of non-object
+      |  tuve que agregar la directiva @if líneas194-198 que no incluye el curso también puede agregar la directiva @forelse
+      |   *Directiva @if
+      |     @if (auth()->user()->roles->count())
+      |       {{ auth()->user()->name }} - {{ auth()->user()->roles->first()->name }}
+      |     @else
+      |       {{ auth()->user()->name }} - Sin roles asignados
+      |     @endif
+      |   *Directiva @forelse
+      |     @forelse ($user->roles as $role)
+      |       {{ auth()->user()->name }} - {{ auth()->user()->roles->first()->name }}
+      |     @empty
+      |       {{ auth()->user()->name }} - Sin roles asignados
+      |     @endforelse
       | ------------------------------------------------------------------------------------------------
 --}}

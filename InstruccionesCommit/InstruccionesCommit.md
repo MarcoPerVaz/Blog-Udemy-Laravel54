@@ -4,7 +4,7 @@
 <!-- end title -->
 
 <!-- commit name -->
-### Commit | __Mostrando el listado de usuarios__
+### Commit | __Creando el perfil de usuario__
 <!-- end commit name -->
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -17,24 +17,18 @@
 
 <!-- commit instructions -->
 #### Instrucciones Commit
-1. Edición del archivo de rutas `routes\web.php`
-2. Creación y edición del controlador `app\Http\Controllers\Admin\UsersController.php`
-   > php artisan make:controller Admin/UsersController -r
-     
-     **`-r` Crea 7 funciones REST de forma automática (index, create, store, show, edit, update y destroy)*
-     - Edición de la función `index()`
-       
-       **No olvidar importar el modelo `use App\User;`*
-3. Creación del directorio `resources\views\admin\users`
-   - Creación y edición de la vista `resources\views\admin\users\index.blade.php`
+1. Edición de la vista `resources\views\admin\users\index.blade.php`
+2. Edición del controlador `app\Http\Controllers\Admin\UsersController.php`
+   - Edición de la función `show($id)`
+3. Creación y edición de la vista `resources\views\admin\users\show.blade.php`
+4. Edición de la vista `resources\views\admin\layout.blade.php`
 <!-- end commit instructions -->
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 <!-- notes -->
 #### Notas:
-- [Dcoumentación | `Introduction csrf protection`](https://laravel.com/docs/5.5/csrf#csrf-introduction)
-- [Dcoumentación | `Spoofing Form Methods`](https://laravel.com/docs/5.5/controllers#resource-controllers)
+- Hay un error en la vista `resources\views\admin\layout.blade.php` en el menú de cerrar sesión, si el usuario no tiene roles asignados muestra el error *Trying to get property 'name' of non-object*, la solución se muestra en la vista `resources\views\admin\layout.blade.php`, la solución no la incluye el curso, así que tuve que hacerla yo
 <!-- end notes -->
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -43,5 +37,6 @@
 #### Información:
 - Más información en `routes\web.php`
 - Más información en `app\Http\Controllers\Admin\UsersController.php`
-- Más información en `resources\views\admin\users\index.blade.php`
+- Más información en `resources\views\admin\users\show.blade.php`
+- Más información en `resources\views\admin\layout.blade.php`
 <!-- end information -->
