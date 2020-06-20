@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateUserRequest;
+use Spatie\Permission\Models\Permission;
 
 class UsersController extends Controller
 {
@@ -60,18 +61,20 @@ class UsersController extends Controller
      * @return \Illuminate\Http\Response
      */
     /* 
-        | ---------------------------------------------------------------------------------------------------------------------------------------------
-        | *$roles = Role::pluck('name', 'id'); Obtiene los campos 'name' e 'id' de la tabla roles de la base de datos y la guarda en la variable $roles
+        | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        | *$permissions = Permission::pluck('name', 'id'); Obtiene los campos 'name' e 'id' de la tabla permissions de la base de datos y la guarda en la variable $permissions
         |   *Más información sobre la función pluck() en https://laravel.com/docs/5.5/collections#method-pluck
-        | *No olvidar importar el modelo use Spatie\Permission\Models\Role;
-        | *Devuelve la vista resources\views\admin\users\edit.blade.php y le pasa la varible $user y $roles
-        | ---------------------------------------------------------------------------------------------------------------------------------------------
+        | *No olvidar importar el modelo use Spatie\Permission\Models\Permission;
+        | *Devuelve la vista resources\views\admin\users\edit.blade.php y le pasa la varible $user, $roles y $permissions
+        | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
     */
     public function edit(User $user)
     {
         $roles = Role::pluck('name', 'id');
 
-        return view('admin.users.edit', compact('user', 'roles'));
+        $permissions = Permission::pluck('name', 'id');
+
+        return view('admin.users.edit', compact('user','roles','permissions'));
     }
 
     /**

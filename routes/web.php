@@ -19,13 +19,14 @@ Route::group(
         Route::get('/', 'AdminController@index')->name('dashboard');
         Route::resource('posts', 'PostsController', ['except' => 'show', 'as' => 'admin']);
         Route::resource('users', 'UsersController', ['as' => 'admin']);
+        Route::put('users/{user}/roles', 'UsersRolesController@update')->name('admin.users.roles.update');
 
         /* 
-            | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-            | *Ruta con nombre que apunta a 'users/slugUser/roles' asociada a la función update(Request $request, $id) del controlador app\Http\Controllers\Admin\UsersRolesController.php
-            | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+            | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+            | *Ruta con nombre que apunta a 'users/slugPermission/permissions' asociada a la función update(Request $request, $id) del controlador app\Http\Controllers\Admin\UsersPermissionsController.php
+            | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         */
-        Route::put('users/{user}/roles', 'UsersRolesController@update')->name('admin.users.roles.update');
+        Route::put('users/{user}/permissions', 'UsersPermissionsController@update')->name('admin.users.permissions.update');
         Route::post('posts/{post}/photos', 'PhotosController@store')->name('admin.posts.photos.update');
         Route::delete('photos/{photo}', 'PhotosController@destroy')->name('admin.photos.destroy');
     }

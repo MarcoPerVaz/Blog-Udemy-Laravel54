@@ -81,6 +81,28 @@
           <button class="btn btn-primary btn-block">Actualizar roles</button>
         </form>
       </div>
+
+      <div class="box box-primary">
+        <div class="box-header with-border">
+          <h3 class="box-title">Permisos</h3>
+        </div>
+        <form action="{{ route('admin.users.permissions.update', $user) }}" method="post">
+          {{ csrf_field() }} {{ method_field('PUT') }}
+          <div class="box-body">
+            @foreach ($permissions as $id => $name)
+              <div class="checkbox">
+                {{-- permissions --}}
+                  <label>
+                    <input type="checkbox" name="permissions[]" value="{{ $name }}" {{ $user->permissions->contains($id) ? 'checked' : '' }}>
+                      {{ $name }} 
+                  </label>
+                {{-- end permissions --}}
+              </div>
+            @endforeach
+          </div>
+          <button class="btn btn-primary btn-block">Actualizar permisos</button>
+        </form>
+      </div>
     </div>
   {{-- end second column --}}
 </div>
@@ -88,15 +110,15 @@
 
 
 {{-- Notas:
-      | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+      | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
       | *El helper route() permite usar rutas con nombre y se definen en routes\web.php
       | *csrf_field() Ofrece protección contra ataques csrf
       |   *Más información en https://laravel.com/docs/5.5/csrf#csrf-introduction
       | *method_field('PUT' Los navegadores actuales no permiten usar el método httpm 'PUT' pero Laravel ofrece la posibilidad de usarlo en las rutas
       |   *Más información en https://laravel.com/docs/5.5/controllers#resource-controllers
-      | *@foreach ($roles as $id => $name) Recorre la variable $roles y obtiene el $id y el $name a partir de la variable $roles enviada desde el controlador
-      | *name="roles[]" Para poder recibir el array de roles con Request desde el controlador
-      | *value="{{ $name }}" e obtiene el nombre del role a partir de la variable $roles enviada desde el controlador
-      | *$user->roles->contains($id) ? 'checked' : '' Operación ternaria, si la relación roles() contiene el 'id' colocarle la clase 'checked' de lo contrario no colocarle nada
-      | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+      | *@foreach ($permissions as $id => $name) Recorre la variable $permissions y obtiene el $id y el $name a partir de la variable $roles enviada desde el controlador
+      | *name="permissions[]" Para poder recibir el array de permisos con Request desde el controlador
+      | *value="{{ $name }}" e obtiene el nombre del permiso a partir de la variable $permissions enviada desde el controlador
+      | *$user->permissions->contains($id) ? 'checked' : '' Operación ternaria, si la relación permissions() contiene el 'id' colocarle la clase 'checked' de lo contrario no colocarle nada
+      | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --}}
