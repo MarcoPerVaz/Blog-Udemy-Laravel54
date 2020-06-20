@@ -17,7 +17,18 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
-    
+
+    /* 
+        | ---------------------------------------------------------------------------------------------------------------------------------------------------------------
+        | *Mutador para encriptar la contraseña
+        | *$this->attributes['password'] = bcrypt($password); Encripta a la variable $password y se la asigna al campo 'password' de la tabla 'users' de la base de datos
+        | ---------------------------------------------------------------------------------------------------------------------------------------------------------------
+    */
+    public function setPasswordAttribute($password)
+    {
+        $this->attributes['password'] = bcrypt($password);
+    }
+
     public function posts()
     {
         return $this->hasMany(Post::class);
@@ -26,8 +37,8 @@ class User extends Authenticatable
 
 
 /* Notas:
-    | ------------------------------------------------------------------------------
-    | *No olvidar importar use Spatie\Permission\Traits\HasRoles;
-    | *No olvidar importar el trait use Notifiable, HasRoles; (Notifiable ya existe)
-    | ------------------------------------------------------------------------------
+    | -----------------------------------------------------------------------------------------------------
+    | *Más información sobre mutadores en https://laravel.com/docs/5.5/eloquent-mutators#defining-a-mutator
+    | *Más información sobre la función bcrypt() en https://laravel.com/docs/5.5/helpers#method-bcrypt
+    | -----------------------------------------------------------------------------------------------------
 */

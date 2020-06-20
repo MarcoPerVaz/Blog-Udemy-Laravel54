@@ -60,12 +60,17 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\User
      */
+    /* 
+        | ----------------------------------------------------------------------------------------------------------------------------------------------------------------
+        | *'password' => bcrypt($data['password']), Se quita esta encriptación para evitar doble encriptación ya que se hace en el mutador setPasswordAttribute($password)
+        |   del modelo app\User.php
+        | ----------------------------------------------------------------------------------------------------------------------------------------------------------------
+    */
     protected function create(array $data)
     {
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
-            'password' => bcrypt($data['password']),
         ]);
     }
 }
