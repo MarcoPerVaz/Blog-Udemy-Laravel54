@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\User;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateUserRequest;
 
@@ -58,9 +59,19 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    /* 
+        | ---------------------------------------------------------------------------------------------------------------------------------------------
+        | *$roles = Role::pluck('name', 'id'); Obtiene los campos 'name' e 'id' de la tabla roles de la base de datos y la guarda en la variable $roles
+        |   *Más información sobre la función pluck() en https://laravel.com/docs/5.5/collections#method-pluck
+        | *No olvidar importar el modelo use Spatie\Permission\Models\Role;
+        | *Devuelve la vista resources\views\admin\users\edit.blade.php y le pasa la varible $user y $roles
+        | ---------------------------------------------------------------------------------------------------------------------------------------------
+    */
     public function edit(User $user)
     {
-        return view('admin.users.edit', compact('user'));
+        $roles = Role::pluck('name', 'id');
+
+        return view('admin.users.edit', compact('user', 'roles'));
     }
 
     /**
@@ -70,23 +81,6 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    /* 
-        | -------------------------------------------------------------------------------------------------------------------------------------------------
-        | *Inyectar el modelo app\User.php como parámetro en la función update(Request $request, User $user)
-        | *No olvidar importar el FormRequest use App\Http\Requests\UpdateUserRequest;
-        | *Validaciones para los campos 'name' e 'email', funciona pero fue pasada al form request app\Http\Requests\UpdateUserRequest.php
-        |   *$data = $request->validate([
-        |      'name' => 'required',
-        |      'email' => ['required', Rule::unique('users')->ignore(($user->id))],
-        |    ]);
-        | *Validaciones para los campos 'password' y 'confirmed password', funciona pero fue pasado al form request app\Http\Requests\UpdateUserRequest.php
-        |   if ($request->filled('password')) {
-        |      $rules['password'] = ['confirmed', 'min:6'];
-        |   }
-        | *$user->update($request->validated()); Valida los campos input html
-        | *Quitar la importación use Illuminate\Validation\Rule; ya que fue pasada al form request app\Http\Requests\UpdateUserRequest.php
-        | -------------------------------------------------------------------------------------------------------------------------------------------------
-    */
     public function update(UpdateUserRequest $request, User $user)
     {
         $user->update($request->validated());

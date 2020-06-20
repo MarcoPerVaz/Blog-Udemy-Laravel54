@@ -4,7 +4,7 @@
 <!-- end title -->
 
 <!-- commit name -->
-### Commit | __Editar contraseña__
+### Commit | __Agregar y quitar roles de usuario__
 <!-- end commit name -->
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -17,41 +17,39 @@
 
 <!-- commit instructions -->
 #### Instrucciones Commit
-1. Edición de la vista `resources\views\admin\users\edit.blade.php`
-2. Creación y edición del FormRequest `app\Http\Requests\UpdateUserRequest.php`
-   > php artisan make:request UpdateUserRequest
+1. Edición del controlador `app\Http\Controllers\Admin\UsersController.php`
+   - Edición de la función `edit(User $user)`
+     
+     **No olvidar importar el modelo `use Spatie\Permission\Models\Role;`*
+2. Edición de la vista `resources\views\admin\users\edit.blade.php`
+3. Creación y edición del controlador `app\Http\Controllers\Admin\UsersRolesController.php`
+   > php artisan make:controller Admin/UsersRolesController -r
+     
+     **`-r` Crea 7 funciones REST de forma automática (index, create, store, show, edit, update y destroy)*
 
-    **Si el directorio `app\Http\Requests` no existe Laravel lo crea al usar el comando*
-    - Edición de la función `authorize()`
-    - Edición de la función `rules()`
-      
-      **No olvidar importar `use Illuminate\Validation\Rule;`*
-3. Edición del controlador `app\Http\Controllers\Admin\UsersController.php`
-   - Edición de la función `update(Request $request, User $user)`
+     ***Al final solo se deja la función `update(Request $request, $id)` y se borran las demás funciones
+   - Edición de la función `update(Request $request, $id)`
      
 
-     **No olvidar importar el FormRequest `use App\Http\Requests\UpdateUserRequest;`*
-4. Edición del modelo `app\User.php`
-   - Creación y edición del mutador `setPasswordAttribute($password)`
-5. Edición del controlador `app\Http\Controllers\Auth\RegisterController.php`
-   - Edición de la función `create(array $data)`
+     **No olvidar importar el modelo `use App\User;`*
+4. Edición del archivo de rutas `routes\web.php`
 <!-- end commit instructions -->
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 <!-- notes -->
 #### Notas:
-- [Documentación | 'Form Request Validation'](https://laravel.com/docs/5.5/validation#form-request-validation)
-- [Documentación | 'Accessors & Mutators'](https://laravel.com/docs/5.5/eloquent-mutators#accessors-and-mutators)
-- [Documentación | 'bcrypt()'](https://laravel.com/docs/5.5/helpers#method-bcrypt)
+- [Documentación | `pluck()`](https://laravel.com/docs/5.5/collections#method-pluck)
+- [Documentación | `Introduction csrf protection`](https://laravel.com/docs/5.5/csrf#csrf-introduction)
+- [Documentación | `Spoofing Form Methods`](https://laravel.com/docs/5.5/controllers#resource-controllers)
 <!-- end notes -->
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 <!-- information -->
 #### Información:
-- Más información en `app\Http\Requests\UpdateUserRequest.php`
 - Más información en `app\Http\Controllers\Admin\UsersController.php`
-- Más información en `app\User.php`
-- Más información en `app\Http\Controllers\Auth\RegisterController.php`
+- Más información en `resources\views\admin\users\edit.blade.php`
+- Más información en `app\Http\Controllers\Admin\UsersRolesController.php`
+- Más información en `routes\web.php`
 <!-- end information -->

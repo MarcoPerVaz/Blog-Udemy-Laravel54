@@ -17,22 +17,15 @@ Route::group(
     ],
     function () {
         Route::get('/', 'AdminController@index')->name('dashboard');
-        
-        /* 
-            | -----------------------------------------------------------------------------------------------------------------------------------------
-            | *Ruta resource que incluye las rutas para: index, create, store, edit, update y destroy, excepto la ruta show y se renombran como 'admin'
-            |   *Ejemplo de nombre de las rutas: 'admin.posts.index' dónde 'admin' es lo que se determinó como 'as'
-            | -----------------------------------------------------------------------------------------------------------------------------------------
-        */
         Route::resource('posts', 'PostsController', ['except' => 'show', 'as' => 'admin']);
-        /* 
-            | -------------------------------------------------------------------------------------------------------------------------
-            | *Ruta resource que incluye las rutas para: index, create, store, show, edit, update y destroy y se renombran como 'admin'
-            |   *Ejemplo de nombre de las rutas: 'admin.users.index' dónde 'admin' es lo que se determinó como 'as'
-            | -------------------------------------------------------------------------------------------------------------------------
-        */
         Route::resource('users', 'UsersController', ['as' => 'admin']);
 
+        /* 
+            | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+            | *Ruta con nombre que apunta a 'users/slugUser/roles' asociada a la función update(Request $request, $id) del controlador app\Http\Controllers\Admin\UsersRolesController.php
+            | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        */
+        Route::put('users/{user}/roles', 'UsersRolesController@update')->name('admin.users.roles.update');
         Route::post('posts/{post}/photos', 'PhotosController@store')->name('admin.posts.photos.update');
         Route::delete('photos/{photo}', 'PhotosController@destroy')->name('admin.photos.destroy');
     }
