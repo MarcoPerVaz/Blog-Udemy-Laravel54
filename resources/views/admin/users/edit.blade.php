@@ -67,18 +67,9 @@
         <form action="{{ route('admin.users.roles.update', $user) }}" method="post">
           {{ csrf_field() }} {{ method_field('PUT') }}
           <div class="box-body">
-            @foreach ($roles as $role)
-              <div class="checkbox">
-                {{-- roles --}}
-                  <label>
-                    <input type="checkbox" name="roles[]" value="{{ $role->name }}" {{ $user->roles->contains($role->id) ? 'checked' : '' }}>
-                    {{ $role->name }} 
-                    <br>
-                    <small class="text-muted">{{ $role->permissions->pluck('name')->implode(', ') }}</small>
-                  </label>
-                {{-- end roles --}}
-              </div>
-            @endforeach
+            {{-- roles --}}
+              @include('admin.roles.checkboxes')
+            {{-- end roles --}}
           </div>
           <button class="btn btn-primary btn-block">Actualizar roles</button>
         </form>
@@ -91,16 +82,9 @@
         <form action="{{ route('admin.users.permissions.update', $user) }}" method="post">
           {{ csrf_field() }} {{ method_field('PUT') }}
           <div class="box-body">
-            @foreach ($permissions as $id => $name)
-              <div class="checkbox">
-                {{-- permissions --}}
-                  <label>
-                    <input type="checkbox" name="permissions[]" value="{{ $name }}" {{ $user->permissions->contains($id) ? 'checked' : '' }}>
-                      {{ $name }} 
-                  </label>
-                {{-- end permissions --}}
-              </div>
-            @endforeach
+            {{-- permissions --}}
+              @include('admin.permissions.checkboxes')
+            {{-- end permissions --}}
           </div>
           <button class="btn btn-primary btn-block">Actualizar permisos</button>
         </form>
@@ -112,7 +96,8 @@
 
 
 {{-- Notas:
-      | ---------------------------------------------------------------------------------------------------------------------------------------------------------------
-      | *@foreach ($roles as $role) Recorre la variable $roles que vienen de la función edit(User $user) del controlador app\Http\Controllers\Admin\UsersController.php
-      | ---------------------------------------------------------------------------------------------------------------------------------------------------------------
+      | -----------------------------------------------------------------------------------------------------------------
+      | *@include('admin.roles.checkboxes') Incluye la vista resources\views\admin\roles\checkboxes.blade.php
+      | *@include('admin.permissions.checkboxes') Incluye la vista resources\views\admin\permissions\checkboxes.blade.php
+      | -----------------------------------------------------------------------------------------------------------------
 --}}

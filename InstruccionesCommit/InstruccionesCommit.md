@@ -4,7 +4,7 @@
 <!-- end title -->
 
 <!-- commit name -->
-### Commit | __Activando rutas anidadas__
+### Commit | __Crear usuarios__
 <!-- end commit name -->
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -17,29 +17,37 @@
 
 <!-- commit instructions -->
 #### Instrucciones Commit
-1. Edición del controlador `app\Http\Controllers\Admin\UsersController.php`
+1. Edición de la vista `resources\views\admin\users\index.blade.php`
+2. Edición de la vista `resources\views\admin\users\create.blade.php`
+3. Edición de la vista `resources\views\admin\users\edit.blade.php`
+4. Creación del directorio `resources\views\admin\roles`
+   - Creación y edición de la vista `resources\views\admin\roles\checkboxes.blade.php`
+5. Creación del directorio `resources\views\admin\permissions`
+   - Creación y edición de la vista `resources\views\admin\permissions\checkboxes.blade.php`
+6. Edición del controlador `app\Http\Controllers\Admin\UsersController.php`
    - Edición de la función `create()`
-   - Edición de la función `edit(User $user)`
+   - Edición de la función `store(Request $request)`
      
-     **No olvidar importar el modelo `use Spatie\Permission\Models\Role;`*
-2. Edición de la vista `resources\views\admin\users\edit.blade.php`
-3. Edición de la vista `resources\views\admin\partials\nav.blade.php`
-4. Creación y edición de la vista `resources\views\admin\users\create.blade.php`
-5. Edición de la vista `resources\views\admin\users\index.blade.php`
+     **No olvidar importar el modelo `use App\User;`*
 <!-- end commit instructions -->
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 <!-- notes -->
 #### Notas:
+- [Documentación | `Introduction csrf protection`](https://laravel.com/docs/5.5/csrf#csrf-introduction)
+- NOTA: En el curso mostraba un error si no se seleccionaban roles o permisos, en mi proyecto no aparecía ese error pero se hizo como en el curso para referencia
+  - Más información en `app\Http\Controllers\Admin\UsersController.php`
 <!-- end notes -->
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 <!-- information -->
 #### Información:
-- Más información en `app\Http\Controllers\Admin\UsersController.php`
-- Más información en `resources\views\admin\users\edit.blade.php`
-- Más información en `resources\views\admin\partials\nav.blade.php`
+- Más información en `resources\views\admin\users\index.blade.php`
 - Más información en `resources\views\admin\users\create.blade.php`
+- Más información en `resources\views\admin\users\edit.blade.php`
+- Más información en `resources\views\admin\roles\checkboxes.blade.php`
+- Más información en `resources\views\admin\permissions\checkboxes.blade.php`
+- Más información en `app\Http\Controllers\Admin\UsersController.php`
 <!-- end information -->
