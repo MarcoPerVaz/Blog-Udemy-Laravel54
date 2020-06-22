@@ -27,9 +27,14 @@ class UsersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    /* 
+        | ---------------------------------------------------------------
+        | *Devuelve la vista resources\views\admin\users\create.blade.php
+        | ---------------------------------------------------------------
+    */
     public function create()
     {
-        //
+        return view('admin.users.create');
     }
 
     /**
@@ -61,16 +66,14 @@ class UsersController extends Controller
      * @return \Illuminate\Http\Response
      */
     /* 
-        | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        | *$permissions = Permission::pluck('name', 'id'); Obtiene los campos 'name' e 'id' de la tabla permissions de la base de datos y la guarda en la variable $permissions
-        |   *Más información sobre la función pluck() en https://laravel.com/docs/5.5/collections#method-pluck
-        | *No olvidar importar el modelo use Spatie\Permission\Models\Permission;
-        | *Devuelve la vista resources\views\admin\users\edit.blade.php y le pasa la varible $user, $roles y $permissions
-        | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        | *$roles = Role::with('permissions')->get(); Obtener todo de la relación permissions() del modelo vendor\spatie\laravel-permission\src\Models\Role.php y guardarlo en la variable $roles
+        | ¨No olvidar importar el modelo use Spatie\Permission\Models\Role;
+        | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     */
     public function edit(User $user)
     {
-        $roles = Role::pluck('name', 'id');
+        $roles = Role::with('permissions')->get();
 
         $permissions = Permission::pluck('name', 'id');
 

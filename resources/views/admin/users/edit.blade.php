@@ -67,12 +67,14 @@
         <form action="{{ route('admin.users.roles.update', $user) }}" method="post">
           {{ csrf_field() }} {{ method_field('PUT') }}
           <div class="box-body">
-            @foreach ($roles as $id => $name)
+            @foreach ($roles as $role)
               <div class="checkbox">
                 {{-- roles --}}
                   <label>
-                    <input type="checkbox" name="roles[]" value="{{ $name }}" {{ $user->roles->contains($id) ? 'checked' : '' }}>
-                    {{ $name }} 
+                    <input type="checkbox" name="roles[]" value="{{ $role->name }}" {{ $user->roles->contains($role->id) ? 'checked' : '' }}>
+                    {{ $role->name }} 
+                    <br>
+                    <small class="text-muted">{{ $role->permissions->pluck('name')->implode(', ') }}</small>
                   </label>
                 {{-- end roles --}}
               </div>
@@ -110,15 +112,7 @@
 
 
 {{-- Notas:
-      | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-      | *El helper route() permite usar rutas con nombre y se definen en routes\web.php
-      | *csrf_field() Ofrece protección contra ataques csrf
-      |   *Más información en https://laravel.com/docs/5.5/csrf#csrf-introduction
-      | *method_field('PUT' Los navegadores actuales no permiten usar el método httpm 'PUT' pero Laravel ofrece la posibilidad de usarlo en las rutas
-      |   *Más información en https://laravel.com/docs/5.5/controllers#resource-controllers
-      | *@foreach ($permissions as $id => $name) Recorre la variable $permissions y obtiene el $id y el $name a partir de la variable $roles enviada desde el controlador
-      | *name="permissions[]" Para poder recibir el array de permisos con Request desde el controlador
-      | *value="{{ $name }}" e obtiene el nombre del permiso a partir de la variable $permissions enviada desde el controlador
-      | *$user->permissions->contains($id) ? 'checked' : '' Operación ternaria, si la relación permissions() contiene el 'id' colocarle la clase 'checked' de lo contrario no colocarle nada
-      | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+      | ---------------------------------------------------------------------------------------------------------------------------------------------------------------
+      | *@foreach ($roles as $role) Recorre la variable $roles que vienen de la función edit(User $user) del controlador app\Http\Controllers\Admin\UsersController.php
+      | ---------------------------------------------------------------------------------------------------------------------------------------------------------------
 --}}
