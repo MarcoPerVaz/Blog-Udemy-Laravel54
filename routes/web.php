@@ -1,5 +1,16 @@
 <?php
 
+// Ruta preview del email
+  // Solo se usó para visualizar el diseño del email
+/* 
+    | ------------------------------------------------------------------------------------------------------------------------
+    | *Ruta que apunta a '/email' y es para previsualizar el email pero solo es de prueba por lo que se deja entre comentarios
+    | ------------------------------------------------------------------------------------------------------------------------
+*/
+// Route::get('/email', function(){
+//     return new App\Mail\LoginCredentials(App\User::first(), '123456');
+// });
+
 Route::get('/', 'PagesController@home')->name('pages.home');
 Route::get('nosotros', 'PagesController@about')->name('pages.about');
 Route::get('archivo', 'PagesController@archive')->name('pages.archive');
@@ -20,12 +31,6 @@ Route::group(
         Route::resource('posts', 'PostsController', ['except' => 'show', 'as' => 'admin']);
         Route::resource('users', 'UsersController', ['as' => 'admin']);
         Route::put('users/{user}/roles', 'UsersRolesController@update')->name('admin.users.roles.update');
-
-        /* 
-            | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-            | *Ruta con nombre que apunta a 'users/slugPermission/permissions' asociada a la función update(Request $request, $id) del controlador app\Http\Controllers\Admin\UsersPermissionsController.php
-            | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        */
         Route::put('users/{user}/permissions', 'UsersPermissionsController@update')->name('admin.users.permissions.update');
         Route::post('posts/{post}/photos', 'PhotosController@store')->name('admin.posts.photos.update');
         Route::delete('photos/{photo}', 'PhotosController@destroy')->name('admin.photos.destroy');
