@@ -17,9 +17,14 @@ class UsersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    /* 
+        | ----------------------------------------------------------------------------------------------------------------------------------------------------------------
+        | *$users = User::allowed()->get(); Se obtiene la consulta queryscope de la función scopeAllowed($query) del modelo app\User.php y se guarda en la variable $users
+        | ----------------------------------------------------------------------------------------------------------------------------------------------------------------
+    */
     public function index()
     {
-        $users = User::all();
+        $users = User::allowed()->get(); 
         return view('admin.users.index', compact('users'));
     }
 
@@ -28,8 +33,15 @@ class UsersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    /* 
+        | -----------------------------------------------------------------------------------------------------------------
+        | *$this->authorize('create', new User); Usa la función create(User $user) de la Policy app\Policies\UserPolicy.php
+        | -----------------------------------------------------------------------------------------------------------------
+    */
     public function create()
     {
+        $this->authorize('create', new User);
+
         $user = new User;
 
         $roles = Role::with('permissions')->get();
@@ -46,16 +58,14 @@ class UsersController extends Controller
      * @return \Illuminate\Http\Response
      */
     /* 
-        | ------------------------------------------------------------------------------------
-        | *UserWasCreated::dispatch($user, $data['password']);
-        |   *dispatch() Sirve para disparar el evento
-        |   *$user Variable que contiene el nombre del usuario recien creado
-        |   *$data['password'] Obtiene el password a partir del elemento input html 'password'
-        | *No olvidar importar use App\Events\UserWasCreated;
-        | ------------------------------------------------------------------------------------
+        | -----------------------------------------------------------------------------------------------------------------
+        | *$this->authorize('create', new User); Usa la función create(User $user) de la Policy app\Policies\UserPolicy.php
+        | -----------------------------------------------------------------------------------------------------------------
     */
     public function store(Request $request)
     {
+        $this->authorize('create', new User);
+
         $data = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
@@ -84,8 +94,15 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    /* 
+        | --------------------------------------------------------------------------------------------------------------------------
+        | *$this->authorize('view', $user); Usa la función view(User $authUser, User $user) de la Policy app\Policies\UserPolicy.php
+        | --------------------------------------------------------------------------------------------------------------------------
+    */
     public function show(User $user)
     {
+        $this->authorize('view', $user);
+
         return view('admin.users.show', compact('user'));
     }
 
@@ -95,8 +112,15 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    /* 
+        | ------------------------------------------------------------------------------------------------------------------------------
+        | *$this->authorize('update', $user); Usa la función update(User $authUser, User $user) de la Policy app\Policies\UserPolicy.php
+        | ------------------------------------------------------------------------------------------------------------------------------
+    */
     public function edit(User $user)
     {
+        $this->authorize('update', $user);
+
         $roles = Role::with('permissions')->get();
 
         $permissions = Permission::pluck('name', 'id');
@@ -111,8 +135,15 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    /* 
+        | ------------------------------------------------------------------------------------------------------------------------------
+        | *$this->authorize('update', $user); Usa la función update(User $authUser, User $user) de la Policy app\Policies\UserPolicy.php
+        | ------------------------------------------------------------------------------------------------------------------------------
+    */
     public function update(UpdateUserRequest $request, User $user)
     {
+        $this->authorize('update', $user);
+
         $user->update($request->validated());
 
         return back()->withFlash('Usuario actualizado');
@@ -129,3 +160,10 @@ class UsersController extends Controller
         //
     }
 }
+
+
+/* Notas:
+    | -----------------------------------------------------------------------------------------------------------
+    | *Más información sobre Policies o Políticas en https://laravel.com/docs/5.5/authorization#creating-policies
+    | -----------------------------------------------------------------------------------------------------------
+*/

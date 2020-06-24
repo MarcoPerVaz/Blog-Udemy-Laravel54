@@ -18,12 +18,6 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    /* 
-        | ---------------------------------------------------------------------------------------------------------------------------------------------------------------
-        | *Mutador para encriptar la contraseña
-        | *$this->attributes['password'] = bcrypt($password); Encripta a la variable $password y se la asigna al campo 'password' de la tabla 'users' de la base de datos
-        | ---------------------------------------------------------------------------------------------------------------------------------------------------------------
-    */
     public function setPasswordAttribute($password)
     {
         $this->attributes['password'] = bcrypt($password);
@@ -33,12 +27,29 @@ class User extends Authenticatable
     {
         return $this->hasMany(Post::class);
     }
+
+    /* 
+        | ------------------------------------------------------------------------------------------------------------------------------------------
+        | *Query scope
+        | *if (auth()->user()->can('view', $this) Verifica si el usuario puede ver 'view'
+        |   *'view' Es el nombre de la función view(User $authUser, User $user) de la política app\Policies\UserPolicy.php
+        |   *return $query; Devuelve la consulta
+        | *return $query->where('id', auth()->id()); Devuelve la consulta con la clausula where que compara el campo 'id' con el usuario autenticado
+        | ------------------------------------------------------------------------------------------------------------------------------------------
+    */
+    public function scopeAllowed($query)
+    {
+        if (auth()->user()->can('view', $this)) {
+            return $query;
+        }
+
+        return $query->where('id', auth()->id());
+    }
 }
 
 
 /* Notas:
-    | -----------------------------------------------------------------------------------------------------
-    | *Más información sobre mutadores en https://laravel.com/docs/5.5/eloquent-mutators#defining-a-mutator
-    | *Más información sobre la función bcrypt() en https://laravel.com/docs/5.5/helpers#method-bcrypt
-    | -----------------------------------------------------------------------------------------------------
+    | ----------------------------------------------------------------------------------------
+    | *Más información sobre queryscopes en https://laravel.com/docs/5.5/eloquent#query-scopes
+    | ----------------------------------------------------------------------------------------
 */

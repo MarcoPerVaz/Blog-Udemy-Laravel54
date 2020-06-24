@@ -14,12 +14,13 @@ class AuthServiceProvider extends ServiceProvider
      */
     /* 
         | ---------------------------------------------------------------
-        | *'App\Post' => 'App\Policies\PostPolicy',
-        |   *'App\Post' Es el modelo
-        |   *'App\Policies\PostPolicy' Es la ruta de la Policy o Política
+        | *'App\User' => 'App\Policies\UserPolicy',
+        |   *'App\User' Es el modelo
+        |   *'App\Policies\UserPolicy' Es la ruta de la Policy o Política
         | ---------------------------------------------------------------
     */
     protected $policies = [
+        'App\User' => 'App\Policies\UserPolicy',
         'App\Post' => 'App\Policies\PostPolicy',
     ];
 

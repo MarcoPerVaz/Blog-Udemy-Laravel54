@@ -27,42 +27,49 @@ class UsersTableSeeder extends Seeder
         $adminRole = Role::create(['name' => 'Admin']);
         $writerRole = Role::create(['name' => 'Writer']);
 
-        /* 
-            | --------------------------------------------------------------------
-            | *Se crean los permisos en la tabla 'permissions' de la base de datos
-            |   *'View posts' Poder editar posts
-            |   *'Create posts' Poder crear posts
-            |   *'Update posts' Poder actualizar posts
-            |   *'Delete posts' Poder eliminar posts
-            | *No olvidar importar el modelo use Spatie\Permission\Models\Permission;
-            | --------------------------------------------------------------------
-        */
         $viewPostsPermission = Permission::create(['name' => 'View posts']);
         $createPostsPermission = Permission::create(['name' => 'Create posts']);
         $updatePostsPermission = Permission::create(['name' => 'Update posts']);
         $deletePostsPermission = Permission::create(['name' => 'Delete posts']);
 
+        /* 
+            | -----------------------------------------------------------------------
+            | *Se crean los permisos en la tabla 'permissions' de la base de datos
+            |   *'View users' Poder editar usuarios
+            |   *'Create users' Poder crear usuarios
+            |   *'Update users' Poder actualizar usuarios
+            |   *'Delete users' Poder eliminar usuarios
+            | *No olvidar importar el modelo use Spatie\Permission\Models\Permission;
+            | -----------------------------------------------------------------------
+        */
+        $viewUsersPermission = Permission::create(['name' => 'View users']);
+        $createUsersPermission = Permission::create(['name' => 'Create users']);
+        $updateUsersPermission = Permission::create(['name' => 'Update users']);
+        $deleteUsersPermission = Permission::create(['name' => 'Delete users']);
+
         /*
-            | -----------
+            | ------------------------------------------------------------------------------------------------------------------------------
             | *user admin
-            | -----------
+            | *Se quito la función bcrypt() del password porque se creó el mutador setPasswordAttribute($password) en el modelo app\User.php
+            | ------------------------------------------------------------------------------------------------------------------------------
         */
         $admin = new User;
         $admin->name = 'Marco-admin';
         $admin->email = 'admin@mail.com';
-        $admin->password = bcrypt('123456');
+        $admin->password = '123456';
         $admin->save();
         $admin->assignRole($adminRole);
 
         /*
-            | ------------
+            | ------------------------------------------------------------------------------------------------------------------------------
             | *user writer
-            | ------------
+            | *Se quito la función bcrypt() del password porque se creó el mutador setPasswordAttribute($password) en el modelo app\User.php
+            | ------------------------------------------------------------------------------------------------------------------------------
         */
         $writer = new User;
         $writer->name = 'Antonio-writer';
         $writer->email = 'otrousuario@mail.com';
-        $writer->password = bcrypt('123456');
+        $writer->password = '123456';
         $writer->save();
         $writer->assignRole($writerRole);
     }

@@ -4,7 +4,7 @@
 <!-- end title -->
 
 <!-- commit name -->
-### Commit | __Enviar las credenciales vía email__
+### Commit | __Políticas de acceso a usuarios__
 <!-- end commit name -->
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -18,62 +18,43 @@
 <!-- commit instructions -->
 #### Instrucciones Commit
 1. Edición del archivo `app\Listeners\SendLoginCredentials.php`
-   - Edición de la función `handle(UserWasCreated $event)`
-     
-     **No olvidar importar `use Illuminate\Support\Facades\Mail;`*
-
-     **No olvidar importar `use App\Mail\LoginCredentials;`*
-2. Creación del mail
-   > php artisan make:mail LoginCredentials -m emails.login-credentials
-     
-     **`-m` Es para crear una plantilla con markdown (Ver más información en notas)*
-
-     **`emails.login-credentials` para crear el email en `resources\views\emails\login-credentials.blade.php` Laravel crea los directorios necesarios `app\Mail` ya que se especifica en el comando que cree la carpeta `Mail`*
-     - El comando crea el archivo `app\Mail\LoginCredentials.php`
-       
-       **El comando crea automáticamente el directorio `app\Mail`*
-     - El comando crea la vista `resources\views\emails\login-credentials.blade.php`
-
-       **El comando crea automáticamente el directorio `resources\views\emails`*
-3. Edición del archivo `app\Mail\LoginCredentials.php`
-   - Edición de la función `__construct()`
-   - Edición de la función `build()`
-4. Edición del archivo de rutas `routes\web.php` para previsualizar el email (sólo de prueba)
-5. Edición de la vista `resources\views\emails\login-credentials.blade.php`
-6. [Ir a `Mailtrap`](https://mailtrap.io/)
-   - Crear cuenta o iniciar sesión
-   - Obtener las credenciales y pasarlas al archivo `.env`
-7. Edición del archivo `.env` la información viene de `Mailtrap`
-   - MAIL_DRIVER=smtp
-   - MAIL_HOST=smtp.mailtrap.io
-   - MAIL_PORT=2525
-   - MAIL_USERNAME=obtenerloDeMailtrap
-   - MAIL_PASSWORD=obtenerloDeMailtrap
-   - MAIL_ENCRYPTION=null
-8. Edición del archivo `.env-example` la información viene de `Mailtrap`
+2. Creación y edición de la Policy `php artisan make:policy UserPolicy -m User`
    
-   **Modificar este archivo sirve para que al clonar el proyecto, los datos de configuración tengan consistencia*
-   - MAIL_DRIVER=smtp
-   - MAIL_HOST=smtp.mailtrap.io
-   - MAIL_PORT=puertoMailTrap
-   - MAIL_USERNAME=obtenerloDeMailtrap
-   - MAIL_PASSWORD=obtenerloDeMailtrap
-   - MAIL_ENCRYPTION=null
+   **`-m` Es para vincular la policy con el modelo app\User.php en este caso*
+   - Creación y edición de la función `before($user)`
+   - Edición de la función `view(User $user, User $model)`
+   - Edición de la función `create(User $user)`
+   - Edición de la función `update(User $user, User $model)`
+   - Edición de la función `delete(User $user, User $model)`
+3. Edición del archivo `app\Providers\AuthServiceProvider.php`
+4. Edición del modelo `app\User.php`
+   - Creación y edición del queryscope `scopeAllowed($query)`
+5. Edición del controlador `app\Http\Controllers\Admin\UsersController.php`
+   - Edición de la función `index()`
+   - Edición de la función `create()`
+   - Edición de la función `store(Request $request)`
+   - Edición de la función `show(User $user)`
+   - Edición de la función `edit(User $user)`
+   - Edición de la función `update(UpdateUserRequest $request, User $user)`
+6. Edición del seeder `database\seeds\UsersTableSeeder.php`
+7. Rehacer las migraciones con seeds
+   > php artisan migrate:fresh --seed
 <!-- end commit instructions -->
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 <!-- notes -->
 #### Notas:
-- Comando para ver los subcomandos y su descripción
-  > php artisan make:mail -h
+- [Documentación | `Query scopes`](https://laravel.com/docs/5.5/eloquent#query-scopes)
 <!-- end notes -->
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 <!-- information -->
 #### Información:
-- Más información en `app\Listeners\SendLoginCredentials.php`
-- Más información en `app\Mail\LoginCredentials.php`
-- Más información en `routes\web.php`
+- Más información en `app\Policies\UserPolicy.php`
+- Más información en `app\Providers\AuthServiceProvider.php`
+- Más información en `app\User.php`
+- Más información en `app\Http\Controllers\Admin\UsersController.php`
+- Más información en `database\seeds\UsersTableSeeder.php`
 <!-- end information -->
