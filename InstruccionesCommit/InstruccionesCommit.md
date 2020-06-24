@@ -4,7 +4,7 @@
 <!-- end title -->
 
 <!-- commit name -->
-### Commit | __Crear usuarios__
+### Commit | __Eventos y Listeners__
 <!-- end commit name -->
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -17,37 +17,37 @@
 
 <!-- commit instructions -->
 #### Instrucciones Commit
-1. Edición de la vista `resources\views\admin\users\index.blade.php`
-2. Edición de la vista `resources\views\admin\users\create.blade.php`
-3. Edición de la vista `resources\views\admin\users\edit.blade.php`
-4. Creación del directorio `resources\views\admin\roles`
-   - Creación y edición de la vista `resources\views\admin\roles\checkboxes.blade.php`
-5. Creación del directorio `resources\views\admin\permissions`
-   - Creación y edición de la vista `resources\views\admin\permissions\checkboxes.blade.php`
-6. Edición del controlador `app\Http\Controllers\Admin\UsersController.php`
-   - Edición de la función `create()`
+1. Edición del archivo `app\Providers\EventServiceProvider.php`
+2. Creación de los archivos `app\Events\UserWasCreated.php` y `app\Listeners\SendLoginCredentials.php`
+   > php artisan event:generate
+     
+     **Los directorios `app\Events` y `app\Listeners``se crean automáticamente si no existen al usar el comando*
+
+     **Los archivos nuevos se crean a partir de la información en la propiedad `$listen` en `app\Providers\EventServiceProvider.php`*
+   - Edición del archivo `app\Events\UserWasCreated.php`
+     - Edición de la función constructor ` __construct`
+     - Eliminación de la función `broadcastOn()`
+3. Edición del controlador `app\Http\Controllers\Admin\UsersController.php`
    - Edición de la función `store(Request $request)`
      
-     **No olvidar importar el modelo `use App\User;`*
+     **No olvidar importar `use App\Events\UserWasCreated;`*
+4. Edición del archivo `app\Listeners\SendLoginCredentials.php`
+   - Eliminación de la función `__construct()`
+   - Edición de la función `handle(UserWasCreated $event)`
 <!-- end commit instructions -->
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 <!-- notes -->
 #### Notas:
-- [Documentación | `Introduction csrf protection`](https://laravel.com/docs/5.5/csrf#csrf-introduction)
-- NOTA: En el curso mostraba un error si no se seleccionaban roles o permisos, en mi proyecto no aparecía ese error pero se hizo como en el curso para referencia
-  - Más información en `app\Http\Controllers\Admin\UsersController.php`
 <!-- end notes -->
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 <!-- information -->
 #### Información:
-- Más información en `resources\views\admin\users\index.blade.php`
-- Más información en `resources\views\admin\users\create.blade.php`
-- Más información en `resources\views\admin\users\edit.blade.php`
-- Más información en `resources\views\admin\roles\checkboxes.blade.php`
-- Más información en `resources\views\admin\permissions\checkboxes.blade.php`
+- Más información en `app\Providers\EventServiceProvider.php`
+- Más información en `app\Events\UserWasCreated.php`
 - Más información en `app\Http\Controllers\Admin\UsersController.php`
+- Más información en `app\Listeners\SendLoginCredentials.php`
 <!-- end information -->
