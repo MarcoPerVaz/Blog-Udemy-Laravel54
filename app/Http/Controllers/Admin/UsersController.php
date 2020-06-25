@@ -17,11 +17,6 @@ class UsersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    /* 
-        | ----------------------------------------------------------------------------------------------------------------------------------------------------------------
-        | *$users = User::allowed()->get(); Se obtiene la consulta queryscope de la función scopeAllowed($query) del modelo app\User.php y se guarda en la variable $users
-        | ----------------------------------------------------------------------------------------------------------------------------------------------------------------
-    */
     public function index()
     {
         $users = User::allowed()->get(); 
@@ -33,11 +28,6 @@ class UsersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    /* 
-        | -----------------------------------------------------------------------------------------------------------------
-        | *$this->authorize('create', new User); Usa la función create(User $user) de la Policy app\Policies\UserPolicy.php
-        | -----------------------------------------------------------------------------------------------------------------
-    */
     public function create()
     {
         $this->authorize('create', new User);
@@ -57,11 +47,6 @@ class UsersController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    /* 
-        | -----------------------------------------------------------------------------------------------------------------
-        | *$this->authorize('create', new User); Usa la función create(User $user) de la Policy app\Policies\UserPolicy.php
-        | -----------------------------------------------------------------------------------------------------------------
-    */
     public function store(Request $request)
     {
         $this->authorize('create', new User);
@@ -94,11 +79,6 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    /* 
-        | --------------------------------------------------------------------------------------------------------------------------
-        | *$this->authorize('view', $user); Usa la función view(User $authUser, User $user) de la Policy app\Policies\UserPolicy.php
-        | --------------------------------------------------------------------------------------------------------------------------
-    */
     public function show(User $user)
     {
         $this->authorize('view', $user);
@@ -112,11 +92,6 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    /* 
-        | ------------------------------------------------------------------------------------------------------------------------------
-        | *$this->authorize('update', $user); Usa la función update(User $authUser, User $user) de la Policy app\Policies\UserPolicy.php
-        | ------------------------------------------------------------------------------------------------------------------------------
-    */
     public function edit(User $user)
     {
         $this->authorize('update', $user);
@@ -136,9 +111,9 @@ class UsersController extends Controller
      * @return \Illuminate\Http\Response
      */
     /* 
-        | ------------------------------------------------------------------------------------------------------------------------------
-        | *$this->authorize('update', $user); Usa la función update(User $authUser, User $user) de la Policy app\Policies\UserPolicy.php
-        | ------------------------------------------------------------------------------------------------------------------------------
+        | -------------------------------------------------------------------------------------------------------------
+        | *¨Devuelve la vista resources\views\admin\users\edit.blade.php con el mensaje de sesión 'Usuario actualizado'
+        | -------------------------------------------------------------------------------------------------------------
     */
     public function update(UpdateUserRequest $request, User $user)
     {
@@ -146,7 +121,7 @@ class UsersController extends Controller
 
         $user->update($request->validated());
 
-        return back()->withFlash('Usuario actualizado');
+        return redirect()->route('admin.users.edit', $user)->withFlash('Usuario actualizado');
     }
 
     /**
@@ -155,15 +130,31 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    /* 
+        | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        | *destroy(User $user) Se inyecta el modelo app\User.php como parámetro en la función
+        | *$this->authorize('delete', $user); Usa la función delete(User $user, User $model) de la Policy app\Policies\UserPolicy.php
+        | *$user->delete(); Elimina el usuario de la tabla 'users' de la base de datos
+        | *Redirecciona a la vista resources\views\admin\users\index.blade.php con el mensaje de sesión 'Usuario eliminado'
+        | *Para eliminar los posts asociados al usuario recien eliminado se usa $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+        | *La eliminación de roles y permisos se hace en la función bootHasRoles() del archivo vendor\spatie\laravel-permission\src\Traits\HasRoles.php que viene en el paquete laravel-permission
+        | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    */
+    public function destroy(User $user)
     {
-        //
+        $this->authorize('delete', $user);
+
+        $user->delete();
+
+        return redirect()->route('admin.users.index')->withFlash('Usuario eliminado');
     }
 }
 
 
 /* Notas:
-    | -----------------------------------------------------------------------------------------------------------
-    | *Más información sobre Policies o Políticas en https://laravel.com/docs/5.5/authorization#creating-policies
-    | -----------------------------------------------------------------------------------------------------------
+    | ----------------------------------------------------------------------------------------------------------------------------------------------------
+    | *withFlash() Es un método mágico de Laravel que une la función with() con la función flash()
+    | *Nota: En el curso la función bootHasRoles() muestra que elimina tanto roles como permisos, pero en la función de mi proyecto solo elimina los roles
+    |        pero en mi proyecto también elimina los permisos así que funciona bien
+    | ----------------------------------------------------------------------------------------------------------------------------------------------------
 */

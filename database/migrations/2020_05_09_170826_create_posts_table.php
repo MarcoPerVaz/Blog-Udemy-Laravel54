@@ -14,9 +14,12 @@ class CreatePostsTable extends Migration
     public function up()
     {
         /* 
-            | -------------------------------------------------------------------
-            | *$table->unsignedInteger('user_id'); Campo de tipo entero sin signo
-            | -------------------------------------------------------------------
+            | --------------------------------------------------------------------------------------------------------------
+            | *$table->foreign('user_id')->references('id')->on('users')->onDelete('cascade'); 
+            |   *->foreign('user_id') Llave foránea
+            |   *->references('id')->on('users') Tiene como referencia el campo 'id' de la tabla 'users' de la base de datos
+            |   *->onDelete('cascade') Cuando se elimine un usuario se eliminen también también los posts en cascada
+            | --------------------------------------------------------------------------------------------------------------
         */
         Schema::create('posts', function (Blueprint $table) {
             $table->increments('id');
@@ -27,8 +30,9 @@ class CreatePostsTable extends Migration
             $table->text('body')->nullable();
             $table->timestamp('published_at')->nullable();
             $table->unsignedInteger('category_id')->nullable();
-
             $table->unsignedInteger('user_id');
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
             $table->timestamps();
         });
@@ -44,3 +48,10 @@ class CreatePostsTable extends Migration
         Schema::dropIfExists('posts');
     }
 }
+
+
+/* Notas:
+    | -----------------
+    | *Más información sobre claves o llaves foráneas en https://laravel.com/docs/5.5/migrations#foreign-key-constraints
+    | -----------------
+*/
