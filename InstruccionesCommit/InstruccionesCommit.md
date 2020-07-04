@@ -4,7 +4,7 @@
 <!-- end title -->
 
 <!-- commit name -->
-### Commit | __Eliminar usuarios__
+### Commit | __Permisos para asignar roles__
 <!-- end commit name -->
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -17,25 +17,27 @@
 
 <!-- commit instructions -->
 #### Instrucciones Commit
-1. Edición del controlador `app\Http\Controllers\Admin\UsersController.php`
-   - Edición de la función `update(UpdateUserRequest $request, User $user)`
-   - Edición de la función `destroy($id)`
-2. Edición de la migración `database\migrations\2020_05_09_170826_create_posts_table.php`
-3. Rehacer las migraciones con seeds
+1. Edición del archivo `app\Http\Kernel.php`
+2. Edición del archivo de rutas `routes\web.php`
+3. Edición del seed `database\seeds\UsersTableSeeder.php`
+4. Rehacer las migraciones con seeds
    > php artisan migrate:fresh --seed
+5. Edición de la vista `resources\views\admin\users\edit.blade.php`
 <!-- end commit instructions -->
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 <!-- notes -->
 #### Notas:
-- [Documentación | ](https://laravel.com/docs/5.5/migrations#foreign-key-constraints)
+- [Documentación | `Laravel permission`](https://github.com/spatie/laravel-permission)
 <!-- end notes -->
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 <!-- information -->
 #### Información:
-- Más información en `app\Http\Controllers\Admin\UsersController.php`
-- Más información en `database\migrations\2020_05_09_170826_create_posts_table.php`
+- Más información en `app\Http\Kernel.php`
+- Más información en `routes\web.php`
+- Más información en `database\seeds\UsersTableSeeder.php`
+- Más información en `resources\views\admin\users\edit.blade.php`
 <!-- end information -->

@@ -14,13 +14,8 @@ class UsersTableSeeder extends Seeder
     */
     public function run()
     {
-        /* 
-            | -----------------------------------------------------------------------------------------------------------------------------------------------------------------
-            | *Borra los registros de la tabla 'permissions' de la base de datos cada que se use el comando php artisan migrate:refresh --seed para evitar registros duplicados
-            | -----------------------------------------------------------------------------------------------------------------------------------------------------------------
-        */
-        Permission::truncate();
 
+        Permission::truncate();
         Role::truncate();
         User::truncate();
 
@@ -32,26 +27,22 @@ class UsersTableSeeder extends Seeder
         $updatePostsPermission = Permission::create(['name' => 'Update posts']);
         $deletePostsPermission = Permission::create(['name' => 'Delete posts']);
 
-        /* 
-            | -----------------------------------------------------------------------
-            | *Se crean los permisos en la tabla 'permissions' de la base de datos
-            |   *'View users' Poder editar usuarios
-            |   *'Create users' Poder crear usuarios
-            |   *'Update users' Poder actualizar usuarios
-            |   *'Delete users' Poder eliminar usuarios
-            | *No olvidar importar el modelo use Spatie\Permission\Models\Permission;
-            | -----------------------------------------------------------------------
-        */
         $viewUsersPermission = Permission::create(['name' => 'View users']);
         $createUsersPermission = Permission::create(['name' => 'Create users']);
         $updateUsersPermission = Permission::create(['name' => 'Update users']);
         $deleteUsersPermission = Permission::create(['name' => 'Delete users']);
 
+        /* 
+            | -----------------------------------------------------------------------------------------------------------------------------------------------------
+            | *Crea el permiso para actualizar roles 'Update roles' en la table 'permissions' de la base de datos y lo guarda en la variable $UpdateRolesPermission
+            | -----------------------------------------------------------------------------------------------------------------------------------------------------
+        */
+        $UpdateRolesPermission = Permission::create(['name' => 'Update roles']);
+
         /*
-            | ------------------------------------------------------------------------------------------------------------------------------
+            | -----------
             | *user admin
-            | *Se quito la función bcrypt() del password porque se creó el mutador setPasswordAttribute($password) en el modelo app\User.php
-            | ------------------------------------------------------------------------------------------------------------------------------
+            | -----------
         */
         $admin = new User;
         $admin->name = 'Marco-admin';
@@ -61,10 +52,9 @@ class UsersTableSeeder extends Seeder
         $admin->assignRole($adminRole);
 
         /*
-            | ------------------------------------------------------------------------------------------------------------------------------
+            | ------------
             | *user writer
-            | *Se quito la función bcrypt() del password porque se creó el mutador setPasswordAttribute($password) en el modelo app\User.php
-            | ------------------------------------------------------------------------------------------------------------------------------
+            | ------------
         */
         $writer = new User;
         $writer->name = 'Antonio-writer';
