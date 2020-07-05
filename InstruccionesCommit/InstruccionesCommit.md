@@ -4,7 +4,7 @@
 <!-- end title -->
 
 <!-- commit name -->
-### Commit | __Permisos para asignar roles__
+### Commit | __Mostrando el listado de roles__
 <!-- end commit name -->
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -17,27 +17,29 @@
 
 <!-- commit instructions -->
 #### Instrucciones Commit
-1. Edición del archivo `app\Http\Kernel.php`
-2. Edición del archivo de rutas `routes\web.php`
-3. Edición del seed `database\seeds\UsersTableSeeder.php`
-4. Rehacer las migraciones con seeds
-   > php artisan migrate:fresh --seed
-5. Edición de la vista `resources\views\admin\users\edit.blade.php`
+1. Edición del archivo de rutas `routes\web.php`
+2. Creación y edición del controlador `app\Http\Controllers\Admin\RolesController.php`
+   > php artisan mak:controller Admin/RolesController -r
+     
+     **`-r` Indica a Laravel que se quiere crear un controlador con los 7 métodos REST (index, create, store, show, edit, update y destroy)*
+   - Edición de la función `index()`
+     
+     **No olvidar importar el modelo `use Spatie\Permission\Models\Role;`*
+3. Creación y edición de la vista `resources\views\admin\roles\index.blade.php`
 <!-- end commit instructions -->
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 <!-- notes -->
 #### Notas:
-- [Documentación | `Laravel permission`](https://github.com/spatie/laravel-permission)
+- [Documentación | `CSRF protection`](https://laravel.com/docs/5.5/csrf#csrf-introduction)
+- [Documentación | `Spoofing Form Methods`](https://laravel.com/docs/5.5/controllers#resource-controllers)
+- [Documentación | `Stacks`](https://laravel.com/docs/5.5/blade#stacks)
 <!-- end notes -->
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 <!-- information -->
 #### Información:
-- Más información en `app\Http\Kernel.php`
 - Más información en `routes\web.php`
-- Más información en `database\seeds\UsersTableSeeder.php`
-- Más información en `resources\views\admin\users\edit.blade.php`
 <!-- end information -->

@@ -21,27 +21,15 @@ Route::group(
         Route::resource('users', 'UsersController', ['as' => 'admin']);
 
         /* 
-            | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-            | *middleware('role:Admin') Define al middleware que controlará la ruta y le define que role solo podrá tener acceso
-            |   *'role:Admin'
-            |       *role es el alias definido en app\Http\Kernel.php
-            |       *Admin Es el role definido en la base de datos y debe ser escrito igual que como está en la base de datos
-            | *put() Es el método Http implementado por Laravel para actualizar roles, los navegadores actuales no soportan este método pero Laravel permite implementarlo
-            | *Ruta con nombre que apunta a 'users/slugUsuario/roles' asociada a la función update(Request $request, User $user) del controlador app\Http\Controllers\Admin\UsersRolesController.php
-            | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+            | ----------------------------------------------------
+            | *Ruta con nombre que apunta a '/roles'
+            | *'as' => 'admin' El nombre de la ruta tendrá 'admin'
+            |   *Ejemplo: 'admin.roles.index'
+            | ----------------------------------------------------
         */
-        Route::middleware('role:Admin')->put('users/{user}/roles', 'UsersRolesController@update')->name('admin.users.roles.update');
+        Route::resource('roles', 'RolesController', ['as' => 'admin']);
 
-        /* 
-            | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-            | *middleware('role:Admin') Define al middleware que controlará la ruta y le define que role solo podrá tener acceso
-            |   *'role:Admin'
-            |       *role es el alias definido en app\Http\Kernel.php
-            |       *Admin Es el role definido en la base de datos y debe ser escrito igual que como está en la base de datos
-            | *put() Es el método Http implementado por Laravel para actualizar permisos, los navegadores actuales no soportan este método pero Laravel permite implementarlo
-            | *Ruta con nombre que apunta a 'users/slugUsuario/permissions' asociada a la función update(Request $request, User $user) del controlador app\Http\Controllers\Admin\UsersPermissionsController.php
-            | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        */
+        Route::middleware('role:Admin')->put('users/{user}/roles', 'UsersRolesController@update')->name('admin.users.roles.update');
         Route::middleware('role:Admin')->put('users/{user}/permissions', 'UsersPermissionsController@update')->name('admin.users.permissions.update');
 
         Route::post('posts/{post}/photos', 'PhotosController@store')->name('admin.posts.photos.update');
