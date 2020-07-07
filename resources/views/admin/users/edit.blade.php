@@ -10,15 +10,9 @@
           <h3 class="box-title">Datos personales</h3>
         </div>
         <div class="box-body">
-          @if ( $errors->any() )
-            {{-- validation errors --}}
-              <ul class="list-group">
-                @foreach ($errors->all() as $error)
-                <li class="list-group-item list-group-item-danger">{{ $error }}</li>  
-                @endforeach
-              </ul>
-            {{-- validation errors --}}
-          @endif
+
+          @include('partials.error-messages')
+
           <form action="{{ route('admin.users.update', $user) }}" method="post">
             {{ csrf_field() }} {{ method_field('PUT') }}
 
@@ -93,9 +87,11 @@
           <form action="{{ route('admin.users.permissions.update', $user) }}" method="post">
             {{ csrf_field() }} {{ method_field('PUT') }}
             <div class="box-body">
+
               {{-- permissions --}}
-                @include('admin.permissions.checkboxes')
+                @include('admin.permissions.checkboxes', ['model' => $user])
               {{-- end permissions --}}
+
             </div>
             <button class="btn btn-primary btn-block">Actualizar permisos</button>
           </form>
@@ -116,15 +112,8 @@
 
 
 {{-- Notas:
-      | -------------------------------------------------------------------------------
-      | *@role() Directiva incluída en el paquete Laravel-permission
-      |   *Támbien permite usar la directiva @permission()
-      |     *Más información sobre el paquete Laravel-permission en https://github.com/spatie/laravel-permission
-      | *@role('Admin') Si el role es Admin
-      | *@else Si el role no es admin
-      | *@forelse ($user->roles as $role) Recorre los roles del usuario
-      | *@empty Si no tiene ningún role asignado
-      | *@forelse ($user->permissions as $permission) Recorre los permsisos del usuario
-      | *@empty Si no tiene ningún permiso asignado
-      | -------------------------------------------------------------------------------
+      | -------------------------------------------------------------------------------------------------------------------------------------------------------------------
+      | *@include('partials.error-messages') Incluye la vista resources\views\partials\error-messages.blade.php
+      | *@include('admin.permissions.checkboxes', ['model' => $user]) Incluye la vista resources\views\admin\permissions\checkboxes.blade.php y le pasa la variable 'model'
+      | -------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --}}

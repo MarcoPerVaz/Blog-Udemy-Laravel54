@@ -4,7 +4,7 @@
 <!-- end title -->
 
 <!-- commit name -->
-### Commit | __Mostrando el listado de roles__
+### Commit | __Formulario para crear roles__
 <!-- end commit name -->
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -17,29 +17,37 @@
 
 <!-- commit instructions -->
 #### Instrucciones Commit
-1. Edición del archivo de rutas `routes\web.php`
-2. Creación y edición del controlador `app\Http\Controllers\Admin\RolesController.php`
-   > php artisan mak:controller Admin/RolesController -r
-     
-     **`-r` Indica a Laravel que se quiere crear un controlador con los 7 métodos REST (index, create, store, show, edit, update y destroy)*
-   - Edición de la función `index()`
+1. Edición del controlador `app\Http\Controllers\Admin\RolesController.php`
+   - Edición de la función `create()`
      
      **No olvidar importar el modelo `use Spatie\Permission\Models\Role;`*
-3. Creación y edición de la vista `resources\views\admin\roles\index.blade.php`
+
+     **No olvidar importar el modelo `use Spatie\Permission\Models\Permission;`*
+   - Edición de la función `store(Request $request)`
+     
+     **No olvidar importar el modelo `use Spatie\Permission\Models\Role;`*
+2. Creación y edición de la vista `resources\views\partials\error-messages.blade.php`
+3. Edición de la vista `resources\views\admin\permissions\checkboxes.blade.php`
+4. Creación y edición de la vista `resources\views\admin\roles\create.blade.php`
+5. Edición de la vista `resources\views\admin\users\create.blade.php`
+6. Edición de la vista `resources\views\admin\users\edit.blade.php`
 <!-- end commit instructions -->
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 <!-- notes -->
 #### Notas:
-- [Documentación | `CSRF protection`](https://laravel.com/docs/5.5/csrf#csrf-introduction)
-- [Documentación | `Spoofing Form Methods`](https://laravel.com/docs/5.5/controllers#resource-controllers)
-- [Documentación | `Stacks`](https://laravel.com/docs/5.5/blade#stacks)
+- [Documentación | `Introduction csrf protection`](https://laravel.com/docs/5.5/csrf#csrf-introduction)
 <!-- end notes -->
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 <!-- information -->
 #### Información:
-- Más información en `routes\web.php`
+- Más información en `app\Http\Controllers\Admin\RolesController.php`
+- Más información en `resources\views\partials\error-messages.blade.php`
+- Más información en `resources\views\admin\permissions\checkboxes.blade.php`
+- Más información en `resources\views\admin\roles\create.blade.php`
+- Más información en `resources\views\admin\users\create.blade.php`
+- Más información en `resources\views\admin\users\edit.blade.php`
 <!-- end information -->
